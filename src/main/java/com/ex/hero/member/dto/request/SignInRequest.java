@@ -1,4 +1,4 @@
-package com.ex.hero.member.dto.signin.request;
+package com.ex.hero.member.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

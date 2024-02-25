@@ -5,7 +5,8 @@ import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.ex.hero.member.dto.signup.request.SignUpRequest;
+import com.ex.hero.member.dto.request.MemberUpdateRequest;
+import com.ex.hero.member.dto.request.SignUpRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,18 +49,6 @@ public class Member {
 	private Boolean status;
 
 
-	public static Member createMember(String account, String name, String password, String phone, MemberType role) {
-		Member member = new Member();
-		member.setAccount(account);
-		member.setName(name);
-		member.setPassword(password);
-		member.setPhone(phone);
-		member.setRole(role);
-		member.setCreatedAt(LocalDateTime.now());
-		member.setStatus(Boolean.TRUE);
-		return member;
-	}
-
 	public static Member from(SignUpRequest request) {
 		return Member.builder()
 			.account(request.account())
@@ -68,6 +57,13 @@ public class Member {
 			.role(MemberType.USER)
 			.createdAt(LocalDateTime.now())
 			.build();
+	}
+
+	public void update(MemberUpdateRequest newMember) {
+		this.password = newMember.newPassword() == null || newMember.newPassword().isBlank() ? this.password : newMember.password();
+		this.name = newMember.name();
+		this.email = newMember.email();
+		this.phone = newMember.phone();
 	}
 
 }
