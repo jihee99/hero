@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ex.hero.common.annotation.AdminAuthorize;
 import com.ex.hero.common.dto.ApiResponse;
 import com.ex.hero.member.service.AdminService;
 
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Tag(name = "관리자용 API")
 @RequiredArgsConstructor
+@AdminAuthorize
 @RestController
 @RequestMapping("/api/v1/system")
 public class AdminController {

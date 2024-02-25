@@ -9,11 +9,20 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.ex.hero.security.jwt.JwtAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
 	private final String[] allowedUrls = {"/", "/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
+
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
+
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -44,6 +53,7 @@ public class SecurityConfig {
 				requests.requestMatchers(allowedUrls).permitAll()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
 					.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
 			)
+			.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
 
 		;
 

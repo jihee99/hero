@@ -2,6 +2,7 @@ package com.ex.hero.member.controller;
 
 import java.util.UUID;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ex.hero.common.annotation.UserAuthorize;
 import com.ex.hero.common.dto.ApiResponse;
 import com.ex.hero.member.dto.request.MemberUpdateRequest;
 import com.ex.hero.member.service.MemberService;
@@ -19,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @Tag(name="로그인 후 사용자가 접근할 수 있는 API")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('USER')")
 @RestController
 @RequestMapping("/api/v1/member")
 public class MemberController {
