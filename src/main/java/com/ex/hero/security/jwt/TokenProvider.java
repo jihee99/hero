@@ -61,7 +61,6 @@ public class TokenProvider {
 
 
 	public String createAccessToken(String userSpecification) {
-		System.out.println("token provider > create access token");
 		 return Jwts.builder()
 			 .signWith(new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS512.getJcaName()))
 			 .setSubject(userSpecification) // Jwt 토큰 제목
@@ -72,8 +71,6 @@ public class TokenProvider {
 	}
 
 	public String createRefreshToken() {
-		System.out.println("token provider > create refresh token");
-
 		return Jwts.builder()
 			.signWith(new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS512.getJcaName()))
 			.setIssuer(issuer)
