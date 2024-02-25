@@ -10,7 +10,9 @@ import com.ex.hero.member.dto.response.SignInResponse;
 import com.ex.hero.member.dto.request.SignUpRequest;
 import com.ex.hero.member.dto.response.SignUpResponse;
 import com.ex.hero.member.model.Member;
+import com.ex.hero.member.repository.MemberRefreshTokenRepository;
 import com.ex.hero.member.repository.MemberRepository;
+import com.ex.hero.security.jwt.MemberRefreshToken;
 import com.ex.hero.security.jwt.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class SignService {
 
 
 	private final MemberRepository memberRepository;
+	private final MemberRefreshTokenRepository memberRefreshTokenRepository;
 	private final TokenProvider tokenProvider;
 	private final PasswordEncoder passwordEncoder;	// 추가
 
@@ -37,15 +40,20 @@ public class SignService {
 	}
 
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public SignInResponse signIn(SignInRequest request) {
 		Member member = memberRepository.findByAccount(request.account())
 			.filter(it -> passwordEncoder.matches(request.password(), it.getPassword()))
 			.orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
-		// return new SignInResponse(member.getName(), member.getRole());
-		String token = tokenProvider.createToken(String.format("%s:%s",member.getId(),member.getRole()));
-		System.out.println(token);
-		return new SignInResponse(member.getName(), member.getRole(), token);
+		String accessToken = tokenProvider.createAccessToken(String.format("%s:%s", member.getId(), member.getRole()));	// token -> accessToken
+		String refreshToken = tokenProvider.createRefreshToken();	// 리프레시 토큰 생성
+		// 리프레시 토큰이 이미 있으면 토큰을 갱신하고 없으면 토큰을 추가
+		memberRefreshTokenRepository.findById(member.getId())
+			.ifPresentOrElse(
+				it -> it.updateRefreshToken(refreshToken),
+				() -> memberRefreshTokenRepository.save(new MemberRefreshToken(member, refreshToken))
+			);
+		return new SignInResponse(member.getName(), member.getRole(), accessToken, refreshToken);
 	}
 
 

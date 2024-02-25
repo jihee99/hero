@@ -3,24 +3,27 @@ package com.ex.hero.security.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.ex.hero.security.jwt.JwtAuthenticationFilter;
+import com.ex.hero.security.filter.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
 	private final String[] allowedUrls = {"/", "/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
-
+	private final AuthenticationEntryPoint entryPoint;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
 
 
@@ -40,7 +43,6 @@ public class SecurityConfig {
 	}
 
 
-
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
@@ -54,6 +56,7 @@ public class SecurityConfig {
 					.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
 			)
 			.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
+			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
 
 		;
 

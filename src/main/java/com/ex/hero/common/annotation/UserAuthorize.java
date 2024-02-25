@@ -11,6 +11,4 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @Retention(RetentionPolicy.RUNTIME)
 @PreAuthorize("hasAuthority('USER')")
 public @interface UserAuthorize {
-
-
 }

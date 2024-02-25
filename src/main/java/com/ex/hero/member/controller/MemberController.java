@@ -3,6 +3,8 @@ package com.ex.hero.member.controller;
 import java.util.UUID;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,19 +32,19 @@ public class MemberController {
 
 	@Operation(summary = "회원 정보 조회")
 	@GetMapping("/")
-	public ApiResponse getMemberInfo(String id){
-		return ApiResponse.success(memberService.getMemberInfo(UUID.fromString(id)));
+	public ApiResponse getMemberInfo(@AuthenticationPrincipal User user){
+		return ApiResponse.success(memberService.getMemberInfo(UUID.fromString(user.getUsername())));
 	}
 
 	@Operation(summary = "회원 탈퇴")
-	@DeleteMapping
-	public ApiResponse deleteMember(String id) {
-		return ApiResponse.success(memberService.deleteMember(UUID.fromString(id)));
+	@GetMapping("/delete")
+	public ApiResponse deleteMember(@AuthenticationPrincipal User user) {
+		return ApiResponse.success(memberService.deleteMember(UUID.fromString(user.getUsername())));
 	}
 
 	@Operation(summary = "회원 정보 수정")
-	@PutMapping
-	public ApiResponse updateMember(String id, @RequestBody MemberUpdateRequest request) {
-		return ApiResponse.success(memberService.updateMember(UUID.fromString(id), request));
+	@GetMapping("/update")
+	public ApiResponse updateMember(@AuthenticationPrincipal User user, @RequestBody MemberUpdateRequest request) {
+		return ApiResponse.success(memberService.updateMember(UUID.fromString(user.getUsername()), request));
 	}
 }
