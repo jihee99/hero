@@ -51,7 +51,6 @@ public class TokenProvider {
 	) {
 		this.secretKey = secretKey;
 		this.expirationMinutes = expirationMinutes;
-		System.out.println("parsing1");
 		this.refreshExpirationHours = refreshExpirationHours;
 		this.issuer = issuer;
 		this.memberRefreshTokenRepository = memberRefreshTokenRepository;	// 추가
