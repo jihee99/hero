@@ -1,0 +1,46 @@
+server:
+  port: 8081
+
+spring:
+#  devtools:
+#    livereload:
+#      enabled: true
+#    restart:
+#      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/palago
+    username: palago
+    password: palago00
+    driver-class-name: org.postgresql.Driver
+#  thymeleaf:
+#    check-template-location: true
+#    prefix: classpath:/templates/
+#    suffix: .html
+#    cache: false
+
+
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  paths-to-match: /**
+  swagger-ui:
+    path: /
+    display-request-duration: true
+    groups-order: desc
+    operations-sorter: alpha
+    disable-swagger-default-url: true
+  api-docs:
+    groups:
+      enabled: true
+
+jasypt:
+  encryptor:
+    bean: propertyEncryptor
+  secret-key: ${JASYPT_PASSWORD}
