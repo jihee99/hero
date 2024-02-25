@@ -3,6 +3,7 @@ package com.ex.hero.member.service;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 
+	private final PasswordEncoder passwordEncoder;
+
 	@Transactional(readOnly = true)
 	public MemberInfoResponse getMemberInfo(UUID id) {
 		return memberRepository.findById(id)
@@ -39,9 +42,9 @@ public class MemberService {
 	@Transactional
 	public MemberUpdateResponse updateMember(UUID id, MemberUpdateRequest request) {
 		return memberRepository.findById(id)
-			.filter(member -> member.getPassword().equals(request.password()))
+			.filter(member -> passwordEncoder.matches(request.password(), member.getPassword()))
 			.map(member -> {
-				member.update(request);
+				member.update(request, passwordEncoder);
 				return MemberUpdateResponse.of(true, member);
 			})
 			.orElseThrow(() -> new NoSuchElementException("아이디 또는 비밀번호가 일치하지 않습니다."));

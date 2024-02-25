@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ex.hero.member.dto.request.MemberUpdateRequest;
 import com.ex.hero.member.dto.request.SignUpRequest;
@@ -49,18 +50,19 @@ public class Member {
 	private Boolean status;
 
 
-	public static Member from(SignUpRequest request) {
+	public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
 		return Member.builder()
 			.account(request.account())
-			.password(request.password())
+			.password(passwordEncoder.encode(request.password()))
 			.name(request.name())
 			.role(MemberType.USER)
 			.createdAt(LocalDateTime.now())
 			.build();
 	}
 
-	public void update(MemberUpdateRequest newMember) {
-		this.password = newMember.newPassword() == null || newMember.newPassword().isBlank() ? this.password : newMember.password();
+	public void update(MemberUpdateRequest newMember, PasswordEncoder passwordEncoder) {
+		this.password = newMember.newPassword() == null || newMember.newPassword().isBlank()
+			? this.password : passwordEncoder.encode(newMember.password());
 		this.name = newMember.name();
 		this.email = newMember.email();
 		this.phone = newMember.phone();

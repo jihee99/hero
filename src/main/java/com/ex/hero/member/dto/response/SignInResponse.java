@@ -8,6 +8,7 @@ public record SignInResponse(
         @Schema(description = "회원 이름", example = "홍길동")
         String name,
         @Schema(description = "회원 유형", example = "USER")
-        MemberType role
+        MemberType role,
+        String token
 ) {
 }
