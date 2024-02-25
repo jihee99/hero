@@ -28,7 +28,14 @@ public class AdminController {
 
     @Operation(summary = "관리자 목록 조회")
     @GetMapping("/admins")
+    public ApiResponse getAllSellers() {
+        return ApiResponse.success(adminService.getSellers());
+    }
+
+    @Operation(summary = "관리자 목록 조회")
+    @GetMapping("/admins")
     public ApiResponse getAllAdmins() {
         return ApiResponse.success(adminService.getAdmins());
     }
+
 }
