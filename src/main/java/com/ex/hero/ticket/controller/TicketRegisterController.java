@@ -36,7 +36,7 @@ public class TicketRegisterController {
 		ResultMap result = new ResultMap();
 		try {
 			result.setSuccess();
-
+			ticketItemRegisterService.createTicketItem(ticketItemRequest);
 		} catch (Exception e){
 			log.error(e.getMessage());
 		}

@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
 import com.ex.hero.common.vo.Money;
+import com.ex.hero.member.model.Member;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -15,6 +16,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,9 +31,15 @@ public class TicketItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	private UUID ticketId;
+
+	@ManyToOne
+	@JoinColumn(name = "id")
+	private Member member;
+
 	@Enumerated(EnumType.STRING)
 	private TicketPayType payType;
+
 	private String name;
 	private String description;
 	private Money price;
