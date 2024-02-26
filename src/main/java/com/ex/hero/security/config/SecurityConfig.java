@@ -48,13 +48,27 @@ public class SecurityConfig {
 		http
 			.sessionManagement( sessionManageMent -> sessionManageMent.sessionCreationPolicy(
 				SessionCreationPolicy.STATELESS))
-
 			.csrf(AbstractHttpConfigurer::disable)
 
 			.authorizeHttpRequests(requests ->
-				requests.requestMatchers(allowedUrls).permitAll()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
-					.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
+				requests
+					.requestMatchers(allowedUrls).permitAll()
+
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "SELLER", "ADMIN") // member, seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/seller/**").hasAnyAuthority("SELLER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
+
+					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
 			)
+
+			// .authorizeHttpRequests(requests ->
+			// 	requests.requestMatchers(allowedUrls).permitAll()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
+			//
+			//
+			//
+			// 		.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
+			// )
+
 			.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
 			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
 

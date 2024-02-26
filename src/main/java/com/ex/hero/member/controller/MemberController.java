@@ -13,16 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.hero.common.dto.ApiResponse;
+import com.ex.hero.common.dto.ResultMap;
 import com.ex.hero.member.dto.request.MemberUpdateRequest;
 import com.ex.hero.member.service.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Tag(name="로그인 후 사용자가 접근할 수 있는 API")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+// @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 @RestController
 @RequestMapping("/api/v1/member")
 public class MemberController {
