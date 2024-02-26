@@ -9,7 +9,7 @@ spring:
 #      enabled: true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -19,11 +19,11 @@ spring:
     username: palago
     password: palago00
     driver-class-name: org.postgresql.Driver
-#  thymeleaf:
-#    check-template-location: true
-#    prefix: classpath:/templates/
-#    suffix: .html
-#    cache: false
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
 
 
 springdoc:
