@@ -3,6 +3,10 @@ package com.ex.hero.member.model;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.Comment;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.ex.hero.member.dto.request.MemberUpdateRequest;
+import com.ex.hero.member.dto.response.MemberInfoResponse;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -38,5 +42,27 @@ public class Seller {
 	private LocalDateTime applyAt;
 	@Comment("승인일")
 	private LocalDateTime approveAt;
+
+	public static Seller from(Member member){
+		return Seller.builder()
+			.member(member)
+			.applyType(SellerApplyType.APPLY)
+			.applyAt(LocalDateTime.now())
+			.build();
+	}
+
+	public void apply(MemberInfoResponse memberInfo){
+		Member member = new Member();
+		member.setId(memberInfo.id());
+		member.setAccount(memberInfo.account());
+		member.setName(memberInfo.name());
+		member.setEmail(memberInfo.email());
+		member.setRole(memberInfo.role());
+		member.setCreatedAt(memberInfo.createdAt());
+
+		this.member = member;
+		this.applyType = SellerApplyType.APPLY;
+		this.applyAt = LocalDateTime.now();
+	}
 
 }
