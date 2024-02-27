@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 @Tag(name = "관리자용 API")
 @RequiredArgsConstructor
-@AdminAuthorize
+// @AdminAuthorize
 @RestController
 @RequestMapping("/api/v1/system")
 public class AdminController {

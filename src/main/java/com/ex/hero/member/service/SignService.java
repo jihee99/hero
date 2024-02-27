@@ -34,6 +34,8 @@ public class SignService {
 		try {
 			memberRepository.flush();
 		} catch (DataIntegrityViolationException e) {
+			// TODO
+			// 예외처리
 			throw new IllegalArgumentException("이미 사용중인 아이디입니다.");
 		}
 		return SignUpResponse.from(member);

@@ -9,6 +9,7 @@ import org.hibernate.annotations.Comment;
 import com.ex.hero.common.vo.Money;
 import com.ex.hero.member.model.Member;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -31,13 +32,17 @@ public class TicketItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID ticketId;
+	@Column(name = "ticket_id")
+	@Comment("티켓 아이디")
+	private UUID id;
 
 	@ManyToOne
 	@JoinColumn(name = "id")
+	@Comment("회원 아이디(uuid)")
 	private Member member;
 
 	@Enumerated(EnumType.STRING)
+	@Comment("결제 타입 (무료|유료)")
 	private TicketPayType payType;
 
 	private String name;

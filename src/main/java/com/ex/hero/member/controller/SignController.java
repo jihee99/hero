@@ -28,6 +28,7 @@ public class SignController {
 		return ApiResponse.success(signService.registerMember(request));
 	}
 
+
 	@Operation(summary = "로그인")
 	@PostMapping("/sign-in")
 	public ApiResponse signIn(@RequestBody SignInRequest request) {

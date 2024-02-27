@@ -49,4 +49,10 @@ public class MemberController {
 	public ApiResponse updateMember(@AuthenticationPrincipal User user, @RequestBody MemberUpdateRequest request) {
 		return ApiResponse.success(memberService.updateMember(UUID.fromString(user.getUsername()), request));
 	}
+
+	@GetMapping("/apply-seller")
+	public ApiResponse applySeller(@AuthenticationPrincipal User user, @RequestBody MemberUpdateRequest request) {
+		// memberService.appleySeller(UUID.fromString(user.getUsername()), request);
+		return ApiResponse.success(null);
+	}
 }
