@@ -1,5 +1,7 @@
 package com.ex.hero.host.model;
 
+import java.util.UUID;
+
 import com.ex.hero.common.model.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -16,7 +18,7 @@ public class HostUser extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "host_user_id")
-    private Long id;
+    private UUID id;
 
     // 소속 호스트 아이디
     @ManyToOne(fetch = FetchType.EAGER)
@@ -25,19 +27,19 @@ public class HostUser extends BaseTimeEntity {
 
     // 소속 호스트를 관리중인 유저 아이디
     @Column(name = "member_id")
-    private Long userId;
+    private UUID userId;
 
     // 초대 승락 여부
     private Boolean active = Boolean.FALSE;
 
     // 유저의 권한
-//    @Enumerated(EnumType.STRING)
-//    private HostRole role = GUEST;
+    @Enumerated(EnumType.STRING)
+    private HostRole role = HostRole.GUEST;
 
-//    public void setHostRole(HostRole role) {
-//        this.role = role;
-//    }
-//
+    public void setHostRole(HostRole role) {
+        this.role = role;
+    }
+
 //    public void activate() {
 //        if (this.active) throw AlreadyJoinedHostException.EXCEPTION;
 //        this.active = true;
@@ -45,9 +47,9 @@ public class HostUser extends BaseTimeEntity {
 //    }
 
     @Builder
-    public HostUser(Host host, Long userId) {
+    public HostUser(Host host, UUID userId, HostRole role) {
         this.host = host;
         this.userId = userId;
-//        this.role = role;
+        this.role = role;
     }
 }

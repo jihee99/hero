@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.model.MemberType;
-import com.ex.hero.member.model.Seller;
-import com.ex.hero.member.model.SellerApplyType;
 import com.ex.hero.member.repository.MemberRepository;
 import com.ex.hero.member.repository.SellerRepository;
 
@@ -18,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
-public class SellerInitializer implements ApplicationRunner {
+public class HostInitializer implements ApplicationRunner {
 	private final MemberRepository memberRepository;
 	private final SellerRepository sellerRepository;
 
@@ -30,7 +28,7 @@ public class SellerInitializer implements ApplicationRunner {
 			.account("seller")
 			.password(passwordEncoder.encode("1234"))
 			.name("판매자")
-			.role(MemberType.SELLER)
+			.role(MemberType.HOST)
 			.createdAt(LocalDateTime.now())
 			.build());
 	}
