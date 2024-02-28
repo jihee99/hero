@@ -13,7 +13,7 @@ public record MemberInfoResponse(
 	UUID id,
 	@Schema(description = "회원 아이디", example = "gildong2")
 	String account,
-	@Schema(description = "회원 이름", example = "콜라곰")
+	@Schema(description = "회원 이름", example = "홍길동")
 	String name,
 	@Schema(description = "회원 이메일", example = "user@test.com")
 	String email,

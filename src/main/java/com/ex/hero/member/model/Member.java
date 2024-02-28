@@ -3,6 +3,8 @@ package com.ex.hero.member.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -33,6 +35,7 @@ import lombok.*;
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
+	@Column(name="member_id")
 	private UUID id;
 
 	@Column(nullable = false, unique = true)
@@ -48,6 +51,7 @@ public class Member {
 	private MemberType role;
 	@CreatedDate
 	private LocalDateTime createdAt;
+	@ColumnDefault("TRUE")
 	private Boolean status;
 
 

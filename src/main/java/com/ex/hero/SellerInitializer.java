@@ -26,21 +26,13 @@ public class SellerInitializer implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) {
-		Member member = memberRepository.save(Member.builder()
+		memberRepository.save(Member.builder()
 			.account("seller")
 			.password(passwordEncoder.encode("1234"))
 			.name("판매자")
 			.role(MemberType.SELLER)
 			.createdAt(LocalDateTime.now())
 			.build());
-
-		sellerRepository.save(Seller.builder()
-			.member(member)
-			.applyType(SellerApplyType.APPROVE)
-			.applyAt(LocalDateTime.now())
-			.approveAt(LocalDateTime.now())
-			.build());
-
 	}
 
 }

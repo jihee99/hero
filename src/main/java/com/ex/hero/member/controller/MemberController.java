@@ -50,11 +50,11 @@ public class MemberController {
 		return ApiResponse.success(memberService.updateMember(UUID.fromString(user.getUsername()), request));
 	}
 
-	@Operation(summary = "판매자 등록 신청")
-	@GetMapping("/apply-seller")
-	public ApiResponse applySeller(@AuthenticationPrincipal User user, @RequestBody MemberUpdateRequest request) {
-		memberService.registerSellerRequest(UUID.fromString(user.getUsername()), request);
-		return ApiResponse.success(null);
-	}
+//	@Operation(summary = "판매자 등록 신청")
+//	@GetMapping("/apply-seller")
+//	public ApiResponse applySeller(@AuthenticationPrincipal User user, @RequestBody SellerApplyRequest request) {
+//		memberService.registerSellerRequest(UUID.fromString(user.getUsername()), request);
+//		return ApiResponse.success(null);
+//	}
 
 }

@@ -14,7 +14,7 @@ public record SellerApplyResponse (
 	@Schema(description = "신청 상태", example = "APPLY")
 	SellerApplyType applyType
 ) {
-	public static SellerApplyResponse of(boolean result, Seller seller) {
-		return new SellerApplyResponse(result, seller.getMember().getAccount(), seller.getApplyType());
-	}
+//	public static SellerApplyResponse of(boolean result, Seller seller) {
+//		return new SellerApplyResponse(result, seller.getMemberId(), seller.getApplyType());
+//	}
 }

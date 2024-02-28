@@ -1,4 +1,4 @@
-package com.ex.hero.ticket.model;
+package com.ex.hero.member.model;
 
 import com.ex.hero.member.model.Member;
 

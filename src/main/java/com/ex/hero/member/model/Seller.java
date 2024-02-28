@@ -1,20 +1,15 @@
 package com.ex.hero.member.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ex.hero.member.dto.request.MemberUpdateRequest;
 import com.ex.hero.member.dto.response.MemberInfoResponse;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,9 +27,12 @@ import lombok.Setter;
 public class Seller {
 
 	@Id
-	@OneToOne
-	@JoinColumn(name = "id")
-	private Member member;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	@Column(name="seller_id")
+	private UUID id;
+
+	@JoinColumn(name="member_id")
+	private UUID memberId;
 	@Enumerated(EnumType.STRING)
 	@Comment("승인 타입 (신청|거절|승인)")
 	private SellerApplyType applyType;
@@ -43,26 +41,29 @@ public class Seller {
 	@Comment("승인일")
 	private LocalDateTime approveAt;
 
-	public static Seller from(Member member){
-		return Seller.builder()
-			.member(member)
-			.applyType(SellerApplyType.APPLY)
-			.applyAt(LocalDateTime.now())
-			.build();
-	}
 
-	public void apply(MemberInfoResponse memberInfo){
-		Member member = new Member();
-		member.setId(memberInfo.id());
-		member.setAccount(memberInfo.account());
-		member.setName(memberInfo.name());
-		member.setEmail(memberInfo.email());
-		member.setRole(memberInfo.role());
-		member.setCreatedAt(memberInfo.createdAt());
 
-		this.member = member;
-		this.applyType = SellerApplyType.APPLY;
-		this.applyAt = LocalDateTime.now();
-	}
+//
+//	public static Seller from(Member member){
+//		return Seller.builder()
+//			.member(member)
+//			.applyType(SellerApplyType.APPLY)
+//			.applyAt(LocalDateTime.now())
+//			.build();
+//	}
+//
+//	public Seller(MemberInfoResponse memberInfo){
+//		Member member = new Member();
+//		member.setId(memberInfo.id());
+//		member.setAccount(memberInfo.account());
+//		member.setName(memberInfo.name());
+//		member.setEmail(memberInfo.email());
+//		member.setRole(memberInfo.role());
+//		member.setCreatedAt(memberInfo.createdAt());
+//
+//		this.member = member;
+//		this.applyType = SellerApplyType.APPLY;
+//		this.applyAt = LocalDateTime.now();
+//	}
 
 }

@@ -1,8 +1,10 @@
 package com.ex.hero.member.service;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import com.ex.hero.member.model.SellerApplyType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,6 @@ public class MemberService {
 
 	private final MemberRepository memberRepository;
 	private final SellerRepository sellerRepository;
-
 	private final PasswordEncoder passwordEncoder;
 
 	@Transactional(readOnly = true)
@@ -60,33 +61,43 @@ public class MemberService {
 
 	public void registerSellerRequest(UUID id, MemberUpdateRequest request) {
 		// 회원인가?
-		MemberInfoResponse member = memberRepository.findById(id)
+		memberRepository.findById(id)
 			.map(MemberInfoResponse::from)
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 
 		// 이미 판매자인가?
 		// findById가 존재하면 > AlreadyAppliedUserException
-		// 존재하지 않으면 > SellerRepository.save
 		sellerRepository.findById(id)
-			.map(seller -> {
-				seller.apply(member);
-				return seller;
-			})
 			.ifPresentOrElse(
 				seller -> {throw AlreadyAppliedUserException.EXCEPTION;},
-				() -> SellerRepository.save(Seller.builder().build());
-				)
+				() -> {
+					//SellerRepository.save
 
+				}
+		);
 
+		// 존재하지 않으면 > SellerRepository.save
 
-			.map(seller -> {
-				seller.apply(member);
-				return seller;
-			})
-			.orElseThrow(() -> AlreadyAppliedUserException.EXCEPTION);
-
-
-		// 아무것도 걸리는게 없으면 save
+		log.info("{}", request);
+		Seller newSeller = Seller.builder()
+				.id(id)
+				.applyType(SellerApplyType.APPLY) // 판매자 신청 상태로 설정하거나, 필요에 따라 다른 값을 지정합니다.
+				.applyAt(LocalDateTime.now()) // 신청 시간을 현재 시간으로 설정하거나, 필요에 따라 다른 값을 지정합니다.
+				.build();
+		sellerRepository.save(newSeller);
+//		sellerRepository.findById(id)
+////			.map(seller -> {
+////				seller.apply(member);
+////				return seller;
+////			})
+//			.ifPresentOrElse(
+//				seller -> {throw AlreadyAppliedUserException.EXCEPTION;},
+//				() -> sellerRepository.save(new Seller(member))
+//				);
+//
+//
+//
+//		// 아무것도 걸리는게 없으면 save
 
 	}
 }
