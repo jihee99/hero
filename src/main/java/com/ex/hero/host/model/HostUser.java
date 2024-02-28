@@ -31,13 +31,13 @@ public class HostUser extends BaseTimeEntity {
     private Boolean active = Boolean.FALSE;
 
     // 유저의 권한
-//    @Enumerated(EnumType.STRING)
-//    private HostRole role = GUEST;
+    @Enumerated(EnumType.STRING)
+    private HostRole role = HostRole.GUEST;
 
-//    public void setHostRole(HostRole role) {
-//        this.role = role;
-//    }
-//
+    public void setHostRole(HostRole role) {
+        this.role = role;
+    }
+
 //    public void activate() {
 //        if (this.active) throw AlreadyJoinedHostException.EXCEPTION;
 //        this.active = true;
