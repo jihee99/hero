@@ -12,4 +12,6 @@ import com.ex.hero.member.model.MemberType;
 public interface MemberRepository extends JpaRepository<Member, UUID> {
     Optional<Member> findByAccount(String account);
     List<Member> findAllByRole(MemberType role);
+
+
 }

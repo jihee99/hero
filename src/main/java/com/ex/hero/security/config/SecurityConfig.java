@@ -55,7 +55,7 @@ public class SecurityConfig {
 					.requestMatchers(allowedUrls).permitAll()
 
 					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "HOST", "ADMIN") // member, seller, admin 권한 허용
-					.requestMatchers("/api/v[0-9]+/seller/**").hasAnyAuthority("HOST", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/host/**").hasAnyAuthority("HOST", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
 					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요

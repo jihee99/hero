@@ -3,6 +3,8 @@ package com.ex.hero.host.model;
 import java.util.UUID;
 
 import com.ex.hero.common.model.BaseTimeEntity;
+import com.ex.hero.host.exception.AlreadyJoinedHostException;
+
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class HostUser extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "host_user_id")
     private UUID id;
 
@@ -40,11 +42,13 @@ public class HostUser extends BaseTimeEntity {
         this.role = role;
     }
 
-//    public void activate() {
-//        if (this.active) throw AlreadyJoinedHostException.EXCEPTION;
-//        this.active = true;
-//        Events.raise(HostUserJoinEvent.of(this.host.getId(), this.getUserId()));
-//    }
+    public void activate() {
+        if (this.active) throw AlreadyJoinedHostException.EXCEPTION;
+        this.active = true;
+        // Events.raise(HostUserJoinEvent.of(this.host.getId(), this.getUserId()));
+    }
+
+
 
     @Builder
     public HostUser(Host host, UUID userId, HostRole role) {

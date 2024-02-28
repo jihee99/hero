@@ -28,8 +28,9 @@ public enum MemberErrorCode implements BaseErrorCode {
 	USER_NOT_FOUND(NOT_FOUND, "USER_404_1", "유저 정보를 찾을 수 없습니다."),
 	USER_PHONE_INVALID(BAD_REQUEST, "USER_404_2", "유저의 휴대폰 전화번호가 올바르지않습니다. 관리자에게 문의주세요"),
 	@ExplainError("이미 판매자 등록신청을 한 경우")
-	ALREADY_APPLIED_USER(NOT_FOUND, "USER_405_1", "이미 신청한 회원입니다.");
+	ALREADY_APPLIED_USER(NOT_FOUND, "USER_405_1", "이미 신청한 회원입니다."),
 
+	SECURITY_CONTEXT_NOT_FOUND(NOT_FOUND, "USER_500_2", "security context not found");
 
 	private final Integer status;
 	private final String code;
