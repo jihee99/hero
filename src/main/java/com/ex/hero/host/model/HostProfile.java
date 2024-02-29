@@ -38,7 +38,6 @@ public class HostProfile extends BaseTimeEntity {
     public HostProfile(
             String name,
             String introduce,
-            String profileImageKey,
             String contactEmail,
             String contactNumber) {
         this.name = name;
