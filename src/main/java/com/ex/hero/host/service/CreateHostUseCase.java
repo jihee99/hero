@@ -24,8 +24,8 @@ public class CreateHostUseCase {
 
 	private final MemberUtils memberUtils;
 	private final HostService hostService;
+	private final CommonHostService commonHostService;
 
-	private final HostRepository hostRepository;
 	@Transactional
 	public HostResponse execute(CreateHostRequest createHostRequest) {
 		// 존재하는 유저인지 검증
@@ -42,7 +42,7 @@ public class CreateHostUseCase {
 	}
 
 	public HostUser toMasterHostUser(UUID hostId, UUID userId) {
-		final Host host = hostRepository.findById(hostId).orElseThrow(() -> HostNotFoundException.EXCEPTION);
+		final Host host = commonHostService.findById(hostId);
 		return HostUser.builder().userId(userId).host(host).role(HostRole.MASTER).build();
 	}
 

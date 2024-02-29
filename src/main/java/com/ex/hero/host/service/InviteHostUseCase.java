@@ -34,7 +34,7 @@ public class InviteHostUseCase {
 	private final HostRepository hostRepository;
 
 	public HostDetailResponse execute(UUID hostId, InviteHostRequest inviteHostRequest) {
-		final Host host = hostRepository.findById(hostId).orElseThrow(() -> HostNotFoundException.EXCEPTION);
+		final Host host = commonHostService.findById(hostId);
 		final Member inviteMember = memberRepository.findByEmailAndStatus(inviteHostRequest.getEmail(), Boolean.TRUE)
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 		final UUID invitedUserId = inviteMember.getId();
