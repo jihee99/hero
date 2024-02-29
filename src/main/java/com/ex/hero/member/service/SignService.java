@@ -44,7 +44,7 @@ public class SignService {
 
 	@Transactional
 	public SignInResponse signIn(SignInRequest request) {
-		Member member = memberRepository.findByAccount(request.account())
+		Member member = memberRepository.findByEmail(request.email())
 			.filter(it -> passwordEncoder.matches(request.password(), it.getPassword()))
 			.orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
 		String accessToken = tokenProvider.createAccessToken(String.format("%s:%s", member.getId(), member.getRole()));	// token -> accessToken
