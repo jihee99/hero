@@ -1,6 +1,5 @@
 package com.ex.hero.host.service;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,16 +7,15 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.hero.host.dto.request.InviteHostRequest;
+import com.ex.hero.common.MemberUtils;
 import com.ex.hero.host.dto.response.HostDetailResponse;
 import com.ex.hero.host.exception.HostNotFoundException;
 import com.ex.hero.host.model.Host;
-import com.ex.hero.host.model.HostRole;
 import com.ex.hero.host.model.HostUser;
 import com.ex.hero.host.repository.HostRepository;
 import com.ex.hero.host.vo.HostUserVo;
-import com.ex.hero.member.exception.UserNotFoundException;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.repository.MemberRepository;
 import com.ex.hero.member.vo.MemberInfoVo;
@@ -26,25 +24,20 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class InviteHostUseCase {
+public class JoinHostUseCase {
 
 	private final CommonHostService commonHostService;
 	private final HostService hostService;
-	private final MemberRepository memberRepository;
 	private final HostRepository hostRepository;
+	private final MemberUtils memberUtils;
+	private final MemberRepository memberRepository;
 
-	public HostDetailResponse execute(UUID hostId, InviteHostRequest inviteHostRequest) {
+	@Transactional
+	public HostDetailResponse execute(UUID hostId) {
+		final UUID userId = memberUtils.getCurrentMemberId();
 		final Host host = hostRepository.findById(hostId).orElseThrow(() -> HostNotFoundException.EXCEPTION);
-		final Member inviteMember = memberRepository.findByEmailAndStatus(inviteHostRequest.getEmail(), Boolean.TRUE)
-			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
-		final UUID invitedUserId = inviteMember.getId();
-		final HostRole role = inviteHostRequest.getRole();
 
-		final HostUser hostUser = HostUser.builder().userId(invitedUserId).role(role).build();
-
-		return commonHostService.toHostDetailResponseExecute(hostService.inviteHostUser(host, hostUser));
+		return commonHostService.toHostDetailResponseExecute(hostService.activateHostUser(host, userId));
 	}
-
-
 
 }

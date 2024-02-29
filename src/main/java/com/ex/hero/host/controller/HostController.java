@@ -16,6 +16,8 @@ import com.ex.hero.host.dto.response.HostDetailResponse;
 import com.ex.hero.host.dto.response.HostResponse;
 import com.ex.hero.host.service.CreateHostUseCase;
 import com.ex.hero.host.service.HostService;
+import com.ex.hero.host.service.InviteHostUseCase;
+import com.ex.hero.host.service.JoinHostUseCase;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -30,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 public class HostController {
 
 	private final CreateHostUseCase createHostUseCase;
+	private final InviteHostUseCase inviteHostUseCase;
+	private final JoinHostUseCase joinHostUseCase;
+
 	private final HostService hostService;
 
 	@Operation(summary = "호스트 간편 생성. 호스트를 생성한 유저는 마스터 호스트가 됩니다.")
@@ -39,12 +44,18 @@ public class HostController {
 	}
 
 	/* 멤버를 호스트 유저로 초대하는 api */
+	@Operation(summary = "멤버를 호스트 유저로 초대.")
+	@PostMapping("/{hostId}/invite")
 	public HostDetailResponse inviteHost(@PathVariable UUID hostId, @RequestBody @Valid InviteHostRequest inviteHostRequest){
-		// return inviteHostUseCase.execute(hostId, inviteHostRequest);
-		return null;
+		return inviteHostUseCase.execute(hostId, inviteHostRequest);
 	}
 
 	/* 초대받은 유저 호스트 가입 api */
+	@Operation(summary = "초대받은 호스트에 가입.")
+	@PostMapping("/{hostId}/join")
+	public HostDetailResponse joinHost(@PathVariable UUID hostId){
+		return joinHostUseCase.execute(hostId);
+	}
 
 	/* 초대받은 유저 호스트 가입 거절 api */
 
