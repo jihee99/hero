@@ -57,6 +57,7 @@ public class Member {
 
 	public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
 		return Member.builder()
+			.email(request.email())
 			.password(passwordEncoder.encode(request.password()))
 			.name(request.name())
 			.role(MemberType.USER)

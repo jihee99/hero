@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record SellerApplyRequest(
         @Schema(description = "회원 아이디", example = "gildong2")
-        String account,
+        String email,
         @Schema(description = "회원 비밀번호", example = "****")
         String password
         //TODO

@@ -36,7 +36,7 @@ public class HostService {
 		return hostRepository.save(host);
 	}
 
-	public Host updateHostUserRole(Host host, Long userId, HostRole role) {
+	public Host updateHostUserRole(Host host, UUID userId, HostRole role) {
 		host.setHostUserRole(userId, role);
 		return hostRepository.save(host);
 	}
