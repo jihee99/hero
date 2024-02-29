@@ -1,5 +1,6 @@
 package com.ex.hero.host.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequestMapping("/api/v1/seller")
+@Tag(name = "호스트용 API")
+@RequestMapping("/api/v1/host")
 @RestController
 @RequiredArgsConstructor
 public class HostController {

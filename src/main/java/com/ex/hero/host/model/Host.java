@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "host")
-public class Host extends BaseTimeEntity {
+public class Host{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -156,9 +156,9 @@ public class Host extends BaseTimeEntity {
 
     public static Host toEntity(CreateHostRequest createHostRequest, UUID masterUserId) {
         return Host.builder()
-            .name(createHostRequest.getName())
-            .contactEmail(createHostRequest.getContactEmail())
-            .contactNumber(createHostRequest.getContactNumber())
+            .name(createHostRequest.name())
+            .contactEmail(createHostRequest.contactEmail())
+            .contactNumber(createHostRequest.contactNumber())
             .masterUserId(masterUserId)
             .build();
     }
@@ -168,7 +168,6 @@ public class Host extends BaseTimeEntity {
     public Host(
         String name,
         String introduce,
-        String profileImageKey,
         String contactEmail,
         String contactNumber,
         UUID masterUserId) {
@@ -176,7 +175,6 @@ public class Host extends BaseTimeEntity {
             HostProfile.builder()
                 .name(name)
                 .introduce(introduce)
-                .profileImageKey(profileImageKey)
                 .contactEmail(contactEmail)
                 .contactNumber(contactNumber)
                 .build();

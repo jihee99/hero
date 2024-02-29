@@ -6,14 +6,10 @@ import org.hibernate.validator.constraints.Length;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@Getter
-@RequiredArgsConstructor
 public record CreateHostRequest (
 
-	@Schema(defaultValue = "홍길동", description = "호스트 이름")
+	@Schema(defaultValue = "테스트호스트", description = "호스트 이름")
 	@NotBlank(message = "호스트 이름을 입력해주세요")
 	@Length(max = 15)
 	String name,
