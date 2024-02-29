@@ -38,7 +38,7 @@ public class HostController {
 		return createHostUseCase.execute(createEventRequest);
 	}
 
-	/* 멤버를 호스트 유저로 초대하는 api */가
+	/* 멤버를 호스트 유저로 초대하는 api */
 	public HostDetailResponse inviteHost(@PathVariable UUID hostId, @RequestBody @Valid InviteHostRequest inviteHostRequest){
 		// return inviteHostUseCase.execute(hostId, inviteHostRequest);
 		return null;
