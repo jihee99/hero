@@ -1,0 +1,49 @@
+package com.ex.hero.member.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.stereotype.Service;
+
+import com.ex.hero.member.exception.UserNotFoundException;
+import com.ex.hero.member.model.Member;
+import com.ex.hero.member.repository.MemberRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class CommonMemberService {
+
+	private final MemberRepository memberRepository;
+
+	/*  */
+
+	public Member queryMember(UUID userId) {
+		return memberRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
+	}
+
+	/** Member id 리스트에 포함되어 있는 유저를 모두 가져오는 쿼리 */
+	public List<Member> queryMemberListByIdIn(List<UUID> userIdList) {
+		return memberRepository.findAllByIdIn(userIdList);
+	}
+
+	/** 이메일로 유저를 가져오는 쿼리 */
+	public Member queryMemberByEmail(String email) {
+		return memberRepository
+			.findByEmailAndStatus(email, Boolean.TRUE)
+			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
+	}
+
+	// public Long countNormalMemberCreatedBefore(LocalDateTime before) {
+	// 	return memberRepository.countByStatusAndCreatedAtBefore(Boolean.TRUE, before);
+	// }
+
+	public List<Member> findMemberByIdIn(List<UUID> userIds) {
+		return memberRepository.findByIdIn(userIds);
+	}
+
+}
