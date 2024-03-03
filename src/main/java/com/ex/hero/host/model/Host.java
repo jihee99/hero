@@ -1,6 +1,8 @@
 package com.ex.hero.host.model;
 
+import com.ex.hero.common.aop.domainEvent.Events;
 import com.ex.hero.common.model.BaseTimeEntity;
+import com.ex.hero.events.host.HostUserInvitationEvent;
 import com.ex.hero.host.dto.request.CreateHostRequest;
 import com.ex.hero.host.exception.AlreadyJoinedHostException;
 import com.ex.hero.host.exception.CannotModifyMasterHostRoleException;
@@ -10,6 +12,7 @@ import com.ex.hero.host.exception.NotAcceptedHostException;
 import com.ex.hero.host.exception.NotManagerHostException;
 import com.ex.hero.host.exception.NotMasterHostException;
 import com.ex.hero.host.vo.HostInfoVo;
+import com.ex.hero.host.vo.HostProfileVo;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -53,7 +56,7 @@ public class Host{
     public void inviteHostUsers(Set<HostUser> hostUserList) {
         hostUserList.forEach(this::validateHostUserExistence);
         this.hostUsers.addAll(hostUserList);
-        // hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
+        hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
     }
 
     public Boolean hasHostUserId(UUID userId) {
@@ -149,9 +152,9 @@ public class Host{
         return HostInfoVo.from(this);
     }
 
-    // public HostProfileVo toHostProfileVo() {
-    //     return HostProfileVo.from(this);
-    // }
+    public HostProfileVo toHostProfileVo() {
+        return HostProfileVo.from(this);
+    }
 
 
     public static Host toEntity(CreateHostRequest createHostRequest, UUID masterUserId) {

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -49,10 +48,12 @@ public class Member {
 	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
 	private MemberType role;
+
 	@CreatedDate
 	private LocalDateTime createdAt;
+
 	@ColumnDefault("TRUE")
-	private Boolean status;
+	private Boolean status = Boolean.TRUE;
 
 
 	public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
@@ -62,6 +63,7 @@ public class Member {
 			.name(request.name())
 			.role(MemberType.USER)
 			.createdAt(LocalDateTime.now())
+			.status(Boolean.TRUE)
 			.build();
 	}
 

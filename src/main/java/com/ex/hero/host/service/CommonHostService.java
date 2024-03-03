@@ -8,11 +8,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.ex.hero.common.MemberUtils;
 import com.ex.hero.host.dto.response.HostDetailResponse;
 import com.ex.hero.host.exception.HostNotFoundException;
 import com.ex.hero.host.model.Host;
-import com.ex.hero.host.model.HostProfile;
 import com.ex.hero.host.model.HostUser;
 import com.ex.hero.host.repository.HostRepository;
 import com.ex.hero.host.vo.HostUserVo;

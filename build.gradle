@@ -69,6 +69,8 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 //    implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    /* aop */
+    implementation 'org.springframework:spring-aop:6.1.0'
 }
 
 
