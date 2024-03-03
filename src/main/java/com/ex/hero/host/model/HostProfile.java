@@ -1,6 +1,8 @@
 package com.ex.hero.host.model;
 
 import com.ex.hero.common.model.BaseTimeEntity;
+import com.ex.hero.host.dto.request.UpdateHostRequest;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
@@ -45,4 +47,7 @@ public class HostProfile extends BaseTimeEntity {
         this.contactEmail = contactEmail;
         this.contactNumber = contactNumber;
     }
+
+
+
 }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ex.hero.host.exception.HostNotFoundException;
 import com.ex.hero.host.model.Host;
+import com.ex.hero.host.model.HostProfile;
 import com.ex.hero.host.model.HostRole;
 import com.ex.hero.host.model.HostUser;
 import com.ex.hero.host.repository.HostRepository;
@@ -41,10 +42,11 @@ public class HostService {
 		return hostRepository.save(host);
 	}
 
-	public Host updateHostProfile(Host host) {
-		// host.updateProfile(profile);
+	public Host updateHostProfile(Host host, HostProfile profile) {
+		host.updateProfile(profile);
 		return hostRepository.save(host);
 	}
+
 
 	public Host activateHostUser(Host host, UUID userId) {
 		host.getHostUserByUserId(userId).activate();

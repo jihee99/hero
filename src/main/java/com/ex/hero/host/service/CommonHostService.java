@@ -12,6 +12,7 @@ import com.ex.hero.common.MemberUtils;
 import com.ex.hero.host.dto.response.HostDetailResponse;
 import com.ex.hero.host.exception.HostNotFoundException;
 import com.ex.hero.host.model.Host;
+import com.ex.hero.host.model.HostProfile;
 import com.ex.hero.host.model.HostUser;
 import com.ex.hero.host.repository.HostRepository;
 import com.ex.hero.host.vo.HostUserVo;
@@ -31,6 +32,7 @@ public class CommonHostService {
 	public Host findById(UUID hostId) {
 		return hostRepository.findById(hostId).orElseThrow(() -> HostNotFoundException.EXCEPTION);
 	}
+
 
 	public HostDetailResponse toHostDetailResponseExecute(Host host) {
 		final List<UUID> userIds = host.getHostUser_UserIds();

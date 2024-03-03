@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class UpdateHostUserRoleUseCase {
 	private final CommonHostService commonHostService;
 	private final HostService hostService;
-	private final HostRepository hostRepository;
+
 	public HostDetailResponse execute(UUID hostId, UpdateHostUserRoleRequest updateHostUserRoleRequest) {
 		final Host host = commonHostService.findById(hostId);
 		final UUID updateUserId = updateHostUserRoleRequest.getUserId();
