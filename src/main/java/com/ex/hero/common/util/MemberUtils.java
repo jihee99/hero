@@ -1,4 +1,4 @@
-package com.ex.hero.common;
+package com.ex.hero.common.util;
 
 import java.util.UUID;
 

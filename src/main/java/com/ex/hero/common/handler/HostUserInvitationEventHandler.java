@@ -39,6 +39,6 @@ public class HostUserInvitationEventHandler {
         System.out.println(role.getName());
         System.out.println(hostName);
 
-         invitationEmailService.execute(member.toEmailUserInfo(), hostName, role);
+        invitationEmailService.execute(member.toEmailUserInfo(), hostName, role);
     }
 }

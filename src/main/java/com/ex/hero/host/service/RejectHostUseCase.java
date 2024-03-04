@@ -4,10 +4,9 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.ex.hero.common.MemberUtils;
+import com.ex.hero.common.util.MemberUtils;
 import com.ex.hero.host.dto.response.HostDetailResponse;
 import com.ex.hero.host.model.Host;
-import com.ex.hero.host.repository.HostRepository;
 
 import lombok.RequiredArgsConstructor;
 

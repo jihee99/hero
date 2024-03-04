@@ -5,15 +5,12 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.hero.common.MemberUtils;
+import com.ex.hero.common.util.MemberUtils;
 import com.ex.hero.host.dto.request.CreateHostRequest;
-import com.ex.hero.host.dto.response.HostMapper;
 import com.ex.hero.host.dto.response.HostResponse;
-import com.ex.hero.host.exception.HostNotFoundException;
 import com.ex.hero.host.model.Host;
 import com.ex.hero.host.model.HostRole;
 import com.ex.hero.host.model.HostUser;
-import com.ex.hero.host.repository.HostRepository;
 import com.ex.hero.member.model.Member;
 
 import lombok.RequiredArgsConstructor;

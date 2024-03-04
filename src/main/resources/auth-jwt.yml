@@ -4,3 +4,5 @@ expiration-minutes: 30
 refresh-expiration-hours: 24
 # 리프레시 토큰 유효시간은 24시간
 issuer: SYSTEM
+
+sender-address: oosoojh31@gmail.com

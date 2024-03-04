@@ -1,5 +1,10 @@
 package com.ex.hero.host.service;
 
+import static com.ex.hero.common.util.EmailContents.MESSAGE_SUBJECT;
+import static com.ex.hero.common.util.EmailContents.SENDER_ADDRESS;
+import static com.ex.hero.common.util.EmailContents.MESSAGE_PREFIX;
+import static com.ex.hero.common.util.EmailContents.MESSAGE_SUFFIX;
+
 import com.ex.hero.host.model.HostRole;
 import com.ex.hero.mail.dto.EmailUserInfo;
 import lombok.RequiredArgsConstructor;
@@ -14,23 +19,28 @@ import org.springframework.stereotype.Service;
 public class HostUserInvitationEmailService {
 
     private final JavaMailSender javaMailSender;
+    private final StringBuilder stringBuilder = new StringBuilder();
 
     public void execute(EmailUserInfo toEmailUserInfo, String hostName, HostRole role) {
+
+        System.out.println(toEmailUserInfo.getEmail());
+        System.out.println(toEmailUserInfo.getName());
+
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("oosoojh31@gmail.com");
-        message.setFrom("oosoojh31@gmail.com");
-        message.setSubject("localhost:8080 email 확인");
-        message.setText("Test");
+
+        message.setTo(toEmailUserInfo.getEmail());
+        message.setFrom(SENDER_ADDRESS);
+        message.setSubject(MESSAGE_SUBJECT);
+        message.setText(getMessage());
 
         javaMailSender.send(message);
     }
 
-//    public void execute(EmailUserInfo userInfo, String hostName, HostRole hostRole) {
-//        Context context = new Context();
-//        context.setVariable("userInfo", userInfo);
-//        context.setVariable("hostName", hostName);
-//        context.setVariable("role", hostRole.getValue());
-//        awsSesUtils.singleEmailRequest(
-//                userInfo, "테스트" + hostName + " 호스트 초대 알림 드립니다.", "hostInvite", context);
-//    }
+    private String getMessage(){
+        stringBuilder.setLength(0);
+        return String.valueOf(stringBuilder.append(MESSAGE_PREFIX)
+            .append("여기에 코드나 url이 들어가도록!!!")
+            .append(MESSAGE_SUFFIX));
+    }
+
 }

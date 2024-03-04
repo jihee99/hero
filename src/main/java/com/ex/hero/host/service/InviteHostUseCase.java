@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.ex.hero.events.host.HostUserInvitationEvent;
 import com.ex.hero.host.dto.request.InviteHostRequest;
 import com.ex.hero.host.dto.response.HostDetailResponse;
 import com.ex.hero.host.exception.HostNotFoundException;
@@ -31,7 +32,7 @@ public class InviteHostUseCase {
 	private final CommonHostService commonHostService;
 	private final HostService hostService;
 	private final MemberRepository memberRepository;
-	private final HostRepository hostRepository;
+	private final HostUserInvitationEmailService invitationEmailService;
 
 	public HostDetailResponse execute(UUID hostId, InviteHostRequest inviteHostRequest) {
 		final Host host = commonHostService.findById(hostId);
@@ -41,10 +42,11 @@ public class InviteHostUseCase {
 		final HostRole role = inviteHostRequest.getRole();
 
 		final HostUser hostUser = HostUser.builder().userId(invitedUserId).role(role).build();
-		System.out.println("1. mail handler 가 타야한다.");
-		return commonHostService.toHostDetailResponseExecute(hostService.inviteHostUser(host, hostUser));
-	}
+		HostDetailResponse hostDetailResponse = commonHostService.toHostDetailResponseExecute(hostService.inviteHostUser(host, hostUser));
 
+		invitationEmailService.execute(inviteMember.toEmailUserInfo(), host.toHostProfileVo().getName(), role);
+		return hostDetailResponse;
+	}
 
 
 }

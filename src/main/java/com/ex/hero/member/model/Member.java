@@ -21,6 +21,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PostPersist;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.*;
@@ -83,5 +84,11 @@ public class Member {
 	public EmailUserInfo toEmailUserInfo() {
 		return new EmailUserInfo(this.name, this.email);
 	}
+
+	// @PostPersist
+	// public void registerEvent() {
+	// 	UserRegisterEvent userRegisterEvent = UserRegisterEvent.builder().userId(id).build();
+	// 	Events.raise(userRegisterEvent);
+	// }
 
 }
