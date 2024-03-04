@@ -34,6 +34,7 @@ public class HostService {
 
 	public Host inviteHostUser(Host host, HostUser hostUser) {
 		host.inviteHostUsers(Set.of(hostUser));
+		System.out.println("hostservice의 inviteHostUser");
 		return hostRepository.save(host);
 	}
 

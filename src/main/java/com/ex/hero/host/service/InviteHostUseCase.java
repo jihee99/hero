@@ -41,7 +41,7 @@ public class InviteHostUseCase {
 		final HostRole role = inviteHostRequest.getRole();
 
 		final HostUser hostUser = HostUser.builder().userId(invitedUserId).role(role).build();
-
+		System.out.println("1. mail handler 가 타야한다.");
 		return commonHostService.toHostDetailResponseExecute(hostService.inviteHostUser(host, hostUser));
 	}
 

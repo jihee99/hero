@@ -48,7 +48,6 @@ public class CommonHostService {
 				hostUserVoList.add(hostUserVo);
 			}
 		}
-
 		return HostDetailResponse.of(host, hostUserVoList);
 	}
 }
