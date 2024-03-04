@@ -3,6 +3,7 @@ package com.ex.hero.security.config;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -11,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.ex.hero.security.filter.JwtAuthenticationFilter;
@@ -46,16 +48,16 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-			.sessionManagement( sessionManageMent -> sessionManageMent.sessionCreationPolicy(
-				SessionCreationPolicy.STATELESS))
 			.csrf(AbstractHttpConfigurer::disable)
-
+			.sessionManagement( sessionManageMent -> sessionManageMent.sessionCreationPolicy(
+					SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(requests ->
 				requests
 					.requestMatchers(allowedUrls).permitAll()
 
-					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "HOST", "ADMIN") // member, seller, admin 권한 허용
-					.requestMatchers("/api/v[0-9]+/host/**").hasAnyAuthority("HOST", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "HOST", "MANAGER", "ADMIN") // member, seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/host/**").hasAnyAuthority("HOST", "MANAGER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/admin/**").hasAnyAuthority("HOST", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
 					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
@@ -71,9 +73,22 @@ public class SecurityConfig {
 
 			.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
 			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
-
 		;
-
 		return http.build();
+	}
+
+	@Bean
+	public RoleHierarchyImpl roleHierarchy() {
+		RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
+		roleHierarchy.setHierarchy("ROLE_ADMIN > ROLE_HOST > ROLE_MANAGER > ROLE_USER");
+		return roleHierarchy;
+	}
+
+	@Bean
+	public DefaultWebSecurityExpressionHandler expressionHandler() {
+		DefaultWebSecurityExpressionHandler expressionHandler =
+				new DefaultWebSecurityExpressionHandler();
+		expressionHandler.setRoleHierarchy(roleHierarchy());
+		return expressionHandler;
 	}
 }
