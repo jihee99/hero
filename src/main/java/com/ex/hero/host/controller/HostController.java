@@ -58,11 +58,6 @@ public class HostController {
 	public HostDetailResponse inviteHost(
 		@PathVariable UUID hostId, @RequestBody @Valid InviteHostRequest inviteHostRequest
 	){
-		System.out.println("###");
-		log.info(" host id  {} ", hostId);
-		log.info(" inviteHostRequse {} ", inviteHostRequest);
-		log.info(" inviteHostRequse {} ", inviteHostRequest);
-
 		return inviteHostUseCase.execute(hostId, inviteHostRequest);
 	}
 

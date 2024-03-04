@@ -4,13 +4,7 @@ import com.ex.hero.common.aop.domainEvent.Events;
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.events.host.HostUserInvitationEvent;
 import com.ex.hero.host.dto.request.CreateHostRequest;
-import com.ex.hero.host.exception.AlreadyJoinedHostException;
-import com.ex.hero.host.exception.CannotModifyMasterHostRoleException;
-import com.ex.hero.host.exception.ForbiddenHostException;
-import com.ex.hero.host.exception.HostUserNotFoundException;
-import com.ex.hero.host.exception.NotAcceptedHostException;
-import com.ex.hero.host.exception.NotManagerHostException;
-import com.ex.hero.host.exception.NotMasterHostException;
+import com.ex.hero.host.exception.*;
 import com.ex.hero.host.vo.HostInfoVo;
 import com.ex.hero.host.vo.HostProfileVo;
 
@@ -57,6 +51,7 @@ public class Host{
         hostUserList.forEach(this::validateHostUserExistence);
         this.hostUsers.addAll(hostUserList);
         hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
+
     }
 
     public Boolean hasHostUserId(UUID userId) {

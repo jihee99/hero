@@ -3,6 +3,7 @@ package com.ex.hero.member.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.ex.hero.mail.dto.EmailUserInfo;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -77,6 +78,10 @@ public class Member {
 
 	public MemberInfoVo toUserInfoVo() {
 		return MemberInfoVo.from(this);
+	}
+
+	public EmailUserInfo toEmailUserInfo() {
+		return new EmailUserInfo(this.name, this.email);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.ex.hero.host.model;
 
 import java.util.UUID;
 
+import com.ex.hero.common.aop.domainEvent.Events;
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.host.exception.AlreadyJoinedHostException;
 
@@ -45,7 +46,7 @@ public class HostUser extends BaseTimeEntity {
     public void activate() {
         if (this.active) throw AlreadyJoinedHostException.EXCEPTION;
         this.active = true;
-        // Events.raise(HostUserJoinEvent.of(this.host.getId(), this.getUserId()));
+//         Events.raise(HostUserJoinEvent.of(this.host.getId(), this.getUserId()));
     }
 
 

@@ -31,6 +31,7 @@
 // 			.password(passwordEncoder.encode("1234"))
 // 			.name("마스터호스트")
 // 			.role(MemberType.HOST)
+//            .status(Boolean.TRUE)
 // 			.createdAt(LocalDateTime.now())
 // 			.build());
 //
