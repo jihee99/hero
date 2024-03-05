@@ -16,7 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, UUID> {
 
     Optional<Member> findByEmailAndStatus(String email, Boolean status);
 
-    List<Member> findAllByIdIn(List<UUID> id);
+    List<Member> findAllByUserIdIn(List<UUID> userId);
 
-    List<Member> findByIdIn(List<UUID> userIds);
+    List<Member> findByUserIdIn(List<UUID> userIds);
 }

@@ -27,23 +27,24 @@ public class CommonMemberService {
 	}
 
 	/** Member id 리스트에 포함되어 있는 유저를 모두 가져오는 쿼리 */
-	public List<Member> queryMemberListByIdIn(List<UUID> userIdList) {
-		return memberRepository.findAllByIdIn(userIdList);
+	public List<Member> queryMemberListByUserIdIn(List<UUID> userIdList) {
+		return memberRepository.findAllByUserIdIn(userIdList);
 	}
 
 	/** 이메일로 유저를 가져오는 쿼리 */
-	public Member queryMemberByEmail(String email) {
+	public Member queryUserByEmail(String email) {
 		return memberRepository
-			.findByEmailAndStatus(email, Boolean.TRUE)
-			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
+				.findByEmailAndStatus(email, Boolean.TRUE)
+				.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
+
 
 	// public Long countNormalMemberCreatedBefore(LocalDateTime before) {
 	// 	return memberRepository.countByStatusAndCreatedAtBefore(Boolean.TRUE, before);
 	// }
 
-	public List<Member> findMemberByIdIn(List<UUID> userIds) {
-		return memberRepository.findByIdIn(userIds);
+	public List<Member> findMemberByUserIdIn(List<UUID> userIds) {
+		return memberRepository.findByUserIdIn(userIds);
 	}
 
 }

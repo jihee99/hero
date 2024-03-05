@@ -34,6 +34,7 @@ public class Host{
 
     private UUID masterUserId;
 
+    // 단방향 oneToMany 매핑
     @OneToMany(
             mappedBy = "host",
             cascade = CascadeType.ALL,
@@ -107,6 +108,7 @@ public class Host{
 
     /** 해당 유저가 호스트에 이미 속하는지 확인하는 검증 로직] */
     public void validateHostUserIdExistence(UUID userId) {
+        System.out.println(this.hasHostUserId(userId));
         if (this.hasHostUserId(userId)) {
             throw AlreadyJoinedHostException.EXCEPTION;
         }

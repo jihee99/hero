@@ -21,7 +21,6 @@ public class HostUserInvitationEvent extends DomainEvent {
     private final HostProfileVo hostProfileVo;
 
     public static HostUserInvitationEvent of(Host host, HostUser hostUser) {
-        System.out.println("hostUserInvitationEvent");
         return HostUserInvitationEvent.builder()
                 .hostProfileVo(host.toHostProfileVo())
                 .role(hostUser.getRole())
