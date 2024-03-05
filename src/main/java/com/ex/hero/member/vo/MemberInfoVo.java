@@ -21,7 +21,7 @@ public class MemberInfoVo {
 
 	public static MemberInfoVo from(Member member){
 		return MemberInfoVo.builder()
-			.memberId(member.getId())
+			.memberId(member.getUserId())
 			.email(member.getEmail())
 			.password(member.getPassword())
 			.name(member.getName())

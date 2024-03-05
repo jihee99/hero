@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record MemberInfoResponse(
 	@Schema(description = "회원 고유키", example = "c0a80121-7aeb-4b4b-8b0a-6b1c032f0e4a")
-	UUID id,
+	UUID userId,
 	@Schema(description = "회원 이메일", example = "user@test.com")
 	String email,
 	@Schema(description = "회원 이름", example = "홍길동")
@@ -22,7 +22,7 @@ public record MemberInfoResponse(
 ) {
 	public static MemberInfoResponse from(Member member) {
 		return new MemberInfoResponse(
-			member.getId(),
+			member.getUserId(),
 			member.getEmail(),
 			member.getName(),
 			member.getRole(),

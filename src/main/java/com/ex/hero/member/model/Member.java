@@ -38,7 +38,7 @@ public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(name="member_id")
-	private UUID id;
+	private UUID userId;
 	@Column(nullable = false, unique = true)
 	private String email;
 	@Column(nullable = false)
