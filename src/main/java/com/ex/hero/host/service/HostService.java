@@ -33,9 +33,8 @@ public class HostService {
 	}
 
 	public Host inviteHostUser(Host host, HostUser hostUser) {
+		System.out.println("invitehostuser 서비스. 여기까지 와야지 디비에 들어간다. 근데 안들어감. ");
 		host.inviteHostUsers(Set.of(hostUser));
-		System.out.println("hostservice의 inviteHostUser");
-		Host invitedHost = hostRepository.save(host);
 		return hostRepository.save(host);
 	}
 

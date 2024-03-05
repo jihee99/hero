@@ -48,7 +48,6 @@ public class Host{
     }
 
     public void inviteHostUsers(Set<HostUser> hostUserList) {
-        System.out.println("inviteHostUsers 맵핑");
         hostUserList.forEach(this::validateHostUserExistence);
         this.hostUsers.addAll(hostUserList);
         hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));

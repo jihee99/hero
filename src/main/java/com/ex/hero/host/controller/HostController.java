@@ -54,7 +54,7 @@ public class HostController {
 
 	/* 멤버를 호스트 유저로 초대하는 api */
 	@Operation(summary = "멤버를 호스트 유저로 초대합니다.")
-	@PostMapping("/{hostId}/invite")
+	@PostMapping("/host/{hostId}/invite")
 	public HostDetailResponse inviteHost(
 		@PathVariable UUID hostId, @RequestBody @Valid InviteHostRequest inviteHostRequest
 	){
@@ -77,7 +77,7 @@ public class HostController {
 
 	/* 호스트 유저의 권한을 변경하는 api (단, 마스터만 가능) */
 	@Operation(summary = "호스트 유저의 권한을 변경합니다. 매니저 이상만 가능합니다.")
-	@PatchMapping("/{hostId}/role")
+	@PatchMapping("/admin/{hostId}/role")
 	public HostDetailResponse patchHostUserRole(
 		@PathVariable UUID hostId,
 		@RequestBody @Valid UpdateHostUserRoleRequest updateHostUserRoleRequest

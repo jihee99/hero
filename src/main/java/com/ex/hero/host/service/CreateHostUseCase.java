@@ -27,7 +27,7 @@ public class CreateHostUseCase {
 	public HostResponse execute(CreateHostRequest createHostRequest) {
 		// 존재하는 유저인지 검증
 		final Member member = memberUtils.getCurrentMember();
-		final UUID id = member.getId();
+		final UUID id = member.getUserId();
 		// 호스트 생성
 		final Host host = hostService.createHost( Host.toEntity(createHostRequest, id));
 		// 생성한 유저를 마스터 권한으로 등록

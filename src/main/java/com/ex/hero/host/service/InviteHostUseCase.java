@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.ex.hero.host.exception.MessagingServerException;
+import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
 import com.ex.hero.events.host.HostUserInvitationEvent;
@@ -38,13 +40,19 @@ public class InviteHostUseCase {
 		final Host host = commonHostService.findById(hostId);
 		final Member inviteMember = memberRepository.findByEmailAndStatus(inviteHostRequest.getEmail(), Boolean.TRUE)
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
-		final UUID invitedUserId = inviteMember.getId();
+		final UUID invitedUserId = inviteMember.getUserId();
 		final HostRole role = inviteHostRequest.getRole();
 
 		final HostUser hostUser = HostUser.builder().userId(invitedUserId).role(role).build();
+
 		HostDetailResponse hostDetailResponse = commonHostService.toHostDetailResponseExecute(hostService.inviteHostUser(host, hostUser));
 
-		invitationEmailService.execute(inviteMember.toEmailUserInfo(), host.toHostProfileVo().getName(), role);
+		try {
+			invitationEmailService.execute(inviteMember.toEmailUserInfo(), host.toHostProfileVo().getName(), role);
+		} catch (MessagingException e) {
+			throw MessagingServerException.EXCEPTION;
+		}
+
 		return hostDetailResponse;
 	}
 

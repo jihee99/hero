@@ -7,9 +7,10 @@ import static com.ex.hero.common.util.EmailContents.MESSAGE_SUFFIX;
 
 import com.ex.hero.host.model.HostRole;
 import com.ex.hero.mail.dto.EmailUserInfo;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +19,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class HostUserInvitationEmailService {
 
-    private final JavaMailSender javaMailSender;
+    private final JavaMailSender mailSender;
     private final StringBuilder stringBuilder = new StringBuilder();
 
-    public void execute(EmailUserInfo toEmailUserInfo, String hostName, HostRole role) {
+    public void execute(EmailUserInfo toEmailUserInfo, String hostName, HostRole role) throws MessagingException {
 
-        System.out.println(toEmailUserInfo.getEmail());
-        System.out.println(toEmailUserInfo.getName());
+        MimeMessage message = mailSender.createMimeMessage();
 
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        message.setTo(toEmailUserInfo.getEmail());
+        message.addRecipients(MimeMessage.RecipientType.TO, toEmailUserInfo.getEmail());
         message.setFrom(SENDER_ADDRESS);
         message.setSubject(MESSAGE_SUBJECT);
-        message.setText(getMessage());
+        message.setText(getMessage(), "utf-8", "html");
 
-        javaMailSender.send(message);
+        mailSender.send(message);
     }
+
 
     private String getMessage(){
         stringBuilder.setLength(0);

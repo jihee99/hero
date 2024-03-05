@@ -1,9 +1,6 @@
 package com.ex.hero.host.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -31,12 +28,11 @@ public class CommonHostService {
 		return hostRepository.findById(hostId).orElseThrow(() -> HostNotFoundException.EXCEPTION);
 	}
 
-
 	public HostDetailResponse toHostDetailResponseExecute(Host host) {
 		final List<UUID> userIds = host.getHostUser_UserIds();
 		final List<Member> userList = memberRepository.findAllByIdIn(userIds);
 		final Map<UUID, Member> userMap =
-			userList.stream().collect(Collectors.toMap(Member::getId, user -> user));
+			userList.stream().collect(Collectors.toMap(Member::getUserId, user -> user));
 		final List<HostUserVo> hostUserVoList = new ArrayList<>();
 
 		for (UUID userId : userIds) {

@@ -3,6 +3,7 @@ package com.ex.hero.common.handler;
 import java.util.UUID;
 
 import com.ex.hero.host.service.HostUserInvitationEmailService;
+import jakarta.mail.MessagingException;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
@@ -28,7 +29,7 @@ public class HostUserInvitationEventHandler {
     @TransactionalEventListener(
             classes = HostUserInvitationEvent.class,
             phase = TransactionPhase.AFTER_COMMIT)
-    public void handle(HostUserInvitationEvent hostUserInvitationEvent) {
+    public void handle(HostUserInvitationEvent hostUserInvitationEvent) throws MessagingException {
         final UUID userId = hostUserInvitationEvent.getUserId();
         final Member member = commonMemberService.queryMember(userId);
         final HostRole role = hostUserInvitationEvent.getRole();
