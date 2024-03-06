@@ -2,7 +2,6 @@ package com.ex.hero.host.model;
 
 import java.util.UUID;
 
-import com.ex.hero.common.aop.domainEvent.Events;
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.host.exception.AlreadyJoinedHostException;
 

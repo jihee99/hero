@@ -54,7 +54,7 @@ public class Member {
 	@CreatedDate
 	private LocalDateTime createdAt;
 
-	@ColumnDefault("TRUE")
+	@Builder.Default
 	private Boolean status = Boolean.TRUE;
 
 
@@ -77,7 +77,7 @@ public class Member {
 		this.phone = newMember.phone();
 	}
 
-	public MemberInfoVo toUserInfoVo() {
+	public MemberInfoVo toMemberInfoVo() {
 		return MemberInfoVo.from(this);
 	}
 

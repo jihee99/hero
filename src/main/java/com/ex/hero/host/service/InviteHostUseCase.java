@@ -12,7 +12,6 @@ import com.ex.hero.member.service.CommonMemberService;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
-import com.ex.hero.events.host.HostUserInvitationEvent;
 import com.ex.hero.host.dto.request.InviteHostRequest;
 import com.ex.hero.host.dto.response.HostDetailResponse;
 import com.ex.hero.host.exception.HostNotFoundException;
@@ -37,17 +36,21 @@ public class InviteHostUseCase {
 	private final CommonMemberService commonMemberService;
 	private final HostUserInvitationEmailService invitationEmailService;
 
-	public HostDetailResponse execute(UUID hostId, InviteHostRequest inviteHostRequest) throws MessagingException {
+	public HostDetailResponse execute(UUID hostId, InviteHostRequest inviteHostRequest) {
 		final Host host = commonHostService.findById(hostId);
 		final Member inviteMember = commonMemberService.queryUserByEmail(inviteHostRequest.getEmail());
 		final UUID invitedUserId = inviteMember.getUserId();
 		final HostRole role = inviteHostRequest.getRole();
 
-		final HostUser hostUser = commonHostService.toHostUser(hostId, invitedUserId, role);
-
-		invitationEmailService.execute(inviteMember.toEmailUserInfo(), host.toHostProfileVo().getName(), role);
+		final HostUser hostUser = toHostUser(hostId, invitedUserId, role);
+		// invitationEmailService.execute(inviteMember.toEmailUserInfo(), host.toHostProfileVo().getName(), role);
 
 		return commonHostService.toHostDetailResponseExecute(hostService.inviteHostUser(host, hostUser));
+	}
+
+	public HostUser toHostUser(UUID hostId, UUID userId, HostRole role) {
+		final Host host = commonHostService.findById(hostId);
+		return HostUser.builder().userId(userId).host(host).role(role).build();
 	}
 
 

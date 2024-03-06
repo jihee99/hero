@@ -77,19 +77,19 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	@Bean
-	public RoleHierarchy roleHierarchy() {
-		RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
-		hierarchy.setHierarchy("ROLE_ADMIN > ROLE_HOST > ROLE_MANAGER > ROLE_USER");
-		return hierarchy;
-	}
-
-	@Bean
-	static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-		expressionHandler.setRoleHierarchy(roleHierarchy);
-		return expressionHandler;
-	}
+	// @Bean
+	// public RoleHierarchy roleHierarchy() {
+	// 	RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
+	// 	hierarchy.setHierarchy("ROLE_ADMIN > ROLE_HOST > ROLE_MANAGER > ROLE_USER");
+	// 	return hierarchy;
+	// }
+	//
+	// @Bean
+	// static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+	// 	DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+	// 	expressionHandler.setRoleHierarchy(roleHierarchy);
+	// 	return expressionHandler;
+	// }
 
 
 }

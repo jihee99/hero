@@ -19,7 +19,7 @@ public class HostUserVo {
 
 	public static HostUserVo from(Member member, HostUser hostUser) {
 		return HostUserVo.builder()
-			.memberInfoVo(member.toUserInfoVo())
+			.memberInfoVo(member.toMemberInfoVo())
 			.active(hostUser.getActive())
 			.role(hostUser.getRole())
 			.build();

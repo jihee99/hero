@@ -44,7 +44,7 @@ public class CommonHostService {
 		for (UUID userId : userIds) {
 			final Member user = userMap.get(userId);
 			if (user != null) {
-				final MemberInfoVo memberInfoVo = user.toUserInfoVo();
+				final MemberInfoVo memberInfoVo = user.toMemberInfoVo();
 				final HostUser hostUser = host.getHostUserByUserId(userId);
 				final HostUserVo hostUserVo = HostUserVo.from(memberInfoVo, hostUser);
 				hostUserVoList.add(hostUserVo);

@@ -43,8 +43,8 @@ public class CommonMemberService {
 	// 	return memberRepository.countByStatusAndCreatedAtBefore(Boolean.TRUE, before);
 	// }
 
-	public List<Member> findMemberByUserIdIn(List<UUID> userIds) {
-		return memberRepository.findByUserIdIn(userIds);
-	}
+	// public List<Member> findMemberByUserIdIn(List<UUID> userIds) {
+	// 	return memberRepository.findByUserIdIn(userIds);
+	// }
 
 }

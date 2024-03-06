@@ -38,9 +38,9 @@ public class CreateHostUseCase {
 		return HostResponse.of(hostService.addHostUser(host, masterHostUser));
 	}
 
+
 	public HostUser toMasterHostUser(UUID hostId, UUID userId) {
 		final Host host = commonHostService.findById(hostId);
 		return HostUser.builder().userId(userId).host(host).role(HostRole.MASTER).build();
 	}
-
 }

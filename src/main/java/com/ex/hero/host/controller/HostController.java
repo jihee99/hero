@@ -60,7 +60,6 @@ public class HostController {
 	public HostDetailResponse inviteHost(
 		@PathVariable UUID hostId, @RequestBody @Valid InviteHostRequest inviteHostRequest
 	){
-
 		return inviteHostUseCase.execute(hostId, inviteHostRequest);
 	}
 

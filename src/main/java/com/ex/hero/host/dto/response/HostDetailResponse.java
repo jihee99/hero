@@ -33,8 +33,10 @@ public class HostDetailResponse {
 		hostUserVoSet.forEach(
 			hostUserVo -> {
 				if (hostUserVo.getMemberInfoVo().getMemberId().equals(host.getMasterUserId())) {
+					System.out.println("마스터"+hostUserVo.getMemberInfoVo().getEmail() + "    " + host.getMasterUserId());
 					builder.masterUser(hostUserVo);
 				} else {
+					System.out.println("초대된 사용자"+hostUserVo.getMemberInfoVo().getEmail());
 					hostUserVoList.add(hostUserVo);
 				}
 			});
