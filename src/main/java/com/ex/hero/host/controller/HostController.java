@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,11 +54,13 @@ public class HostController {
 	}
 
 	/* 멤버를 호스트 유저로 초대하는 api */
+	@SneakyThrows
 	@Operation(summary = "멤버를 호스트 유저로 초대합니다.")
 	@PostMapping("/host/{hostId}/invite")
 	public HostDetailResponse inviteHost(
 		@PathVariable UUID hostId, @RequestBody @Valid InviteHostRequest inviteHostRequest
 	){
+
 		return inviteHostUseCase.execute(hostId, inviteHostRequest);
 	}
 

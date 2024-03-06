@@ -3,6 +3,7 @@ package com.ex.hero.host.service;
 import java.util.Set;
 import java.util.UUID;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import com.ex.hero.host.repository.HostRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class HostService {
@@ -35,6 +37,8 @@ public class HostService {
 	public Host inviteHostUser(Host host, HostUser hostUser) {
 		System.out.println("invitehostuser 서비스. 여기까지 와야지 디비에 들어간다. 근데 안들어감. ");
 		host.inviteHostUsers(Set.of(hostUser));
+		log.info("##########1 {}", host.getHostUsers().toString());
+		log.info("##########2 {}", host);
 		return hostRepository.save(host);
 	}
 

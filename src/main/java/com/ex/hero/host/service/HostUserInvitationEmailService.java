@@ -22,16 +22,20 @@ public class HostUserInvitationEmailService {
     private final JavaMailSender mailSender;
     private final StringBuilder stringBuilder = new StringBuilder();
 
-    public void execute(EmailUserInfo toEmailUserInfo, String hostName, HostRole role) throws MessagingException {
+    public void execute(EmailUserInfo toEmailUserInfo, String hostName, HostRole role) {
 
         MimeMessage message = mailSender.createMimeMessage();
 
-        message.addRecipients(MimeMessage.RecipientType.TO, toEmailUserInfo.getEmail());
-        message.setFrom(SENDER_ADDRESS);
-        message.setSubject(MESSAGE_SUBJECT);
-        message.setText(getMessage(), "utf-8", "html");
+        try {
+            message.addRecipients(MimeMessage.RecipientType.TO, toEmailUserInfo.getEmail());
+            message.setFrom(SENDER_ADDRESS);
+            message.setSubject(MESSAGE_SUBJECT);
+            message.setText(getMessage(), "utf-8", "html");
 
-        mailSender.send(message);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

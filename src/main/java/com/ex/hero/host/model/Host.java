@@ -51,7 +51,7 @@ public class Host{
     public void inviteHostUsers(Set<HostUser> hostUserList) {
         hostUserList.forEach(this::validateHostUserExistence);
         this.hostUsers.addAll(hostUserList);
-        hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
+//        hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
     }
 
     public Boolean hasHostUserId(UUID userId) {
@@ -108,7 +108,6 @@ public class Host{
 
     /** 해당 유저가 호스트에 이미 속하는지 확인하는 검증 로직] */
     public void validateHostUserIdExistence(UUID userId) {
-        System.out.println(this.hasHostUserId(userId));
         if (this.hasHostUserId(userId)) {
             throw AlreadyJoinedHostException.EXCEPTION;
         }
@@ -180,5 +179,6 @@ public class Host{
         this.masterUserId = masterUserId;
 
     }
+
 
 }

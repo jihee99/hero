@@ -37,19 +37,15 @@ public class InviteHostUseCase {
 	private final CommonMemberService commonMemberService;
 	private final HostUserInvitationEmailService invitationEmailService;
 
-	public HostDetailResponse execute(UUID hostId, InviteHostRequest inviteHostRequest) {
+	public HostDetailResponse execute(UUID hostId, InviteHostRequest inviteHostRequest) throws MessagingException {
 		final Host host = commonHostService.findById(hostId);
 		final Member inviteMember = commonMemberService.queryUserByEmail(inviteHostRequest.getEmail());
 		final UUID invitedUserId = inviteMember.getUserId();
 		final HostRole role = inviteHostRequest.getRole();
 
 		final HostUser hostUser = commonHostService.toHostUser(hostId, invitedUserId, role);
-		
-		try {
-			invitationEmailService.execute(inviteMember.toEmailUserInfo(), host.toHostProfileVo().getName(), role);
-		} catch (MessagingException e) {
-			throw MessagingServerException.EXCEPTION;
-		}
+
+		invitationEmailService.execute(inviteMember.toEmailUserInfo(), host.toHostProfileVo().getName(), role);
 
 		return commonHostService.toHostDetailResponseExecute(hostService.inviteHostUser(host, hostUser));
 	}
