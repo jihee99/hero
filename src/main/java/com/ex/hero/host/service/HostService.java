@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @Slf4j
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class HostService {
 
@@ -48,7 +48,6 @@ public class HostService {
 		host.updateProfile(profile);
 		return hostRepository.save(host);
 	}
-
 
 	public Host activateHostUser(Host host, UUID userId) {
 		host.getHostUserByUserId(userId).activate();
