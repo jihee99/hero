@@ -18,7 +18,7 @@ public class GroupResponse {
 	private final GroupInfoVo profile;
 
 	@Schema(description = "마스터 유저의 고유 아이디")
-	private final UUID masterUserId;
+	private final Long masterUserId;
 
 
 	public static GroupResponse of(Group group) {

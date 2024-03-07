@@ -25,7 +25,7 @@ public class AdminService {
 
     @Transactional(readOnly = true)
     public List<MemberInfoResponse> getSellers() {
-        return memberRepository.findAllByRole(MemberType.HOST).stream()
+        return memberRepository.findAllByRole(MemberType.MANAGER).stream()
             .map(MemberInfoResponse::from)
             .toList();
     }
