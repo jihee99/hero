@@ -28,7 +28,7 @@ import lombok.*;
 
 
 @Entity
-@Table(name = "members")
+@Table(name = "tbl_member")
 @Builder
 @Getter
 @Setter

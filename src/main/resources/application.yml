@@ -2,15 +2,10 @@ server:
   port: 8081
 
 spring:
-#  devtools:
-#    livereload:
-#      enabled: true
-#    restart:
-#      enabled: true
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: none # 또는 update
     properties:
       hibernate:
         format_sql: true
@@ -35,6 +30,7 @@ spring:
           starttls:
             enable: true
           auth: true
+
 
 springdoc:
   default-consumes-media-type: application/json;charset=UTF-8

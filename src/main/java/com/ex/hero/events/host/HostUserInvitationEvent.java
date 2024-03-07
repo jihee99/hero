@@ -6,7 +6,7 @@
 // import com.ex.hero.host.model.Host;
 // import com.ex.hero.host.model.HostRole;
 // import com.ex.hero.host.model.HostUser;
-// import com.ex.hero.host.vo.HostProfileVo;
+// import com.ex.hero.host.vo.GroupProfileVo;
 //
 // import lombok.Builder;
 // import lombok.Getter;
@@ -18,7 +18,7 @@
 // public class HostUserInvitationEvent extends DomainEvent {
 //     private final UUID userId;
 //     private final HostRole role;
-//     private final HostProfileVo hostProfileVo;
+//     private final GroupProfileVo hostProfileVo;
 //
 //     public static HostUserInvitationEvent of(Host host, HostUser hostUser) {
 //         return HostUserInvitationEvent.builder()

@@ -2,7 +2,7 @@
 //
 //import java.util.UUID;
 //
-//import com.ex.hero.host.service.HostUserInvitationEmailService;
+//import com.ex.hero.host.service.GroupUserInvitationEmailService;
 //import jakarta.mail.MessagingException;
 //import org.springframework.scheduling.annotation.Async;
 //import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@
 //public class HostUserInvitationEventHandler {
 //    private final CommonMemberService commonMemberService;
 //
-//    private final HostUserInvitationEmailService invitationEmailService;
+//    private final GroupUserInvitationEmailService invitationEmailService;
 //
 //    @Async
 //    @TransactionalEventListener(
