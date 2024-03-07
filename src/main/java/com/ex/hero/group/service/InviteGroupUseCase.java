@@ -24,20 +24,20 @@ public class InviteGroupUseCase {
 	private final CommonMemberService commonMemberService;
 	private final GroupUserInvitationEmailService invitationEmailService;
 
-	public GroupDetailResponse execute(UUID hostId, InviteGroupRequest inviteGroupRequest) {
-		final Group group = commonGroupService.findById(hostId);
+	public GroupDetailResponse execute(UUID groupId, InviteGroupRequest inviteGroupRequest) {
+		final Group group = commonGroupService.findById(groupId);
 		final Member inviteMember = commonMemberService.queryUserByEmail(inviteGroupRequest.getEmail());
 		final UUID invitedUserId = inviteMember.getUserId();
 		final GroupUserRole role = inviteGroupRequest.getRole();
 
-		final GroupUser groupUser = toHostUser(hostId, invitedUserId, role);
-		 invitationEmailService.execute(inviteMember.toEmailUserInfo(), group.toHostProfileVo().getName(), role);
+		final GroupUser groupUser = toGroupUser(groupId, invitedUserId, role);
+		 invitationEmailService.execute(inviteMember.toEmailUserInfo(), group.toGroupProfileVo().getName(), role);
 
-		return commonGroupService.toHostDetailResponseExecute(groupService.inviteGroupUser(group, groupUser));
+		return commonGroupService.toGroupDetailResponseExecute(groupService.inviteGroupUser(group, groupUser));
 	}
 
-	public GroupUser toHostUser(UUID hostId, UUID userId, GroupUserRole role) {
-		final Group group = commonGroupService.findById(hostId);
+	public GroupUser toGroupUser(UUID groupId, UUID userId, GroupUserRole role) {
+		final Group group = commonGroupService.findById(groupId);
 		return GroupUser.builder().userId(userId).group(group).role(role).build();
 	}
 

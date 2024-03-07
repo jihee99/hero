@@ -13,7 +13,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GroupResponse {
-	@Schema(description = "호스트 프로필")
+	@Schema(description = "그룹 프로필")
 	@JsonUnwrapped
 	private final GroupInfoVo profile;
 

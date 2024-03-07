@@ -14,7 +14,7 @@ public class InviteGroupRequest {
 	@Email(message = "올바른 이메일을 입력해주세요")
 	private String email;
 
-	@Schema(defaultValue = "MANAGER", description = "호스트 유저 역할")
+	@Schema(defaultValue = "MANAGER", description = "그룹 유저 역할")
 	@Enum(message = "MANAGER 또는 GUEST 만 허용됩니다")
 	private GroupUserRole role;
 }

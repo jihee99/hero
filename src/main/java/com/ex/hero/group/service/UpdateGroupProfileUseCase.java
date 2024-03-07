@@ -24,7 +24,7 @@ public class UpdateGroupProfileUseCase {
 	public GroupDetailResponse execute(UUID groupId, UpdateGroupRequest updateGroupRequest) {
 		final Group group = commonGroupService.findById(groupId);
 
-		return commonGroupService.toHostDetailResponseExecute(
+		return commonGroupService.toGroupDetailResponseExecute(
 			groupService.updateGroupProfile(group, toGroupprofile(updateGroupRequest)));
 	}
 

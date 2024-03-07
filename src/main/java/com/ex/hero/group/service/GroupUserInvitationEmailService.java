@@ -22,7 +22,7 @@ public class GroupUserInvitationEmailService {
     private final JavaMailSender mailSender;
     private final StringBuilder stringBuilder = new StringBuilder();
 
-    public void execute(EmailUserInfo toEmailUserInfo, String hostName, GroupUserRole role) {
+    public void execute(EmailUserInfo toEmailUserInfo, String groupName, GroupUserRole role) {
 
         MimeMessage message = mailSender.createMimeMessage();
 
@@ -30,10 +30,8 @@ public class GroupUserInvitationEmailService {
             message.addRecipients(MimeMessage.RecipientType.TO, toEmailUserInfo.getEmail());
             message.setFrom(SENDER_ADDRESS);
             message.setSubject(MESSAGE_SUBJECT);
-            message.setText(getMessage(toEmailUserInfo.getName(), hostName), "utf-8", "html");
+            message.setText(getMessage(toEmailUserInfo.getName(), groupName), "utf-8", "html");
 
-            System.out.println(toEmailUserInfo.getName());
-            System.out.println(hostName);
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
@@ -42,10 +40,10 @@ public class GroupUserInvitationEmailService {
     }
 
 
-    private String getMessage(String userName, String hostName){
+    private String getMessage(String userName, String groupName){
         stringBuilder.setLength(0);
         return String.valueOf(stringBuilder.append(MESSAGE_PREFIX)
-            .append(userName + " 님, 티켓히어로 "+hostName + " 그룹 초대 알림입니다.")
+            .append(userName + " 님, 티켓히어로 "+groupName + " 그룹 초대 알림입니다.")
             .append(MESSAGE_SUFFIX));
     }
 

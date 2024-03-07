@@ -29,7 +29,7 @@ public class CreateGroupUseCase {
 		final Member member = memberUtils.getCurrentMember();
 		final UUID id = member.getUserId();
 		// 호스트 생성
-		final Group group = groupService.createHost( Group.toEntity(createGroupRequest, id));
+		final Group group = groupService.createGroup( Group.toEntity(createGroupRequest, id));
 		// 생성한 유저를 마스터 권한으로 등록
 		final GroupUser masterGroupUser = toMasterGroupUser(group.getId(), id);
 

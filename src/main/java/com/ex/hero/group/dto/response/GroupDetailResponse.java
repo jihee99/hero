@@ -16,15 +16,15 @@ import lombok.Getter;
 @Builder
 public class GroupDetailResponse {
 
-	@Schema(description = "호스트 정보")
+	@Schema(description = "그룹 정보")
 	@JsonUnwrapped
-	private final GroupInfoVo hostInfo;
+	private final GroupInfoVo groupInfo;
 
 	@Schema(description = "마스터 유저의 정보")
 	private final GroupUserVo masterUser;
 
-	@Schema(description = "호스트 유저 정보")
-	private final List<GroupUserVo> hostUsers;
+	@Schema(description = "그룹 유저 정보")
+	private final List<GroupUserVo> groupUsers;
 
 	public static GroupDetailResponse of(Group group, List<GroupUserVo> groupUserVoSet) {
 		GroupDetailResponseBuilder builder = GroupDetailResponse.builder();
@@ -38,8 +38,8 @@ public class GroupDetailResponse {
 				}
 			});
 
-		return builder.hostInfo(GroupInfoVo.from(group))
-			.hostUsers(groupUserVoList)
+		return builder.groupInfo(GroupInfoVo.from(group))
+			.groupUsers(groupUserVoList)
 			.build();
 	}
 

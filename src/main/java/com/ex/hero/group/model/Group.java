@@ -41,7 +41,7 @@ public class Group {
     @OrderBy("createdAt DESC")
     private final Set<GroupUser> groupUsers = new HashSet<>();
 
-    public void addHostUsers(Set<GroupUser> groupUserList) {
+    public void addGroupUsers(Set<GroupUser> groupUserList) {
         groupUserList.forEach(this::validateGroupUserExistence);
         this.groupUsers.addAll(groupUserList);
     }
@@ -52,22 +52,22 @@ public class Group {
 //        hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
     }
 
-    public Boolean hasHostUserId(UUID userId) {
-        return this.groupUsers.stream().anyMatch(hostUser -> hostUser.getUserId().equals(userId));
+    public Boolean hasGroupUserId(UUID userId) {
+        return this.groupUsers.stream().anyMatch(groupUser -> groupUser.getUserId().equals(userId));
     }
 
     public Boolean hasGroupUser(GroupUser groupUser) {
-        return this.hasHostUserId(groupUser.getUserId());
+        return this.hasGroupUserId(groupUser.getUserId());
     }
 
     public GroupUser getGroupUserByUserId(UUID userId) {
         return this.groupUsers.stream()
-            .filter(hostUser -> hostUser.getUserId().equals(userId))
+            .filter(groupUser -> groupUser.getUserId().equals(userId))
             .findFirst()
             .orElseThrow(() -> GroupUserNotFoundException.EXCEPTION);
     }
 
-    public List<UUID> getHostUser_UserIds() {
+    public List<UUID> getGroupUser_UserIds() {
         return this.groupUsers.stream().map(GroupUser::getUserId).collect(Collectors.toList());
     }
 
@@ -78,14 +78,14 @@ public class Group {
     public Boolean isManagerGroupUserId(UUID userId) {
         return this.groupUsers.stream()
             .anyMatch(
-                hostUser ->
-                    hostUser.getUserId().equals(userId)
-                        && hostUser.getRole().equals(GroupUserRole.MANAGER));
+                groupUser ->
+                    groupUser.getUserId().equals(userId)
+                        && groupUser.getRole().equals(GroupUserRole.MANAGER));
     }
 
     public Boolean isActiveGroupUserId(UUID userId) {
         return this.groupUsers.stream()
-            .anyMatch(hostUser -> hostUser.getUserId().equals(userId) && hostUser.getActive());
+            .anyMatch(groupUser -> groupUser.getUserId().equals(userId) && groupUser.getActive());
     }
 
     public void setGroupUserRole(UUID userId, GroupUserRole role) {
@@ -93,7 +93,7 @@ public class Group {
         if (this.getMasterUserId().equals(userId))
             throw CannotModifyMasterGroupUserRoleException.EXCEPTION;
         this.groupUsers.stream()
-            .filter(hostUser -> hostUser.getUserId().equals(userId))
+            .filter(groupUser -> groupUser.getUserId().equals(userId))
             .findFirst()
             .orElseThrow(() -> GroupUserNotFoundException.EXCEPTION)
             .setGroupUserRole(role);
@@ -104,9 +104,9 @@ public class Group {
         this.groupUsers.remove(this.getGroupUserByUserId(userId));
     }
 
-    /** 해당 유저가 호스트에 이미 속하는지 확인하는 검증 로직] */
+    /** 해당 유저가 그룹에 이미 속하는지 확인하는 검증 로직] */
     public void validateGroupUserIdExistence(UUID userId) {
-        if (this.hasHostUserId(userId)) {
+        if (this.hasGroupUserId(userId)) {
             throw AlreadyJoinedGroupException.EXCEPTION;
         }
     }
@@ -115,37 +115,37 @@ public class Group {
         validateGroupUserIdExistence(groupUser.getUserId());
     }
 
-    /** 해당 유저가 호스트에 속하는지 확인하는 검증 로직 */
+    /** 해당 유저가 그룹에 속하는지 확인하는 검증 로직 */
     public void validateGroupUser(UUID userId) {
-        if (!this.hasHostUserId(userId)) throw ForbiddenGroupException.EXCEPTION;
+        if (!this.hasGroupUserId(userId)) throw ForbiddenGroupException.EXCEPTION;
     }
 
-    /** 해당 유저가 호스트에 속하며 가입 승인을 완료했는지 (활성상태) 확인하는 검증 로직 */
+    /** 해당 유저가 그룹에 속하며 가입 승인을 완료했는지 (활성상태) 확인하는 검증 로직 */
     public void validateActiveGroupUser(UUID userId) {
         this.validateGroupUser(userId);
         if (!this.isActiveGroupUserId(userId)) throw NotAcceptedGroupException.EXCEPTION;
     }
 
     /** 해당 유저가 매니저 이상인지 확인하는 검증 로직 */
-    public void validateManagerHostUser(UUID userId) {
+    public void validateManagerGroupUser(UUID userId) {
         this.validateActiveGroupUser(userId);
         if (!this.isManagerGroupUserId(userId) && !this.getMasterUserId().equals(userId)) {
             throw NotManagerGroupException.EXCEPTION;
         }
     }
 
-    /** 해당 유저가 호스트의 마스터(담당자, 방장)인지 확인하는 검증 로직 */
+    /** 해당 유저가 그룹의 마스터(담당자, 방장)인지 확인하는 검증 로직 */
     public void validateMasterGroupUser(UUID userId) {
         this.validateActiveGroupUser(userId);
         if (!this.getMasterUserId().equals(userId)) throw NotMasterGroupException.EXCEPTION;
     }
 
 
-    public GroupInfoVo toHostInfoVo() {
+    public GroupInfoVo toGroupInfoVo() {
         return GroupInfoVo.from(this);
     }
 
-    public GroupProfileVo toHostProfileVo() {
+    public GroupProfileVo toGroupProfileVo() {
         return GroupProfileVo.from(this);
     }
 

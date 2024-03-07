@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateGroupUserRoleRequest {
-	@Schema(defaultValue = "474ecc95-bbd3-4987-8a68-590d7a06f425", description = "호스트 유저 아이디")
+	@Schema(defaultValue = "474ecc95-bbd3-4987-8a68-590d7a06f425", description = "그룹 유저 아이디")
 	@Positive(message = "올바른 유저 고유 아이디를 입력해주세요")
 	private UUID userId;
 
-	@Schema(defaultValue = "MANAGER", description = "호스트 유저 역할")
+	@Schema(defaultValue = "MANAGER", description = "그룹 유저 역할")
 	@Enum(message = "GUEST, MANAGER, MASTER 만 허용됩니다")
 	private GroupUserRole role;
 }

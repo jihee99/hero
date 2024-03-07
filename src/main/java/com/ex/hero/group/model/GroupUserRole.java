@@ -21,7 +21,7 @@ public enum GroupUserRole {
 
     // Enum Validation 을 위한 코드, enum 에 속하지 않으면 null 리턴
     @JsonCreator
-    public static GroupUserRole fromHostRole(String val) {
+    public static GroupUserRole fromGroupUserRole(String val) {
         for (GroupUserRole groupUserRole : GroupUserRole.values()) {
             if (groupUserRole.name().equals(val)) {
                 return groupUserRole;

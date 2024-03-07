@@ -17,12 +17,12 @@ public class UpdateGroupUserRoleUseCase {
 	private final CommonGroupService commonGroupService;
 	private final GroupService groupService;
 
-	public GroupDetailResponse execute(UUID hostId, UpdateGroupUserRoleRequest updateGroupUserRoleRequest) {
-		final Group group = commonGroupService.findById(hostId);
+	public GroupDetailResponse execute(UUID groupId, UpdateGroupUserRoleRequest updateGroupUserRoleRequest) {
+		final Group group = commonGroupService.findById(groupId);
 		final UUID updateUserId = updateGroupUserRoleRequest.getUserId();
 
 		final GroupUserRole updateUserRole = updateGroupUserRoleRequest.getRole();
-		return commonGroupService.toHostDetailResponseExecute(groupService.updateGroupUserRole(group, updateUserId, updateUserRole));
+		return commonGroupService.toGroupDetailResponseExecute(groupService.updateGroupUserRole(group, updateUserId, updateUserRole));
 	}
 
 }

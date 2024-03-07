@@ -24,12 +24,12 @@ public class GroupService {
 
 	private final GroupRepository groupRepository;
 
-	public Group createHost(Group group) {
+	public Group createGroup(Group group) {
 		return groupRepository.save(group);
 	}
 
 	public Group addGroupUser(Group group, GroupUser groupUser) {
-		group.addHostUsers(Set.of(groupUser));
+		group.addGroupUsers(Set.of(groupUser));
 		return groupRepository.save(group);
 	}
 
@@ -71,7 +71,7 @@ public class GroupService {
 	/** 해당 유저가 슈퍼 호스트인지 확인하는 검증 로직 */
 	public void validateManagerGroupUser(UUID groupId, UUID userId) {
 		Group group = groupRepository.findById(groupId).orElseThrow(() -> GroupNotFoundException.EXCEPTION);
-		group.validateManagerHostUser(userId);
+		group.validateManagerGroupUser(userId);
 	}
 
 }

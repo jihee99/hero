@@ -14,7 +14,7 @@ public record CreateGroupRequest(
 	@Length(max = 15)
 	String name,
 
-	@Schema(defaultValue = "host@host.com", description = "마스터 이메일")
+	@Schema(defaultValue = "master@master.com", description = "마스터 이메일")
 	@Email(message = "올바른 형식의 이메일을 입력하세요")
 	String contactEmail,
 

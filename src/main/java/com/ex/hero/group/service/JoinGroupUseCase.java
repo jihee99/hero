@@ -21,11 +21,11 @@ public class JoinGroupUseCase {
 
 
 	@Transactional
-	public GroupDetailResponse execute(UUID hostId) {
+	public GroupDetailResponse execute(UUID groupId) {
 		final UUID userId = memberUtils.getCurrentMemberId();
-		final Group group = commonGroupService.findById(hostId);
+		final Group group = commonGroupService.findById(groupId);
 
-		return commonGroupService.toHostDetailResponseExecute(groupService.activateGroupUser(group, userId));
+		return commonGroupService.toGroupDetailResponseExecute(groupService.activateGroupUser(group, userId));
 	}
 
 }
