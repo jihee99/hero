@@ -116,18 +116,18 @@ public class Group {
     }
 
     /** 해당 유저가 그룹에 속하는지 확인하는 검증 로직 */
-    public void validateGroupUser(UUID userId) {
+    public void validateGroupUser(Long userId) {
         if (!this.hasGroupUserId(userId)) throw ForbiddenGroupException.EXCEPTION;
     }
 
     /** 해당 유저가 그룹에 속하며 가입 승인을 완료했는지 (활성상태) 확인하는 검증 로직 */
-    public void validateActiveGroupUser(UUID userId) {
+    public void validateActiveGroupUser(Long userId) {
         this.validateGroupUser(userId);
         if (!this.isActiveGroupUserId(userId)) throw NotAcceptedGroupException.EXCEPTION;
     }
 
     /** 해당 유저가 매니저 이상인지 확인하는 검증 로직 */
-    public void validateManagerGroupUser(UUID userId) {
+    public void validateManagerGroupUser(Long userId) {
         this.validateActiveGroupUser(userId);
         if (!this.isManagerGroupUserId(userId) && !this.getMasterUserId().equals(userId)) {
             throw NotManagerGroupException.EXCEPTION;
