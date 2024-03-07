@@ -25,8 +25,8 @@ public class MemberInfoVo {
 			.memberId(member.getUserId())
 			.email(member.getEmail())
 			.password(member.getPassword())
-			// .name(member.getName())
-			// .phone(member.getPhone())
+			.name(member.getName())
+			.phone(member.getPhoneNumber())
 			.createdAt(member.getCreatedAt())
 			.accountState(member.getAccountState())
 			.build();
