@@ -35,21 +35,21 @@ public class MemberService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Transactional(readOnly = true)
-	public MemberInfoResponse getMemberInfo(UUID id) {
+	public MemberInfoResponse getMemberInfo(Long id) {
 		return memberRepository.findById(id)
 			.map(MemberInfoResponse::from)
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
 
 	@Transactional
-	public MemberDeleteResponse deleteMember(UUID id) {
+	public MemberDeleteResponse deleteMember(Long id) {
 		if (!memberRepository.existsById(id)) return new MemberDeleteResponse(false);
 		memberRepository.deleteById(id);
 		return new MemberDeleteResponse(true);
 	}
 
 	@Transactional
-	public MemberUpdateResponse updateMember(UUID id, MemberUpdateRequest request) {
+	public MemberUpdateResponse updateMember(Long id, MemberUpdateRequest request) {
 		return memberRepository.findById(id)
 			.filter(member -> passwordEncoder.matches(request.password(), member.getPassword()))
 			.map(member -> {
@@ -59,7 +59,7 @@ public class MemberService {
 			.orElseThrow(() -> new InvalidMemberException("아이디 또는 비밀번호가 일치하지 않습니다."));
 	}
 
-	public void registerSellerRequest(UUID id, MemberUpdateRequest request) {
+	public void registerSellerRequest(Long id, MemberUpdateRequest request) {
 		// 회원인가?
 		memberRepository.findById(id)
 			.map(MemberInfoResponse::from)

@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 public class Group {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
-    private UUID id;
+    private Long id;
 
     @Embedded private GroupProfile profile;
 
-    private UUID masterUserId;
+    private Long masterUserId;
 
     // 단방향 oneToMany 매핑
     @OneToMany(
@@ -52,7 +52,7 @@ public class Group {
 //        hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
     }
 
-    public Boolean hasGroupUserId(UUID userId) {
+    public Boolean hasGroupUserId(Long userId) {
         return this.groupUsers.stream().anyMatch(groupUser -> groupUser.getUserId().equals(userId));
     }
 
@@ -60,14 +60,14 @@ public class Group {
         return this.hasGroupUserId(groupUser.getUserId());
     }
 
-    public GroupUser getGroupUserByUserId(UUID userId) {
+    public GroupUser getGroupUserByUserId(Long userId) {
         return this.groupUsers.stream()
             .filter(groupUser -> groupUser.getUserId().equals(userId))
             .findFirst()
             .orElseThrow(() -> GroupUserNotFoundException.EXCEPTION);
     }
 
-    public List<UUID> getGroupUser_UserIds() {
+    public List<Long> getGroupUser_UserIds() {
         return this.groupUsers.stream().map(GroupUser::getUserId).collect(Collectors.toList());
     }
 
@@ -75,7 +75,7 @@ public class Group {
         this.profile.updateProfile(groupProfile);
     }
 
-    public Boolean isManagerGroupUserId(UUID userId) {
+    public Boolean isManagerGroupUserId(Long userId) {
         return this.groupUsers.stream()
             .anyMatch(
                 groupUser ->
@@ -83,12 +83,12 @@ public class Group {
                         && groupUser.getRole().equals(GroupUserRole.MANAGER));
     }
 
-    public Boolean isActiveGroupUserId(UUID userId) {
+    public Boolean isActiveGroupUserId(Long userId) {
         return this.groupUsers.stream()
             .anyMatch(groupUser -> groupUser.getUserId().equals(userId) && groupUser.getActive());
     }
 
-    public void setGroupUserRole(UUID userId, GroupUserRole role) {
+    public void setGroupUserRole(Long userId, GroupUserRole role) {
         // 마스터의 역할은 수정할 수 없음
         if (this.getMasterUserId().equals(userId))
             throw CannotModifyMasterGroupUserRoleException.EXCEPTION;
@@ -99,13 +99,13 @@ public class Group {
             .setGroupUserRole(role);
     }
 
-    public void removeGroupUser(UUID userId) {
+    public void removeGroupUser(Long userId) {
         if (this.isActiveGroupUserId(userId)) throw AlreadyJoinedGroupException.EXCEPTION;
         this.groupUsers.remove(this.getGroupUserByUserId(userId));
     }
 
     /** 해당 유저가 그룹에 이미 속하는지 확인하는 검증 로직] */
-    public void validateGroupUserIdExistence(UUID userId) {
+    public void validateGroupUserIdExistence(Long userId) {
         if (this.hasGroupUserId(userId)) {
             throw AlreadyJoinedGroupException.EXCEPTION;
         }
@@ -150,7 +150,7 @@ public class Group {
     }
 
 
-    public static Group toEntity(CreateGroupRequest createGroupRequest, UUID masterUserId) {
+    public static Group toEntity(CreateGroupRequest createGroupRequest, Long masterUserId) {
         return Group.builder()
             .name(createGroupRequest.name())
             .contactEmail(createGroupRequest.contactEmail())

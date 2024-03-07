@@ -36,9 +36,9 @@ import lombok.*;
 @AllArgsConstructor
 public class Member {
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="member_id")
-	private UUID userId;
+	private Long userId;
 	@Column(nullable = false, unique = true)
 	private String email;
 	@Column(nullable = false)

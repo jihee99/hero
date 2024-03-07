@@ -25,19 +25,19 @@ public class CommonGroupService {
 	private final MemberRepository memberRepository;
 	private final GroupRepository groupRepository;
 
-	public Group findById(UUID groupId) {
+	public Group findById(Long groupId) {
 		return groupRepository.findById(groupId).orElseThrow(() -> GroupNotFoundException.EXCEPTION);
 	}
 
-	public GroupUser toGroupUser(UUID groupId, UUID userId, GroupUserRole role) {
+	public GroupUser toGroupUser(Long groupId, Long userId, GroupUserRole role) {
 		final Group group = groupRepository.findById(groupId).orElseThrow(() -> GroupNotFoundException.EXCEPTION);
 		return GroupUser.builder().userId(userId).group(group).role(role).build();
 	}
 
 	public GroupDetailResponse toGroupDetailResponseExecute(Group group) {
-		final List<UUID> userIds = group.getGroupUser_UserIds();
+		final List<Long> userIds = group.getGroupUser_UserIds();
 		final List<Member> userList = memberRepository.findAllByUserIdIn(userIds);
-		final Map<UUID, Member> userMap =
+		final Map<Long, Member> userMap =
 			userList.stream().collect(Collectors.toMap(Member::getUserId, user -> user));
 		final List<GroupUserVo> groupUserVoList = new ArrayList<>();
 

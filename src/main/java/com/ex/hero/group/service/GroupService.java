@@ -38,7 +38,7 @@ public class GroupService {
 		return groupRepository.save(group);
 	}
 
-	public Group updateGroupUserRole(Group group, UUID userId, GroupUserRole role) {
+	public Group updateGroupUserRole(Group group, Long userId, GroupUserRole role) {
 		group.setGroupUserRole(userId, role);
 		return groupRepository.save(group);
 	}
@@ -48,23 +48,23 @@ public class GroupService {
 		return groupRepository.save(group);
 	}
 
-	public Group activateGroupUser(Group group, UUID userId) {
+	public Group activateGroupUser(Group group, Long userId) {
 		group.getGroupUserByUserId(userId).activate();
 		return groupRepository.save(group);
 	}
 
-	public Group removeGroupUser(Group group, UUID userId) {
+	public Group removeGroupUser(Group group, Long userId) {
 		group.removeGroupUser(userId);
 		return groupRepository.save(group);
 	}
 
 	/** 해당 유저가 그룹 사용자에 속하는지 확인하는 검증 로직 */
-	public void validateGroupUser(Group group, UUID userId) {
+	public void validateGroupUser(Group group, Long userId) {
 		group.validateGroupUser(userId);
 	}
 
 	/** 해당 유저가 그룹의 마스터(담당자, 방장)인지 확인하는 검증 로직 */
-	public void validateMasterGroupUser(Group group, UUID userId) {
+	public void validateMasterGroupUser(Group group, Long userId) {
 		group.validateMasterGroupUser(userId);
 	}
 

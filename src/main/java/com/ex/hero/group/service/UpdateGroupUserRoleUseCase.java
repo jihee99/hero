@@ -1,6 +1,5 @@
 package com.ex.hero.group.service;
 
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,9 @@ public class UpdateGroupUserRoleUseCase {
 	private final CommonGroupService commonGroupService;
 	private final GroupService groupService;
 
-	public GroupDetailResponse execute(UUID groupId, UpdateGroupUserRoleRequest updateGroupUserRoleRequest) {
+	public GroupDetailResponse execute(Long groupId, UpdateGroupUserRoleRequest updateGroupUserRoleRequest) {
 		final Group group = commonGroupService.findById(groupId);
-		final UUID updateUserId = updateGroupUserRoleRequest.getUserId();
+		final Long updateUserId = updateGroupUserRoleRequest.getUserId();
 
 		final GroupUserRole updateUserRole = updateGroupUserRoleRequest.getRole();
 		return commonGroupService.toGroupDetailResponseExecute(groupService.updateGroupUserRole(group, updateUserId, updateUserRole));

@@ -27,12 +27,12 @@ import lombok.Setter;
 public class Seller {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="seller_id")
-	private UUID id;
+	private Long id;
 
 	@JoinColumn(name="member_id")
-	private UUID memberId;
+	private Long memberId;
 	@Enumerated(EnumType.STRING)
 	@Comment("승인 타입 (신청|거절|승인)")
 	private SellerApplyType applyType;

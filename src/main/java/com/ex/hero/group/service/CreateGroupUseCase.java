@@ -27,7 +27,7 @@ public class CreateGroupUseCase {
 	public GroupResponse execute(CreateGroupRequest createGroupRequest) {
 		// 존재하는 유저인지 검증
 		final Member member = memberUtils.getCurrentMember();
-		final UUID id = member.getUserId();
+		final Long id = member.getUserId();
 		// 호스트 생성
 		final Group group = groupService.createGroup( Group.toEntity(createGroupRequest, id));
 		// 생성한 유저를 마스터 권한으로 등록
@@ -39,7 +39,7 @@ public class CreateGroupUseCase {
 	}
 
 
-	public GroupUser toMasterGroupUser(UUID groupId, UUID userId) {
+	public GroupUser toMasterGroupUser(Long groupId, Long userId) {
 		final Group group = commonGroupService.findById(groupId);
 		return GroupUser.builder().userId(userId).group(group).role(GroupUserRole.MASTER).build();
 	}

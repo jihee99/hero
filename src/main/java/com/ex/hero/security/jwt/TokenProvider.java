@@ -91,7 +91,7 @@ public class TokenProvider {
 	@Transactional
 	public String recreateAccessToken(String oldAccessToken) throws JsonProcessingException {
 		String subject = decodeJwtPayloadSubject(oldAccessToken);
-		memberRefreshTokenRepository.findByMemberIdAndReissueCountLessThan(UUID.fromString(subject.split(":")[0]), reissueLimit)
+		memberRefreshTokenRepository.findByMemberIdAndReissueCountLessThan(Long.fromString(subject.split(":")[0]), reissueLimit)
 			.ifPresentOrElse(
 				MemberRefreshToken::increaseReissueCount,
 				() -> { throw new ExpiredJwtException(null, null, "Refresh token expired."); }

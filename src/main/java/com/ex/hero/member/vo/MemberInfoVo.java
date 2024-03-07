@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class MemberInfoVo {
-	private final UUID memberId;
+	private final Long memberId;
 	private final String email;
 	private final String password;
 	private final String name;

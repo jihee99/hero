@@ -1,7 +1,5 @@
 package com.ex.hero.group.service;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +19,8 @@ public class JoinGroupUseCase {
 
 
 	@Transactional
-	public GroupDetailResponse execute(UUID groupId) {
-		final UUID userId = memberUtils.getCurrentMemberId();
+	public GroupDetailResponse execute(Long groupId) {
+		final Long userId = memberUtils.getCurrentMemberId();
 		final Group group = commonGroupService.findById(groupId);
 
 		return commonGroupService.toGroupDetailResponseExecute(groupService.activateGroupUser(group, userId));

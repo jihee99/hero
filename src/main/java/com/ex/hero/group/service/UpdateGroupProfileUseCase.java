@@ -21,7 +21,7 @@ public class UpdateGroupProfileUseCase {
 	private final GroupRepository groupRepository;
 
 	@Transactional
-	public GroupDetailResponse execute(UUID groupId, UpdateGroupRequest updateGroupRequest) {
+	public GroupDetailResponse execute(Long groupId, UpdateGroupRequest updateGroupRequest) {
 		final Group group = commonGroupService.findById(groupId);
 
 		return commonGroupService.toGroupDetailResponseExecute(

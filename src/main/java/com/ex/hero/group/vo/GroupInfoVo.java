@@ -1,6 +1,5 @@
 package com.ex.hero.group.vo;
 
-import java.util.UUID;
 
 import com.ex.hero.group.model.Group;
 
@@ -12,7 +11,7 @@ import lombok.Getter;
 @EqualsAndHashCode
 @Builder
 public class GroupInfoVo {
-	private final UUID groupId;
+	private final Long groupId;
 
 	private final String name;
 

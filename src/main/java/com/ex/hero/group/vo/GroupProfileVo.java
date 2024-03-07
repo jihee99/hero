@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 public class GroupProfileVo {
 
-	private final UUID groupId;
+	private final Long groupId;
 
 	private final String name;
 

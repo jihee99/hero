@@ -24,10 +24,10 @@ public class InviteGroupUseCase {
 	private final CommonMemberService commonMemberService;
 	private final GroupUserInvitationEmailService invitationEmailService;
 
-	public GroupDetailResponse execute(UUID groupId, InviteGroupRequest inviteGroupRequest) {
+	public GroupDetailResponse execute(Long groupId, InviteGroupRequest inviteGroupRequest) {
 		final Group group = commonGroupService.findById(groupId);
 		final Member inviteMember = commonMemberService.queryUserByEmail(inviteGroupRequest.getEmail());
-		final UUID invitedUserId = inviteMember.getUserId();
+		final Long invitedUserId = inviteMember.getUserId();
 		final GroupUserRole role = inviteGroupRequest.getRole();
 
 		final GroupUser groupUser = toGroupUser(groupId, invitedUserId, role);
@@ -36,7 +36,7 @@ public class InviteGroupUseCase {
 		return commonGroupService.toGroupDetailResponseExecute(groupService.inviteGroupUser(group, groupUser));
 	}
 
-	public GroupUser toGroupUser(UUID groupId, UUID userId, GroupUserRole role) {
+	public GroupUser toGroupUser(Long groupId, Long userId, GroupUserRole role) {
 		final Group group = commonGroupService.findById(groupId);
 		return GroupUser.builder().userId(userId).group(group).role(role).build();
 	}

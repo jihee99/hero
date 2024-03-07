@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ex.hero.security.jwt.MemberRefreshToken;
 
-public interface MemberRefreshTokenRepository extends JpaRepository<MemberRefreshToken, UUID> {
+public interface MemberRefreshTokenRepository extends JpaRepository<MemberRefreshToken, Long> {
 
-	Optional<MemberRefreshToken> findByMemberIdAndReissueCountLessThan(UUID id, long count);
+	Optional<MemberRefreshToken> findByMemberIdAndReissueCountLessThan(Long id, long count);
 
 }

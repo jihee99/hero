@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record TicketItemResponse (
 	@Schema(description = "티켓상품 id")
-	UUID id,
+	Long id,
 	Member member,
 	TicketPayType payType,
 	String name,

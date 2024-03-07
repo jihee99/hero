@@ -22,12 +22,12 @@ public class CommonMemberService {
 
 	/*  */
 
-	public Member queryMember(UUID userId) {
+	public Member queryMember(Long userId) {
 		return memberRepository.findById(userId).orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
 
 	/** Member id 리스트에 포함되어 있는 유저를 모두 가져오는 쿼리 */
-	public List<Member> queryMemberListByUserIdIn(List<UUID> userIdList) {
+	public List<Member> queryMemberListByUserIdIn(List<Long> userIdList) {
 		return memberRepository.findAllByUserIdIn(userIdList);
 	}
 

@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 public class GroupUser extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_user_id")
-    private UUID id;
+    private Long id;
 
     // 소속 호스트 아이디
     @ManyToOne(fetch = FetchType.EAGER)
@@ -29,7 +29,7 @@ public class GroupUser extends BaseTimeEntity {
 
     // 소속 호스트를 관리중인 유저 아이디
     @Column(name = "member_id")
-    private UUID userId;
+    private Long userId;
 
     // 초대 승락 여부
     private Boolean active = Boolean.FALSE;
@@ -49,7 +49,7 @@ public class GroupUser extends BaseTimeEntity {
     }
 
     @Builder
-    public GroupUser(Group group, UUID userId, GroupUserRole role) {
+    public GroupUser(Group group, Long userId, GroupUserRole role) {
         this.group = group;
         this.userId = userId;
         this.role = role;

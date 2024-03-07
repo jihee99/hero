@@ -32,14 +32,14 @@ import lombok.NoArgsConstructor;
 public class TicketItem {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ticket_id")
 	@Comment("티켓 아이디")
-	private UUID id;
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "id")
-	@Comment("회원 아이디(uuid)")
+	@Comment("회원 아이디(Long)")
 	private Member member;
 
 	@Enumerated(EnumType.STRING)

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ex.hero.group.model.Group;
 
-public interface GroupRepository extends JpaRepository<Group, UUID> {
+public interface GroupRepository extends JpaRepository<Group, Long> {
 }

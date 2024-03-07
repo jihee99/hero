@@ -55,7 +55,7 @@ public class GroupController {
 	@Operation(summary = "멤버를 그룹 유저로 초대합니다.")
 	@PostMapping("/{groupId}/invite")
 	public GroupDetailResponse inviteGroup(
-		@PathVariable UUID groupId, @RequestBody @Valid InviteGroupRequest inviteGroupRequest
+		@PathVariable Long groupId, @RequestBody @Valid InviteGroupRequest inviteGroupRequest
 	){
 		return inviteGroupUseCase.execute(groupId, inviteGroupRequest);
 	}
@@ -63,14 +63,14 @@ public class GroupController {
 	/* 초대받은 유저 그룹 가입 api */
 	@Operation(summary = "초대받은 그룹에 가입을 승인힙니다.")
 	@PostMapping("/{groupId}/join")
-	public GroupDetailResponse joinGroup(@PathVariable UUID groupId) {
+	public GroupDetailResponse joinGroup(@PathVariable Long groupId) {
 		return joinGroupUseCase.execute(groupId);
 	}
 
 	/* 초대받은 유저 그룹 가입 거절 api */
 	@Operation(summary = "초대받은 그룹에 가입을 거절합니다.")
 	@PostMapping("/{groupId}/reject")
-	public GroupDetailResponse rejectGroup(@PathVariable UUID groupId) {
+	public GroupDetailResponse rejectGroup(@PathVariable Long groupId) {
 		return rejectGroupUseCase.execute(groupId);
 	}
 
@@ -78,7 +78,7 @@ public class GroupController {
 	@Operation(summary = "그룹 유저의 권한을 변경합니다. 매니저 이상만 가능합니다.")
 	@PatchMapping("/admin/{groupId}/role")
 	public GroupDetailResponse patchGroupUserRole(
-		@PathVariable UUID groupId,
+		@PathVariable Long groupId,
 		@RequestBody @Valid UpdateGroupUserRoleRequest updateGroupUserRoleRequest
 	) {
 		return updateGroupUserRoleUseCase.execute(groupId, updateGroupUserRoleRequest);
@@ -88,7 +88,7 @@ public class GroupController {
 	@Operation(summary = "그룹 정보를 업데이트 합니다. 매니저 이상부터 가능")
 	@PatchMapping("/{groupId}/profile")
 	public GroupDetailResponse patchGroupById(
-		@PathVariable UUID groupId, @RequestBody @Valid UpdateGroupRequest updateGroupRequest
+		@PathVariable Long groupId, @RequestBody @Valid UpdateGroupRequest updateGroupRequest
 	){
 		return updateGroupProfileUseCase.execute(groupId, updateGroupRequest);
 	}

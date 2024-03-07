@@ -35,19 +35,19 @@ public class MemberController {
 	@Operation(summary = "회원 정보 조회")
 	@GetMapping("/")
 	public ApiResponse getMemberInfo(@AuthenticationPrincipal User user){
-		return ApiResponse.success(memberService.getMemberInfo(UUID.fromString(user.getUsername())));
+		return ApiResponse.success(memberService.getMemberInfo(Long.parseLong(user.getUsername())));
 	}
 
 	@Operation(summary = "회원 탈퇴")
 	@GetMapping("/delete")
 	public ApiResponse deleteMember(@AuthenticationPrincipal User user) {
-		return ApiResponse.success(memberService.deleteMember(UUID.fromString(user.getUsername())));
+		return ApiResponse.success(memberService.deleteMember(Long.parseLong(user.getUsername())));
 	}
 
 	@Operation(summary = "회원 정보 수정")
 	@GetMapping("/update")
 	public ApiResponse updateMember(@AuthenticationPrincipal User user, @RequestBody MemberUpdateRequest request) {
-		return ApiResponse.success(memberService.updateMember(UUID.fromString(user.getUsername()), request));
+		return ApiResponse.success(memberService.updateMember(Long.parseLong(user.getUsername()), request));
 	}
 
 //	@Operation(summary = "판매자 등록 신청")

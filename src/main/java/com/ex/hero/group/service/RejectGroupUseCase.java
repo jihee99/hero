@@ -1,7 +1,5 @@
 package com.ex.hero.group.service;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 
 import com.ex.hero.common.util.MemberUtils;
@@ -17,8 +15,8 @@ public class RejectGroupUseCase {
 	private final GroupService groupService;
 	private final MemberUtils memberUtils;
 
-	public GroupDetailResponse execute(UUID groupId) {
-		final UUID userId = memberUtils.getCurrentMemberId();
+	public GroupDetailResponse execute(Long groupId) {
+		final Long userId = memberUtils.getCurrentMemberId();
 		final Group group = commonGroupService.findById(groupId);
 
 		return commonGroupService.toGroupDetailResponseExecute(groupService.removeGroupUser(group, userId));
