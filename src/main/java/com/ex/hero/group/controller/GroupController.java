@@ -89,7 +89,7 @@ public class GroupController {
 	@PatchMapping("/{groupId}/profile")
 	public GroupDetailResponse patchGroupById(
 		@PathVariable Long groupId, @RequestBody @Valid UpdateGroupRequest updateGroupRequest
-	){
+	) {
 		return updateGroupProfileUseCase.execute(groupId, updateGroupRequest);
 	}
 

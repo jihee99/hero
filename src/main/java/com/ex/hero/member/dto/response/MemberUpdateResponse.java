@@ -16,6 +16,6 @@ public record MemberUpdateResponse(
         String phone
 ) {
     public static MemberUpdateResponse of(boolean result, Member member) {
-        return new MemberUpdateResponse(result, member.getName(), member.getEmail(), member.getPhone());
+        return new MemberUpdateResponse(result, member.getName(), member.getEmail(), member.getPhoneNumber());
     }
 }

@@ -49,15 +49,14 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 			.csrf(AbstractHttpConfigurer::disable)
-			.sessionManagement( sessionManageMent -> sessionManageMent.sessionCreationPolicy(
-					SessionCreationPolicy.STATELESS))
+			.sessionManagement( sessionManageMent -> sessionManageMent.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(requests ->
 				requests
 					.requestMatchers(allowedUrls).permitAll()
 
-					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "HOST", "MANAGER", "ADMIN") // member, seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "MASTER", "MANAGER", "ADMIN") // member, seller, admin 권한 허용
 //					.requestMatchers("/api/v[0-9]+/group/admin/**").hasAnyAuthority("HOST", "ADMIN") // seller, admin 권한 허용
-					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("HOST", "MANAGER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
 					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
