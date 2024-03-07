@@ -165,7 +165,7 @@ public class Group {
         String introduce,
         String contactEmail,
         String contactNumber,
-        UUID masterUserId) {
+        Long masterUserId) {
         this.profile =
             GroupProfile.builder()
                 .name(name)
