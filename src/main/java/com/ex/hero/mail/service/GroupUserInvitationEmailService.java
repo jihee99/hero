@@ -1,4 +1,4 @@
-package com.ex.hero.group.service;
+package com.ex.hero.mail.service;
 
 import static com.ex.hero.common.util.EmailContents.MESSAGE_SUBJECT;
 import static com.ex.hero.common.util.EmailContents.SENDER_ADDRESS;
