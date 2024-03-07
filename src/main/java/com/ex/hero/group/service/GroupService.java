@@ -69,7 +69,7 @@ public class GroupService {
 	}
 
 	/** 해당 유저가 슈퍼 호스트인지 확인하는 검증 로직 */
-	public void validateManagerGroupUser(UUID groupId, UUID userId) {
+	public void validateManagerGroupUser(Long groupId, Long userId) {
 		Group group = groupRepository.findById(groupId).orElseThrow(() -> GroupNotFoundException.EXCEPTION);
 		group.validateManagerGroupUser(userId);
 	}

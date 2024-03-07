@@ -10,9 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ex.hero.member.dto.request.MemberUpdateRequest;
 import com.ex.hero.member.dto.request.SignUpRequest;
+import com.ex.hero.member.exception.ForbiddenUserException;
 import com.ex.hero.member.vo.MemberInfoVo;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -39,23 +41,27 @@ public class Member {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="member_id")
 	private Long userId;
+
 	@Column(nullable = false, unique = true)
 	private String email;
 	@Column(nullable = false)
 	private String password;
-	@Column(nullable = false)
-	private String name;
-	private String phone;
 
-	@Column(name = "role")
+	private String name;
+
+	private String phoneNumber;
+
 	@Enumerated(EnumType.STRING)
-	private MemberType role;
+	private MemberType accountRole = MemberType.USER;
+
+	@Enumerated(EnumType.STRING)
+	private AccountState accountState = AccountState.NORMAL;
 
 	@CreatedDate
 	private LocalDateTime createdAt;
 
-	@Builder.Default
-	private Boolean status = Boolean.TRUE;
+
+	private LocalDateTime lastLoginAt = LocalDateTime.now();
 
 
 	public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
@@ -63,18 +69,26 @@ public class Member {
 			.email(request.email())
 			.password(passwordEncoder.encode(request.password()))
 			.name(request.name())
-			.role(MemberType.USER)
+			.accountRole(MemberType.USER)
 			.createdAt(LocalDateTime.now())
-			.status(Boolean.TRUE)
+			.accountState(AccountState.NORMAL)
 			.build();
 	}
+
+	public void login() {
+		if (!AccountState.NORMAL.equals(this.accountState)) {
+			throw ForbiddenUserException.EXCEPTION;
+		}
+		lastLoginAt = LocalDateTime.now();
+	}
+
 
 	public void update(MemberUpdateRequest newMember, PasswordEncoder passwordEncoder) {
 		this.password = newMember.newPassword() == null || newMember.newPassword().isBlank()
 			? this.password : passwordEncoder.encode(newMember.password());
 		this.name = newMember.name();
 		this.email = newMember.email();
-		this.phone = newMember.phone();
+		this.phoneNumber = newMember.phoneNumber();
 	}
 
 	public MemberInfoVo toMemberInfoVo() {
@@ -83,6 +97,10 @@ public class Member {
 
 	public EmailUserInfo toEmailUserInfo() {
 		return new EmailUserInfo(this.name, this.email);
+	}
+
+	public Boolean isDeletedUser() {
+		return accountState == AccountState.DELETED;
 	}
 
 	// @PostPersist

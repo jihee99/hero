@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.ex.hero.member.exception.UserNotFoundException;
+import com.ex.hero.member.model.AccountState;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.repository.MemberRepository;
 
@@ -34,7 +35,7 @@ public class CommonMemberService {
 	/** 이메일로 유저를 가져오는 쿼리 */
 	public Member queryUserByEmail(String email) {
 		return memberRepository
-				.findByEmailAndStatus(email, Boolean.TRUE)
+				.findByEmailAndAccountState(email, AccountState.NORMAL)
 				.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
 

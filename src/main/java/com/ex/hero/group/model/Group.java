@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -134,9 +135,9 @@ public class Group {
     }
 
     /** 해당 유저가 그룹의 마스터(담당자, 방장)인지 확인하는 검증 로직 */
-    public void validateMasterGroupUser(Long userId) {
-        this.validateActiveGroupUser(userId);
-        if (!this.getMasterUserId().equals(userId)) throw NotMasterGroupException.EXCEPTION;
+    public void validateMasterGroupUser(Long groupId) {
+        this.validateActiveGroupUser(groupId);
+        if (!this.getMasterUserId().equals(groupId)) throw NotMasterGroupException.EXCEPTION;
     }
 
 

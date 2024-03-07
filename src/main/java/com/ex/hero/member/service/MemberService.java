@@ -85,19 +85,7 @@ public class MemberService {
 				.applyAt(LocalDateTime.now()) // 신청 시간을 현재 시간으로 설정하거나, 필요에 따라 다른 값을 지정합니다.
 				.build();
 		sellerRepository.save(newSeller);
-//		sellerRepository.findById(id)
-////			.map(seller -> {
-////				seller.apply(member);
-////				return seller;
-////			})
-//			.ifPresentOrElse(
-//				seller -> {throw AlreadyAppliedUserException.EXCEPTION;},
-//				() -> sellerRepository.save(new Seller(member))
-//				);
-//
-//
-//
-//		// 아무것도 걸리는게 없으면 save
+
 
 	}
 }

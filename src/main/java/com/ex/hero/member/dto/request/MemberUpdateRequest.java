@@ -14,7 +14,7 @@ public record MemberUpdateRequest(
         @Schema(description = "회원 나이", example = "user@test.com")
         String email,
         @Schema(description = "회원 전화번호", example = "010-1234-1234")
-        String phone,
+        String phoneNumber,
         @Schema(description = "회원 등급", example = "USER")
         MemberType role
 ) {

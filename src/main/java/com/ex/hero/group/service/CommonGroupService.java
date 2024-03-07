@@ -41,7 +41,7 @@ public class CommonGroupService {
 			userList.stream().collect(Collectors.toMap(Member::getUserId, user -> user));
 		final List<GroupUserVo> groupUserVoList = new ArrayList<>();
 
-		for (UUID userId : userIds) {
+		for (Long userId : userIds) {
 			final Member user = userMap.get(userId);
 			if (user != null) {
 				final MemberInfoVo memberInfoVo = user.toMemberInfoVo();

@@ -47,7 +47,7 @@ public class SignService {
 		Member member = memberRepository.findByEmail(request.email())
 			.filter(it -> passwordEncoder.matches(request.password(), it.getPassword()))
 			.orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
-		String accessToken = tokenProvider.createAccessToken(String.format("%s:%s", member.getUserId(), member.getRole()));	// token -> accessToken
+		String accessToken = tokenProvider.createAccessToken(String.format("%s:%s", member.getUserId(), member.getAccountRole()));	// token -> accessToken
 		String refreshToken = tokenProvider.createRefreshToken();	// 리프레시 토큰 생성
 		// 리프레시 토큰이 이미 있으면 토큰을 갱신하고 없으면 토큰을 추가
 		memberRefreshTokenRepository.findById(member.getUserId())
@@ -55,7 +55,9 @@ public class SignService {
 				it -> it.updateRefreshToken(refreshToken),
 				() -> memberRefreshTokenRepository.save(new MemberRefreshToken(member, refreshToken))
 			);
-		return new SignInResponse(member.getName(), member.getRole(), accessToken, refreshToken);
+
+		member.login();
+		return new SignInResponse(member.getEmail(), member.getAccountRole(), accessToken, refreshToken);
 	}
 
 

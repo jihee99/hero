@@ -25,7 +25,7 @@ public record MemberInfoResponse(
 			member.getUserId(),
 			member.getEmail(),
 			member.getName(),
-			member.getRole(),
+			member.getAccountRole(),
 			member.getCreatedAt()
 		);
 	}

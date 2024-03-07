@@ -18,21 +18,21 @@ public class AdminService {
 
     @Transactional(readOnly = true)
     public List<MemberInfoResponse> getMembers() {
-        return memberRepository.findAllByRole(MemberType.USER).stream()
+        return memberRepository.findAllByAccountRole(MemberType.USER).stream()
                 .map(MemberInfoResponse::from)
                 .toList();
     }
 
     @Transactional(readOnly = true)
     public List<MemberInfoResponse> getSellers() {
-        return memberRepository.findAllByRole(MemberType.HOST).stream()
+        return memberRepository.findAllByAccountRole(MemberType.MANAGER).stream()
             .map(MemberInfoResponse::from)
             .toList();
     }
 
     @Transactional(readOnly = true)
     public List<MemberInfoResponse> getAdmins() {
-        return memberRepository.findAllByRole(MemberType.ADMIN).stream()
+        return memberRepository.findAllByAccountRole(MemberType.ADMIN).stream()
                 .map(MemberInfoResponse::from)
                 .toList();
     }
