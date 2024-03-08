@@ -2,8 +2,8 @@ package com.ex.hero.group.model;
 
 import com.ex.hero.group.dto.request.CreateGroupRequest;
 import com.ex.hero.group.exception.*;
-import com.ex.hero.group.vo.GroupInfoVo;
-import com.ex.hero.group.vo.GroupProfileVo;
+import com.ex.hero.common.vo.GroupInfoVo;
+import com.ex.hero.common.vo.GroupProfileVo;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 

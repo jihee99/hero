@@ -1,5 +1,7 @@
 package com.ex.hero.group.service;
 
+import com.ex.hero.member.model.Member;
+import com.ex.hero.member.model.MemberType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

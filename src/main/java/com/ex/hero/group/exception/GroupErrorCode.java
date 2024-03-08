@@ -1,5 +1,8 @@
 package com.ex.hero.group.exception;
 
+import static com.ex.hero.common.exception.HeroStatic.BAD_REQUEST;
+import static com.ex.hero.common.exception.HeroStatic.NOT_FOUND;
+
 import com.ex.hero.common.annotation.ExplainError;
 import com.ex.hero.common.dto.ErrorReason;
 import com.ex.hero.common.exception.BaseErrorCode;
@@ -8,9 +11,6 @@ import lombok.Getter;
 
 import java.lang.reflect.Field;
 import java.util.Objects;
-
-import static com.ex.hero.common.exception.HeroStatic.BAD_REQUEST;
-import static com.ex.hero.common.exception.HeroStatic.NOT_FOUND;
 
 @Getter
 @AllArgsConstructor

@@ -2,6 +2,7 @@ package com.ex.hero.group.service;
 
 import java.util.UUID;
 
+import com.ex.hero.member.model.MemberType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

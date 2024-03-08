@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-	private final String[] allowedUrls = {"/swagger-ui/**", "/sign-up", "/sign-in"};
+	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
 	private final AuthenticationEntryPoint entryPoint;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
 
@@ -54,13 +54,21 @@ public class SecurityConfig {
 				requests
 					.requestMatchers(allowedUrls).permitAll()
 
-					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "MANAGER", "MASTER", "ADMIN")
-					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN")
-					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN")
-					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN")
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "MASTER", "MANAGER", "ADMIN") .requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
 					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
 			)
+
+			// .authorizeHttpRequests(requests ->
+			// 	requests.requestMatchers(allowedUrls).permitAll()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
+			//
+			//
+			//
+			// 		.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
+			// )
 
 			.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
 			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
@@ -68,19 +76,19 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	@Bean
-	public RoleHierarchy roleHierarchy() {
-		RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
-		hierarchy.setHierarchy("ROLE_ADMIN > ROLE_MASTER > ROLE_MANAGER > ROLE_USER");
-		return hierarchy;
-	}
-
-	@Bean
-	static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-		expressionHandler.setRoleHierarchy(roleHierarchy);
-		return expressionHandler;
-	}
+	// @Bean
+	// public RoleHierarchy roleHierarchy() {
+	// 	RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
+	// 	hierarchy.setHierarchy("ROLE_ADMIN > ROLE_HOST > ROLE_MANAGER > ROLE_USER");
+	// 	return hierarchy;
+	// }
+	//
+	// @Bean
+	// static MethodSecurityExpressionHandler methodSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
+	// 	DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+	// 	expressionHandler.setRoleHierarchy(roleHierarchy);
+	// 	return expressionHandler;
+	// }
 
 
 }

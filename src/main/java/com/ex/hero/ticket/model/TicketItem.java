@@ -1,7 +1,6 @@
 package com.ex.hero.ticket.model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import com.ex.hero.member.model.AccountInfo;
 import org.hibernate.annotations.ColumnDefault;

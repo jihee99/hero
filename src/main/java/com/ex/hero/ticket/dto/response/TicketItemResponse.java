@@ -1,7 +1,5 @@
 package com.ex.hero.ticket.dto.response;
 
-import java.util.UUID;
-
 import com.ex.hero.common.vo.Money;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.ticket.model.TicketPayType;

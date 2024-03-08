@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.ex.hero.mail.dto.EmailUserInfo;
+import com.ex.hero.member.vo.MemberProfileVo;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,6 +64,9 @@ public class Member {
 
 	private LocalDateTime lastLoginAt = LocalDateTime.now();
 
+	public MemberProfileVo toMemberProfileVo() {
+		return MemberProfileVo.from(this);
+	}
 
 	public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
 		return Member.builder()
@@ -102,6 +106,7 @@ public class Member {
 	public Boolean isDeletedUser() {
 		return accountState == AccountState.DELETED;
 	}
+
 
 	// @PostPersist
 	// public void registerEvent() {

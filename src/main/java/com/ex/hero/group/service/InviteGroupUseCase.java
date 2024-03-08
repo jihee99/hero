@@ -30,7 +30,7 @@ public class InviteGroupUseCase {
 		final GroupUserRole role = inviteGroupRequest.getRole();
 
 		final GroupUser groupUser = toGroupUser(groupId, invitedUserId, role);
-		 invitationEmailService.execute(inviteMember.toEmailUserInfo(), group.toGroupProfileVo().getName(), role);
+//		 invitationEmailService.execute(inviteMember.toEmailUserInfo(), group.toGroupProfileVo().getName(), role);
 
 		return commonGroupService.toGroupDetailResponseExecute(groupService.inviteGroupUser(group, groupUser));
 	}
