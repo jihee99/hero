@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ex.hero.group.model.Group;
-import com.ex.hero.domains.common.vo.GroupInfoVo;
-import com.ex.hero.domains.common.vo.GroupUserVo;
+import com.ex.hero.common.vo.GroupInfoVo;
+import com.ex.hero.common.vo.GroupUserVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import io.swagger.v3.oas.annotations.media.Schema;

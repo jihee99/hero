@@ -5,13 +5,15 @@ import java.util.stream.Collectors;
 
 import com.ex.hero.group.model.GroupUserRole;
 import com.ex.hero.group.repository.GroupRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import com.ex.hero.group.dto.response.GroupDetailResponse;
 import com.ex.hero.group.exception.GroupNotFoundException;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupUser;
-import com.ex.hero.domains.common.vo.GroupUserVo;
+import com.ex.hero.common.vo.GroupUserVo;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.repository.MemberRepository;
 import com.ex.hero.member.vo.MemberInfoVo;
@@ -32,6 +34,10 @@ public class CommonGroupService {
 	public GroupUser toGroupUser(Long groupId, Long userId, GroupUserRole role) {
 		final Group group = groupRepository.findById(groupId).orElseThrow(() -> GroupNotFoundException.EXCEPTION);
 		return GroupUser.builder().userId(userId).group(group).role(role).build();
+	}
+
+	public Slice<Group> querySliceGroupsByUserId(Long userId, Pageable pageable) {
+		return groupRepository.querySliceGroupsByUserId(userId, pageable);
 	}
 
 	public GroupDetailResponse toGroupDetailResponseExecute(Group group) {

@@ -1,6 +1,6 @@
 package com.ex.hero.group.dto.response;
 
-import com.ex.hero.domains.common.vo.EventProfileVo;
+import com.ex.hero.common.vo.EventProfileVo;
 import com.ex.hero.events.model.Event;
 import com.ex.hero.group.model.Group;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;

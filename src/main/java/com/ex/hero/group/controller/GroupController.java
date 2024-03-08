@@ -2,8 +2,10 @@ package com.ex.hero.group.controller;
 
 import java.util.UUID;
 
+import com.ex.hero.common.SliceResponse;
 import com.ex.hero.common.dto.PageResponse;
 import com.ex.hero.group.dto.response.GroupEventProfileResponse;
+import com.ex.hero.group.dto.response.GroupProfileResponse;
 import com.ex.hero.group.service.*;
 import com.ex.hero.member.model.Profile;
 import com.ex.hero.member.vo.MemberProfileVo;
@@ -42,6 +44,8 @@ public class GroupController {
 	private final UpdateGroupProfileUseCase updateGroupProfileUseCase;
 	private final ReadInviteUsersUseCase readInviteUsersUseCase;
 	private final ReadGroupEventUseCase readGroupEventsUseCase;
+	private final ReadGroupsUseCase readGroupsUseCase;
+	private final ReadGroupUseCase readGroupUseCase;
 
 	@Operation(summary = "그룹 간편 생성. 그룹을 생성한 유저는 마스터 사용자가 됩니다.")
 	@PostMapping
@@ -49,11 +53,17 @@ public class GroupController {
 		return createGroupUseCase.execute(createEventRequest);
 	}
 
-	@Operation(summary = "해당 그룹에 가입하지 않은 유저를 이메일로 검색합니다.")
-	@GetMapping("/{groupId}/invite/users")
-	public MemberProfileVo getInviteUserListByEmail(
-			@PathVariable Long groupId, @RequestParam(value = "email") @Email String email) {
-		return readInviteUsersUseCase.execute(groupId, email);
+	@Operation(summary = "내가 속한 호스트 리스트를 가져옵니다.")
+	@GetMapping
+	public SliceResponse<GroupProfileResponse> getAllHosts(
+			@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
+		return readGroupsUseCase.execute(pageable);
+	}
+
+	@Operation(summary = "고유 아이디에 해당하는 그룹 정보를 가져옵니다.")
+	@GetMapping("/{hostId}")
+	public GroupDetailResponse getHostById(@PathVariable Long hostId) {
+		return readGroupUseCase.execute(hostId);
 	}
 
 	@Operation(summary = "해당 그룹에서 관리중인 이벤트 리스트를 가져옵니다.")
@@ -63,6 +73,14 @@ public class GroupController {
 			@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
 		return readGroupEventsUseCase.execute(hostId, pageable);
 	}
+
+	@Operation(summary = "해당 그룹에 가입하지 않은 유저를 이메일로 검색합니다.")
+	@GetMapping("/{groupId}/invite/users")
+	public MemberProfileVo getInviteUserListByEmail(
+			@PathVariable Long groupId, @RequestParam(value = "email") @Email String email) {
+		return readInviteUsersUseCase.execute(groupId, email);
+	}
+
 
 	/* 초대받은 유저 그룹 가입 api */
 	@Operation(summary = "초대받은 그룹에 가입을 승인힙니다.")
