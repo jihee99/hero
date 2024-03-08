@@ -2,6 +2,7 @@ package com.ex.hero.group.service;
 
 import java.util.UUID;
 
+import com.ex.hero.member.model.MemberType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class CreateGroupUseCase {
 		final GroupUser masterGroupUser = toMasterGroupUser(group.getId(), id);
 
 		// 즉시 활성화
+		member.setAccountRole(MemberType.MASTER);
 		masterGroupUser.activate();
 		return GroupResponse.of(groupService.addGroupUser(group, masterGroupUser));
 	}
