@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-	private final String[] allowedUrls = {"/", "/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
+	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
 	private final AuthenticationEntryPoint entryPoint;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
 
@@ -54,9 +54,9 @@ public class SecurityConfig {
 				requests
 					.requestMatchers(allowedUrls).permitAll()
 
-					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "MASTER", "MANAGER", "ADMIN") // member, seller, admin 권한 허용
-//					.requestMatchers("/api/v[0-9]+/group/admin/**").hasAnyAuthority("HOST", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "MASTER", "MANAGER", "ADMIN") .requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
 					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
