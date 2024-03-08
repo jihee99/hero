@@ -18,17 +18,15 @@ import lombok.RequiredArgsConstructor;
 public class UpdateGroupProfileUseCase {
 	private final CommonGroupService commonGroupService;
 	private final GroupService groupService;
-	private final GroupRepository groupRepository;
 
 	@Transactional
 	public GroupDetailResponse execute(Long groupId, UpdateGroupRequest updateGroupRequest) {
 		final Group group = commonGroupService.findById(groupId);
-
 		return commonGroupService.toGroupDetailResponseExecute(
-			groupService.updateGroupProfile(group, toGroupprofile(updateGroupRequest)));
+			groupService.updateGroupProfile(group, toGroupProfile(updateGroupRequest)));
 	}
 
-	public GroupProfile toGroupprofile(UpdateGroupRequest updateGroupRequest) {
+	public GroupProfile toGroupProfile(UpdateGroupRequest updateGroupRequest) {
 		return GroupProfile.builder()
 			.introduce(updateGroupRequest.getIntroduce())
 			.contactEmail(updateGroupRequest.getContactEmail())

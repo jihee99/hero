@@ -106,10 +106,5 @@ public class GroupController {
 		return updateGroupProfileUseCase.execute(groupId, updateGroupRequest);
 	}
 
-	/* 해당 그룹에서 발급한 티켓 리스트 가져오는 api */
-
-	/* 해당 그룹에서 발급한 티켓의 정보 가져오는 api */
-
-
 }
 
