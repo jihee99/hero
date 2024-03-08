@@ -1,4 +1,4 @@
-package com.ex.hero.domains.common.vo;
+package com.ex.hero.common.vo;
 
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventBasic;

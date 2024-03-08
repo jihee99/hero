@@ -1,10 +1,10 @@
 package com.ex.hero.events.model;
 
 import com.ex.hero.common.model.BaseTimeEntity;
-import com.ex.hero.domains.common.vo.EventBasicVo;
-import com.ex.hero.domains.common.vo.EventDetailVo;
-import com.ex.hero.domains.common.vo.EventInfoVo;
-import com.ex.hero.domains.common.vo.EventProfileVo;
+import com.ex.hero.common.vo.EventBasicVo;
+import com.ex.hero.common.vo.EventDetailVo;
+import com.ex.hero.common.vo.EventInfoVo;
+import com.ex.hero.common.vo.EventProfileVo;
 import com.ex.hero.events.exception.CannotModifyOpenEventException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

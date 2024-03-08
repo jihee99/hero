@@ -1,6 +1,6 @@
 package com.ex.hero.ticket.dto.response;
 
-import com.ex.hero.domains.common.vo.Money;
+import com.ex.hero.common.vo.Money;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.ticket.model.TicketPayType;
 import com.ex.hero.ticket.model.TicketType;

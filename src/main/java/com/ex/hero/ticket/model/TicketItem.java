@@ -6,7 +6,7 @@ import com.ex.hero.member.model.AccountInfo;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
-import com.ex.hero.domains.common.vo.Money;
+import com.ex.hero.common.vo.Money;
 import com.ex.hero.member.model.Member;
 
 import jakarta.persistence.Column;
