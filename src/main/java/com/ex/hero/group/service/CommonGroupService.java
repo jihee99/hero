@@ -11,7 +11,7 @@ import com.ex.hero.group.dto.response.GroupDetailResponse;
 import com.ex.hero.group.exception.GroupNotFoundException;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupUser;
-import com.ex.hero.group.vo.GroupUserVo;
+import com.ex.hero.domains.common.vo.GroupUserVo;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.repository.MemberRepository;
 import com.ex.hero.member.vo.MemberInfoVo;

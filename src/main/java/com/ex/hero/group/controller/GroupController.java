@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Email;
 import lombok.SneakyThrows;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class GroupController {
 	private final RejectGroupUseCase rejectGroupUseCase;
 	private final UpdateGroupProfileUseCase updateGroupProfileUseCase;
 	private final ReadInviteUsersUseCase readInviteUsersUseCase;
-//	private final ReadGroupEventUseCase readGroupEventsUseCase;
+	private final ReadGroupEventUseCase readGroupEventsUseCase;
 
 	@Operation(summary = "그룹 간편 생성. 그룹을 생성한 유저는 마스터 사용자가 됩니다.")
 	@PostMapping
@@ -57,12 +58,11 @@ public class GroupController {
 
 	@Operation(summary = "해당 그룹에서 관리중인 이벤트 리스트를 가져옵니다.")
 	@GetMapping("/{hostId}/events")
-	public PageResponse<GroupEventProfileResponse> getHostEventsById(
+	public Page<GroupEventProfileResponse> getHostEventsById(
 			@PathVariable Long hostId,
 			@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-//		return readGroupEventsUseCase.execute(hostId, pageable);
+		return readGroupEventsUseCase.execute(hostId, pageable);
 	}
-
 
 	/* 초대받은 유저 그룹 가입 api */
 	@Operation(summary = "초대받은 그룹에 가입을 승인힙니다.")

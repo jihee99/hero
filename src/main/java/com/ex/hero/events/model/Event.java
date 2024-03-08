@@ -1,6 +1,10 @@
 package com.ex.hero.events.model;
 
 import com.ex.hero.common.model.BaseTimeEntity;
+import com.ex.hero.domains.common.vo.EventBasicVo;
+import com.ex.hero.domains.common.vo.EventDetailVo;
+import com.ex.hero.domains.common.vo.EventInfoVo;
+import com.ex.hero.domains.common.vo.EventProfileVo;
 import com.ex.hero.events.exception.CannotModifyOpenEventException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -53,9 +57,7 @@ public class Event extends BaseTimeEntity {
         return this.eventDetail != null && this.eventDetail.isUpdated();
     }
 
-    public Boolean isPreparing() {
-        return this.status == EventStatus.PREPARING;
-    }
+    public Boolean isPreparing() { return this.status == EventStatus.PREPARING; }
 
     public Boolean isClosed() {
         return this.status == EventStatus.CLOSED;
@@ -70,5 +72,19 @@ public class Event extends BaseTimeEntity {
         if (status == EventStatus.OPEN) throw CannotModifyOpenEventException.EXCEPTION;
     }
 
+
+
+    public EventInfoVo toEventInfoVo() {
+        return EventInfoVo.from(this);
+    }
+
+    public EventDetailVo toEventDetailVo() {
+        return EventDetailVo.from(this);
+    }
+
+    public EventBasicVo toEventBasicVo() {
+        return EventBasicVo.from(this);
+    }
+    public EventProfileVo toEventProfileVo() { return EventProfileVo.from(this); }
 
 }

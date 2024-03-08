@@ -7,6 +7,7 @@ import com.ex.hero.events.service.CommonEventService;
 import com.ex.hero.group.dto.response.GroupEventProfileResponse;
 import com.ex.hero.group.model.Group;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,10 @@ public class ReadGroupEventUseCase{
 
     private final CommonEventService commonEventService;
 
-    public PageResponse<GroupEventProfileResponse> execute(Long hostId, Pageable pageable) {
+    public Page<GroupEventProfileResponse> execute(Long hostId, Pageable pageable) {
         Group group = commonGroupService.findById(hostId);
-        return null;
-//                commonEventService
-//                        .findAllByHostId(hostId, pageable)
-//                        .map(event -> GroupEventProfileResponse.of(group, event)));
+        return commonEventService
+                .findAllByHostId(hostId, pageable)
+                .map(event -> GroupEventProfileResponse.of(group, event));
     }
 }

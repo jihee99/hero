@@ -1,4 +1,4 @@
-package com.ex.hero.group.vo;
+package com.ex.hero.domains.common.vo;
 
 
 import com.ex.hero.group.model.Group;

@@ -1,6 +1,4 @@
-package com.ex.hero.group.vo;
-
-import java.util.UUID;
+package com.ex.hero.domains.common.vo;
 
 import com.ex.hero.group.model.Group;
 

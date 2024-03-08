@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface EventCustomRepository {
 
-    Slice<Event> querySliceEventsByHostIdIn(List<Long> hostIds, Pageable pageable);
+    Slice<Event> querySliceEventsByGroupIdIn(List<Long> hostIds, Pageable pageable);
 
     Slice<Event> querySliceEventsByStatus(EventStatus status, Pageable pageable);
 

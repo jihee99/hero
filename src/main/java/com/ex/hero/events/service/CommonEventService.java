@@ -24,18 +24,16 @@ public class CommonEventService {
                 .orElseThrow(() -> EventNotFoundException.EXCEPTION);
     }
 
-//    public Page<Event>
-
     public Page<Event> findAllByHostId(Long groupId, Pageable pageable) {
-//        return eventRepository.findAllByGroupId(groupId, pageable);
+        return eventRepository.findAllByGroupId(groupId, pageable);
     }
 
     public Page<Event> findAllByHostIdIn(List<Long> groupId, Pageable pageable) {
-//        return eventRepository.findAllByHostIdIn(groupId, pageable);
+        return eventRepository.findAllByGroupIdIn(groupId, pageable);
     }
 
     public Slice<Event> querySliceEventsByHostIdIn(List<Long> groupId, Pageable pageable) {
-        return eventRepository.querySliceEventsByHostIdIn(groupId, pageable);
+        return eventRepository.querySliceEventsByGroupIdIn(groupId, pageable);
     }
 
     public Slice<Event> querySliceEventsByStatus(EventStatus status, Pageable pageable) {
@@ -51,6 +49,6 @@ public class CommonEventService {
     }
 
     public List<Event> findAllByIds(List<Long> ids) {
-//        return eventRepository.findAllByIdIn(ids);
+        return eventRepository.findAllByIdIn(ids);
     }
 }

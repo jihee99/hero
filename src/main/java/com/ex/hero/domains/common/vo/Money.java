@@ -1,4 +1,4 @@
-package com.ex.hero.common.vo;
+package com.ex.hero.domains.common.vo;
 
 import java.math.BigDecimal;
 import java.util.Collection;
