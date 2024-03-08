@@ -27,7 +27,7 @@ public class MemberUtils {
 	private static List<SimpleGrantedAuthority> notUserAuthority = List.of(anonymous, swagger);
 	private final MemberRepository memberRepository;
 
-	public static Long getCurrentMemberId(){
+	public Long getCurrentMemberId(){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		if (authentication == null) {
@@ -47,4 +47,5 @@ public class MemberUtils {
 	public Member getCurrentMember(){
 		return memberRepository.findById(getCurrentMemberId()).orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
+
 }

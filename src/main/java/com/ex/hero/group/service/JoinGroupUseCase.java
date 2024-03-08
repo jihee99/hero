@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ex.hero.common.util.MemberUtils;
 import com.ex.hero.group.dto.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
+import com.ex.hero.member.model.Member;
+import com.ex.hero.member.model.MemberType;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,8 +23,10 @@ public class JoinGroupUseCase {
 	@Transactional
 	public GroupDetailResponse execute(Long groupId) {
 		final Long userId = memberUtils.getCurrentMemberId();
+		final Member member = memberUtils.getCurrentMember();
 		final Group group = commonGroupService.findById(groupId);
 
+		member.setAccountRole(MemberType.MANAGER);
 		return commonGroupService.toGroupDetailResponseExecute(groupService.activateGroupUser(group, userId));
 	}
 

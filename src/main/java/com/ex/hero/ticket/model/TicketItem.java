@@ -25,7 +25,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "tickets")
+@Table(name = "tbl_tickets")
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -69,9 +69,6 @@ public class TicketItem {
 	@ColumnDefault(value = "'VALID'")
 	@Comment("티켓 상태")
 	private TicketItemStatus ticketItemStatus = TicketItemStatus.VALID;
-
-
-
 
 
 	/* 선착순 티켓인지 확인하는 메서드 */

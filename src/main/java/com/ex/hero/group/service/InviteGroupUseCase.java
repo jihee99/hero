@@ -1,8 +1,7 @@
 package com.ex.hero.group.service;
 
 
-import java.util.UUID;
-
+import com.ex.hero.mail.service.GroupUserInvitationEmailService;
 import com.ex.hero.member.service.CommonMemberService;
 import org.springframework.stereotype.Service;
 

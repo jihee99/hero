@@ -5,6 +5,11 @@ import java.util.UUID;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.SneakyThrows;
+
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,10 +43,8 @@ import lombok.extern.slf4j.Slf4j;
 public class GroupController {
 
 	private final CreateGroupUseCase createGroupUseCase;
-	private final InviteGroupUseCase inviteGroupUseCase;
 	private final JoinGroupUseCase joinGroupUseCase;
 	private final RejectGroupUseCase rejectGroupUseCase;
-	private final UpdateGroupUserRoleUseCase updateGroupUserRoleUseCase;
 	private final UpdateGroupProfileUseCase updateGroupProfileUseCase;
 
 	@Operation(summary = "그룹 간편 생성. 그룹을 생성한 유저는 마스터 사용자가 됩니다.")
@@ -50,14 +53,13 @@ public class GroupController {
 		return createGroupUseCase.execute(createEventRequest);
 	}
 
-	/* 멤버를 그룹 유저로 초대하는 api */
-	@SneakyThrows
-	@Operation(summary = "멤버를 그룹 유저로 초대합니다.")
-	@PostMapping("/{groupId}/invite")
-	public GroupDetailResponse inviteGroup(
-		@PathVariable Long groupId, @RequestBody @Valid InviteGroupRequest inviteGroupRequest
-	){
-		return inviteGroupUseCase.execute(groupId, inviteGroupRequest);
+	/* 해당 그룹이 발급한 티켓 리스트 가져오는 api */
+	@Operation(summary = "해당 그룹이 관리중인 티켓 리스트를 가져옵니다.")
+	@GetMapping("/{groupId}/events")
+	public PageResponse<HostEventProfileResponse> getHostEventsById(
+		@PathVariable Long groupId,
+		@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
+		return readHostEventsUseCase.execute(groupId, pageable);
 	}
 
 	/* 초대받은 유저 그룹 가입 api */
@@ -74,19 +76,10 @@ public class GroupController {
 		return rejectGroupUseCase.execute(groupId);
 	}
 
-	/* 그룹 유저의 권한을 변경하는 api (단, 마스터만 가능) */
-	@Operation(summary = "그룹 유저의 권한을 변경합니다. 매니저 이상만 가능합니다.")
-	@PatchMapping("/admin/{groupId}/role")
-	public GroupDetailResponse patchGroupUserRole(
-		@PathVariable Long groupId,
-		@RequestBody @Valid UpdateGroupUserRoleRequest updateGroupUserRoleRequest
-	) {
-		return updateGroupUserRoleUseCase.execute(groupId, updateGroupUserRoleRequest);
-	}
 
 	/* 그룹 정보 업데이트 api (단, 매니저이상부터 가능) */
 	@Operation(summary = "그룹 정보를 업데이트 합니다. 매니저 이상부터 가능")
-	@PatchMapping("/{groupId}/profile")
+	@PostMapping("/{groupId}/profile")
 	public GroupDetailResponse patchGroupById(
 		@PathVariable Long groupId, @RequestBody @Valid UpdateGroupRequest updateGroupRequest
 	) {
@@ -94,6 +87,8 @@ public class GroupController {
 	}
 
 	/* 해당 그룹에서 발급한 티켓 리스트 가져오는 api */
+
+
 
 	/* 해당 그룹에서 발급한 티켓의 정보 가져오는 api */
 
