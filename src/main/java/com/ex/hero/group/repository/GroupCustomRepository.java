@@ -12,5 +12,5 @@ public interface GroupCustomRepository {
 
     List<Group> queryGroupsByActiveUserId(Long id);
 
-    Slice<Group> querySliceGroupsByActiveUserId(Long id, Pageable pageable);
+    // Slice<Group> querySliceGroupsByActiveUserId(Long id, Pageable pageable);
 }

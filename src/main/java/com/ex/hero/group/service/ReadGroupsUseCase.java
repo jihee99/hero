@@ -21,10 +21,11 @@ public class ReadGroupsUseCase {
         final Member member = memberUtils.getCurrentMember();
         final Long userId = member.getUserId();
 
-        return SliceResponse.of(
-                commonGroupService
-                        .querySliceGroupsByUserId(userId, pageable)
-                        .map(group -> GroupProfileResponse.of(group, userId)));
+        return null;
+        // return SliceResponse.of(
+        //         commonGroupService
+        //                 .querySliceGroupsByUserId(userId, pageable)
+        //                 .map(group -> GroupProfileResponse.of(group, userId)));
     }
 
 }

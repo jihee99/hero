@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-//@EnumClass
+// @EnumClass
 public enum EventStatus {
     PREPARING("PREPARING", "준비중"),
     OPEN("OPEN", "진행중"),

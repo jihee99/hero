@@ -36,9 +36,9 @@ public class CommonGroupService {
 		return GroupUser.builder().userId(userId).group(group).role(role).build();
 	}
 
-	public Slice<Group> querySliceGroupsByUserId(Long userId, Pageable pageable) {
-		return groupRepository.querySliceGroupsByUserId(userId, pageable);
-	}
+	// public Slice<Group> querySliceGroupsByUserId(Long userId, Pageable pageable) {
+	// 	return groupRepository.querySliceGroupsByUserId(userId, pageable);
+	// }
 
 	public GroupDetailResponse toGroupDetailResponseExecute(Group group) {
 		final List<Long> userIds = group.getGroupUser_UserIds();
