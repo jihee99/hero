@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class EventDetailVo {
+
     // (마크다운) 전시 상세 내용
     private String content;
 

@@ -24,7 +24,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "tbl_tickets")
+@Table(name = "tbl_ticket_item")
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,7 +32,7 @@ public class TicketItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ticket_id")
+	@Column(name = "ticket_item_id")
 	@Comment("티켓 아이디")
 	private Long id;
 
@@ -46,34 +46,42 @@ public class TicketItem {
 	private TicketPayType payType;
 
 	private String name;
+
 	private String description;
+
 	private Money price;
+
 	@Comment("재고")
 	private Long quantity;
+
 	@Comment("공급량")
 	private Long supplyCount;
+
 	@Comment("구매 제한 수량")
 	private Long purchaseLimit;
+
 	@Enumerated(EnumType.STRING)
 	private TicketType type;
+
 	@Embedded
 	private AccountInfo accountInfo;
+
 	@Comment("판매 가능 여부")
 	private Boolean isSellable;
+
 	@Comment("판매 가능 시간")
 	private LocalDateTime saleStartAt;
+
 	@Comment("판매 종료 시간")
 	private LocalDateTime saleEndAt;
+
 	@Enumerated(EnumType.STRING)
 	@ColumnDefault(value = "'VALID'")
 	@Comment("티켓 상태")
 	private TicketItemStatus ticketItemStatus = TicketItemStatus.VALID;
 
+	private Long eventId;
 
-	/* 선착순 티켓인지 확인하는 메서드 */
-	public Boolean isFCFS() {
-		return this.type.isFCFS();
-	}
 
 	/* 티켓 수량이 감소되었는지 확인하는 메서드 */
 	public Boolean isQuantityReduced() {

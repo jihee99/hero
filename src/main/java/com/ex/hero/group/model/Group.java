@@ -48,7 +48,6 @@ public class Group {
     public void inviteGroupUsers(Set<GroupUser> groupUserList) {
         groupUserList.forEach(this::validateGroupUserExistence);
         this.groupUsers.addAll(groupUserList);
-//        hostUserList.forEach(hostUser -> Events.raise(HostUserInvitationEvent.of(this, hostUser)));
     }
 
     public Boolean hasGroupUserId(Long userId) {

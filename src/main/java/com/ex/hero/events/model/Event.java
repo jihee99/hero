@@ -1,13 +1,22 @@
 package com.ex.hero.events.model;
 
+import com.ex.hero.common.exception.HeroException;
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.common.vo.EventBasicVo;
 import com.ex.hero.common.vo.EventDetailVo;
 import com.ex.hero.common.vo.EventInfoVo;
 import com.ex.hero.common.vo.EventProfileVo;
+import com.ex.hero.events.exception.AlreadyCloseStatusException;
+import com.ex.hero.events.exception.AlreadyDeletedStatusException;
+import com.ex.hero.events.exception.AlreadyOpenStatusException;
+import com.ex.hero.events.exception.CannotDeleteByOpenEventException;
 import com.ex.hero.events.exception.CannotModifyOpenEventException;
+import com.ex.hero.events.exception.EventOpenTimeExpiredException;
+import com.ex.hero.ticket.model.TicketItem;
+
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -30,10 +39,8 @@ public class Event extends BaseTimeEntity {
 
     @Embedded private EventBasic eventBasic;
 
-//    TODO 고민중..
-//    @Embedded private EventPlace eventPlace;
-
     @Embedded private EventDetail eventDetail;
+
 
     // 이벤트 상태
     @Enumerated(EnumType.STRING)
@@ -53,9 +60,6 @@ public class Event extends BaseTimeEntity {
         return this.eventBasic != null && this.eventBasic.isUpdated();
     }
 
-    public Boolean hasEventDetail(){
-        return this.eventDetail != null && this.eventDetail.isUpdated();
-    }
 
     public Boolean isPreparing() { return this.status == EventStatus.PREPARING; }
 
@@ -68,11 +72,24 @@ public class Event extends BaseTimeEntity {
         this.eventBasic = eventBasic;
     }
 
+    public void setEventDetail(EventDetail eventDetail) {
+        this.eventDetail = eventDetail;
+    }
+
+    @Builder
+    public Event(Long groupId, String name, LocalDateTime startAt, Long runTime) {
+        this.groupId = groupId;
+        this.eventBasic = EventBasic.builder().name(name).startAt(startAt).runTime(runTime).build();
+    }
+
     public void validateOpenStatus() {
         if (status == EventStatus.OPEN) throw CannotModifyOpenEventException.EXCEPTION;
     }
 
-
+    public void validateStartAt() {
+        if (this.getStartAt().isBefore(LocalDateTime.now()))
+            throw EventOpenTimeExpiredException.EXCEPTION;
+    }
 
     public EventInfoVo toEventInfoVo() {
         return EventInfoVo.from(this);
@@ -85,6 +102,28 @@ public class Event extends BaseTimeEntity {
     public EventBasicVo toEventBasicVo() {
         return EventBasicVo.from(this);
     }
+
     public EventProfileVo toEventProfileVo() { return EventProfileVo.from(this); }
+
+    public void open() {
+        validateStartAt();
+        updateStatus(EventStatus.OPEN, AlreadyOpenStatusException.EXCEPTION);
+    }
+
+    public void close() {
+        updateStatus(EventStatus.CLOSED, AlreadyCloseStatusException.EXCEPTION);
+    }
+
+    private void updateStatus(EventStatus status, HeroException exception) {
+        if (this.status == status) throw exception;
+        this.status = status;
+    }
+
+    public void deleteSoft() {
+        // 오픈된 이벤트는 삭제 불가
+        if (this.status == EventStatus.OPEN) throw CannotDeleteByOpenEventException.EXCEPTION;
+        if (this.status == EventStatus.DELETED) throw AlreadyDeletedStatusException.EXCEPTION;
+        this.status = EventStatus.DELETED;
+    }
 
 }

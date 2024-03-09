@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class EventBasicVo {
+
     private String name;
     private LocalDateTime startAt;
     private LocalDateTime endAt;

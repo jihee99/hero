@@ -118,7 +118,6 @@ public class Member {
 	// @PostPersist
 	// public void registerEvent() {
 	// 	UserRegisterEvent userRegisterEvent = UserRegisterEvent.builder().userId(id).build();
-	// 	Events.raise(userRegisterEvent);
 	// }
 
 }
