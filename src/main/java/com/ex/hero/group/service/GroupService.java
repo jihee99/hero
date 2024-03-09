@@ -1,5 +1,6 @@
 package com.ex.hero.group.service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -58,17 +59,28 @@ public class GroupService {
 		return groupRepository.save(group);
 	}
 
-	/** 해당 유저가 그룹 사용자에 속하는지 확인하는 검증 로직 */
+	/* 본인이 속한 그룹 리스트를 가져오는 쿼리(승인완료된 그룹만) */
+	public List<Group> findAllByGroupUsers_UserId(Long userId){
+		return groupRepository.findAllByGroupUsers_UserIdAndGroupUsers_ActiveTrue(userId);
+		// return groupRepository.findAllByGroupUsers_UserId(userId);
+	}
+
+	/* 본인이 마스터인 그룹을 가져오는 쿼리 */
+	public List<Group> findAllByMasterUserId(Long userId) {
+		return groupRepository.findAllByMasterUserId(userId);
+	}
+
+	/* 해당 유저가 그룹 사용자에 속하는지 확인하는 검증 로직 */
 	public void validateGroupUser(Group group, Long userId) {
 		group.validateGroupUser(userId);
 	}
 
-	/** 해당 유저가 그룹의 마스터(담당자, 방장)인지 확인하는 검증 로직 */
+	/* 해당 유저가 그룹의 마스터(담당자, 방장)인지 확인하는 검증 로직 */
 	public void validateMasterGroupUser(Group group, Long userId) {
 		group.validateMasterGroupUser(userId);
 	}
 
-	/** 해당 유저가 슈퍼 호스트인지 확인하는 검증 로직 */
+	/* 해당 유저가 슈퍼 호스트인지 확인하는 검증 로직 */
 	public void validateManagerGroupUser(Long groupId, Long userId) {
 		Group group = groupRepository.findById(groupId).orElseThrow(() -> GroupNotFoundException.EXCEPTION);
 		group.validateManagerGroupUser(userId);

@@ -28,7 +28,7 @@ public class JoinGroupUseCase {
 		final Member member = memberUtils.getCurrentMember();
 		final Group group = commonGroupService.findById(groupId);
 
-		member.setAccountRole(MemberType.MANAGER);
+		member.updateMemberType(MemberType.MANAGER);
 		return commonGroupService.toGroupDetailResponseExecute(groupService.activateGroupUser(group, userId));
 	}
 

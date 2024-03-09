@@ -36,7 +36,7 @@ public class CreateGroupUseCase {
 		final GroupUser masterGroupUser = toMasterGroupUser(group.getId(), id);
 
 		// 즉시 활성화
-		member.setAccountRole(MemberType.MASTER);
+		member.updateMemberType(MemberType.MASTER);
 		masterGroupUser.activate();
 		return GroupResponse.of(groupService.addGroupUser(group, masterGroupUser));
 	}

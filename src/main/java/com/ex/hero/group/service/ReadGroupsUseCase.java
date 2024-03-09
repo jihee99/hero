@@ -1,8 +1,12 @@
 package com.ex.hero.group.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.ex.hero.common.SliceResponse;
 import com.ex.hero.common.util.MemberUtils;
 import com.ex.hero.group.dto.response.GroupProfileResponse;
+import com.ex.hero.group.model.Group;
 import com.ex.hero.member.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -14,18 +18,19 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ReadGroupsUseCase {
     private final MemberUtils memberUtils;
-    private final CommonGroupService commonGroupService;
+    private final GroupService groupService;
+
 
     @Transactional(readOnly = true)
-    public SliceResponse<GroupProfileResponse> execute(Pageable pageable) {
+    public List<GroupProfileResponse> execute(Pageable pageable) {
         final Member member = memberUtils.getCurrentMember();
         final Long userId = member.getUserId();
 
-        return null;
-        // return SliceResponse.of(
-        //         commonGroupService
-        //                 .querySliceGroupsByUserId(userId, pageable)
-        //                 .map(group -> GroupProfileResponse.of(group, userId)));
+        return groupService.findAllByGroupUsers_UserId(userId)
+            .stream()
+            .map(group -> GroupProfileResponse.of(group, userId))
+            .collect(Collectors.toList());
+
     }
 
 }

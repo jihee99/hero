@@ -1,5 +1,6 @@
 package com.ex.hero.group.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.ex.hero.common.SliceResponse;
@@ -55,7 +56,7 @@ public class GroupController {
 
 	@Operation(summary = "내가 속한 호스트 리스트를 가져옵니다.")
 	@GetMapping
-	public SliceResponse<GroupProfileResponse> getAllHosts(
+	public List<GroupProfileResponse> getAllHosts(
 			@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
 		return readGroupsUseCase.execute(pageable);
 	}
@@ -66,21 +67,12 @@ public class GroupController {
 		return readGroupUseCase.execute(hostId);
 	}
 
-	@Operation(summary = "해당 그룹에서 관리중인 이벤트 리스트를 가져옵니다.")
-	@GetMapping("/{hostId}/events")
-	public Page<GroupEventProfileResponse> getHostEventsById(
-			@PathVariable Long hostId,
-			@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-		return readGroupEventsUseCase.execute(hostId, pageable);
-	}
-
 	@Operation(summary = "해당 그룹에 가입하지 않은 유저를 이메일로 검색합니다.")
 	@GetMapping("/{groupId}/invite/users")
 	public MemberProfileVo getInviteUserListByEmail(
 			@PathVariable Long groupId, @RequestParam(value = "email") @Email String email) {
 		return readInviteUsersUseCase.execute(groupId, email);
 	}
-
 
 	/* 초대받은 유저 그룹 가입 api */
 	@Operation(summary = "초대받은 그룹에 가입을 승인힙니다.")
@@ -96,7 +88,6 @@ public class GroupController {
 		return rejectGroupUseCase.execute(groupId);
 	}
 
-
 	/* 그룹 정보 업데이트 api (단, 매니저이상부터 가능) */
 	@Operation(summary = "그룹 정보를 업데이트 합니다. 매니저 이상부터 가능")
 	@PatchMapping("/{groupId}/profile")
@@ -105,6 +96,16 @@ public class GroupController {
 	) {
 		return updateGroupProfileUseCase.execute(groupId, updateGroupRequest);
 	}
+
+	// TODO 이벤트 리스트 조회 서비스 생성하기
+	@Operation(summary = "해당 그룹에서 관리중인 이벤트 리스트를 가져옵니다.")
+	@GetMapping("/{hostId}/events")
+	public Page<GroupEventProfileResponse> getHostEventsById(
+		@PathVariable Long hostId,
+		@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
+		return readGroupEventsUseCase.execute(hostId, pageable);
+	}
+
 
 }
 

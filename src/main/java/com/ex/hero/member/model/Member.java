@@ -15,16 +15,13 @@ import com.ex.hero.member.exception.ForbiddenUserException;
 import com.ex.hero.member.vo.MemberInfoVo;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PostPersist;
+
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.*;
@@ -32,11 +29,8 @@ import lombok.*;
 
 @Entity
 @Table(name = "tbl_member")
-@Builder
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Member {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,16 +62,26 @@ public class Member {
 		return MemberProfileVo.from(this);
 	}
 
-	public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
-		return Member.builder()
-			.email(request.email())
-			.password(passwordEncoder.encode(request.password()))
-			.name(request.name())
-			.accountRole(MemberType.USER)
-			.createdAt(LocalDateTime.now())
-			.accountState(AccountState.NORMAL)
-			.build();
+	@Builder
+	public Member(SignUpRequest request, PasswordEncoder passwordEncoder) {
+		this.email = request.email();
+		this.password = passwordEncoder.encode(request.password());
+		this.name = request.name();
+		this.accountRole = MemberType.USER;
+		this.createdAt = LocalDateTime.now();
+		this.accountState = AccountState.NORMAL;
 	}
+
+	// public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
+	// 	return Member.builder()
+	// 		.email(request.email())
+	// 		.password(passwordEncoder.encode(request.password()))
+	// 		.name(request.name())
+	// 		.accountRole(MemberType.USER)
+	// 		.createdAt(LocalDateTime.now())
+	// 		.accountState(AccountState.NORMAL)
+	// 		.build();
+	// }
 
 	public void login() {
 		if (!AccountState.NORMAL.equals(this.accountState)) {
@@ -85,7 +89,6 @@ public class Member {
 		}
 		lastLoginAt = LocalDateTime.now();
 	}
-
 
 	public void update(MemberUpdateRequest newMember, PasswordEncoder passwordEncoder) {
 		this.password = newMember.newPassword() == null || newMember.newPassword().isBlank()
@@ -107,6 +110,10 @@ public class Member {
 		return accountState == AccountState.DELETED;
 	}
 
+
+	public void updateMemberType(MemberType type){
+		this.accountRole = type;
+	}
 
 	// @PostPersist
 	// public void registerEvent() {
