@@ -57,7 +57,7 @@ public class GroupEventController {
 		return updateEventDetailUseCase.execute(eventId, updateEventDetailRequest);
 	}
 
-	@Operation(summary = "공연을 오픈 상태로 변경합니다. 모든 체크리스트를 달성해야 합니다.")
+	@Operation(summary = "전시를 오픈 상태로 변경합니다.")
 	@PostMapping("/{eventId}/open")
 	public EventResponse updateEventStatus(@PathVariable Long eventId) {
 		return openEventUseCase.execute(eventId);

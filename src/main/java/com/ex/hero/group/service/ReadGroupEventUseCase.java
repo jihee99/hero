@@ -18,8 +18,8 @@ public class ReadGroupEventUseCase{
 
     // private final CommonEventService commonEventService;
 
-    public Page<GroupEventProfileResponse> execute(Long hostId, Pageable pageable) {
-        Group group = commonGroupService.findById(hostId);
+    public Page<GroupEventProfileResponse> execute(Long groupId, Pageable pageable) {
+        Group group = commonGroupService.findById(groupId);
         return null;
     }
 }

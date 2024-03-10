@@ -36,7 +36,6 @@ public class CommonGroupService {
 		return GroupUser.builder().userId(userId).group(group).role(role).build();
 	}
 
-
 	public GroupDetailResponse toGroupDetailResponseExecute(Group group) {
 		final List<Long> userIds = group.getGroupUser_UserIds();
 		final List<Member> userList = memberRepository.findAllByUserIdIn(userIds);

@@ -1,12 +1,15 @@
 package com.ex.hero.events.model;
 
+import com.ex.hero.common.deserializer.CustomEnumDeserializer;
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@JsonDeserialize(using = CustomEnumDeserializer.class)
 public enum EventStatus {
     PREPARING("PREPARING", "준비중"),
     OPEN("OPEN", "진행중"),

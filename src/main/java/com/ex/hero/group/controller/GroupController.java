@@ -101,9 +101,9 @@ public class GroupController {
 	@Operation(summary = "해당 그룹에서 관리중인 이벤트 리스트를 가져옵니다.")
 	@GetMapping("/{hostId}/events")
 	public Page<GroupEventProfileResponse> getHostEventsById(
-		@PathVariable Long hostId,
+		@PathVariable Long groupId,
 		@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-		return readGroupEventsUseCase.execute(hostId, pageable);
+		return readGroupEventsUseCase.execute(groupId, pageable);
 	}
 
 

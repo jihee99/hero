@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Tag(name = "그룹마스터용 API")
+@Tag(name = "그룹용 API(마스터용)")
 @RequestMapping("/api/v1/master")
 @RestController
 @RequiredArgsConstructor
