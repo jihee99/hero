@@ -1,11 +1,6 @@
 package com.ex.hero.events.controller;
 
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ex.hero.events.model.dto.request.CreateEventRequest;
 import com.ex.hero.events.model.dto.request.UpdateEventBasicRequest;
@@ -34,6 +29,7 @@ public class GroupEventController {
  	private final UpdateEventDetailUseCase updateEventDetailUseCase;
  	private final UpdateEventStatusUseCase updateEventStatusUseCase;
 	private final OpenEventUseCase openEventUseCase;
+	private final DeleteEventUseCase deleteEventUseCase;
 
 	@Operation(summary = "전시 기본 정보를 등록하여, 새로운 이벤트를 생성합니다.")
 	@PostMapping
@@ -58,7 +54,7 @@ public class GroupEventController {
 	}
 
 	@Operation(summary = "전시를 오픈 상태로 변경합니다.")
-	@PostMapping("/{eventId}/open")
+	@GetMapping("/{eventId}/open")
 	public EventResponse updateEventStatus(@PathVariable Long eventId) {
 		return openEventUseCase.execute(eventId);
 	}
@@ -72,6 +68,11 @@ public class GroupEventController {
 		return updateEventStatusUseCase.execute(eventId, updateEventDetailRequest);
 	}
 
+	@Operation(summary = "공연을 삭제합니다. 조건에 맞지 않을 경우 삭제할 수 없습니다.")
+	@GetMapping("/{eventId}/delete")
+	public EventResponse deleteEvent(@PathVariable Long eventId) {
+		return deleteEventUseCase.execute(eventId);
+	}
 
 
 

@@ -1,5 +1,7 @@
 package com.ex.hero.events.service;
 
+import com.ex.hero.events.exception.CannotDeleteByIssuedTicketException;
+import com.ex.hero.ticket.service.CommonIssuedTicketService;
 import org.springframework.stereotype.Service;
 
 import com.ex.hero.events.exception.CannotOpenEventException;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EventService {
 
 	private final EventRepository eventRepository;
+	private final CommonIssuedTicketService commonIssuedTicketService;
 
 	public Event createEvent(Event event) {
 		return eventRepository.save(event);
@@ -51,4 +54,11 @@ public class EventService {
 		if (!event.hasEventInfo()) throw CannotOpenEventException.EXCEPTION;
 	}
 
+	public Event deleteEvent(Event event) {
+		// 발급된 티켓이 있다면 삭제 불가
+		if (commonIssuedTicketService.existsByEventId(event.getId()))
+			throw CannotDeleteByIssuedTicketException.EXCEPTION;
+		event.deleteSoft();
+		return eventRepository.save(event);
+	}
 }
