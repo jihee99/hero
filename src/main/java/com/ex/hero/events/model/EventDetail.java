@@ -14,7 +14,6 @@ public class EventDetail {
     // 포스터 이미지도 고민중
 //    @Embedded private ImageVo posterImage;
 
-    //x
     @Column(columnDefinition = "TEXT")
     private String content;
 

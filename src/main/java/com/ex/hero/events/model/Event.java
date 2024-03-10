@@ -9,10 +9,10 @@ import com.ex.hero.common.vo.EventProfileVo;
 import com.ex.hero.events.exception.AlreadyCloseStatusException;
 import com.ex.hero.events.exception.AlreadyDeletedStatusException;
 import com.ex.hero.events.exception.AlreadyOpenStatusException;
+import com.ex.hero.events.exception.AlreadyPreparingStatusException;
 import com.ex.hero.events.exception.CannotDeleteByOpenEventException;
 import com.ex.hero.events.exception.CannotModifyOpenEventException;
 import com.ex.hero.events.exception.EventOpenTimeExpiredException;
-import com.ex.hero.ticket.model.TicketItem;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -56,8 +56,8 @@ public class Event extends BaseTimeEntity {
         return this.getEventBasic().endAt();
     }
 
-    public Boolean hasEventBasic() {
-        return this.eventBasic != null && this.eventBasic.isUpdated();
+    public Boolean hasEventInfo() {
+        return this.eventBasic != null && this.eventBasic.isUpdated() && this.eventDetail != null;
     }
 
 
@@ -113,6 +113,11 @@ public class Event extends BaseTimeEntity {
     public void close() {
         updateStatus(EventStatus.CLOSED, AlreadyCloseStatusException.EXCEPTION);
     }
+
+    public void prepare() {
+        updateStatus(EventStatus.PREPARING, AlreadyPreparingStatusException.EXCEPTION);
+    }
+
 
     private void updateStatus(EventStatus status, HeroException exception) {
         if (this.status == status) throw exception;

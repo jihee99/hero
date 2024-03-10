@@ -56,6 +56,7 @@ public class SecurityConfig {
 
 					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/manager/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 

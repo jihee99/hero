@@ -1,7 +1,10 @@
 package com.ex.hero.common.vo;
 
+import com.ex.hero.common.annotation.DateFormat;
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventBasic;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,7 +15,9 @@ import java.time.LocalDateTime;
 public class EventBasicVo {
 
     private String name;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime startAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
     private LocalDateTime endAt;
     private Long runTime;
 

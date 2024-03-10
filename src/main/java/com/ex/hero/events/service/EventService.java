@@ -2,6 +2,7 @@ package com.ex.hero.events.service;
 
 import org.springframework.stereotype.Service;
 
+import com.ex.hero.events.exception.CannotOpenEventException;
 import com.ex.hero.events.exception.UseOtherApiException;
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventBasic;
@@ -10,7 +11,9 @@ import com.ex.hero.events.model.EventStatus;
 import com.ex.hero.events.repository.EventRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EventService {
@@ -31,10 +34,23 @@ public class EventService {
 		return eventRepository.save(event);
 	}
 
+	public Event openEvent(Event event) {
+		this.validateEventInfoExistence(event);
+		event.open();
+		return eventRepository.save(event);
+	}
+
 	public Event updateEventStatus(Event event, EventStatus status) {
+		log.info(" @@ {}", status);
+
 		if (status == EventStatus.CLOSED) event.close();
+		else if (status == EventStatus.PREPARING) event.prepare();
 		else throw UseOtherApiException.EXCEPTION;
 		return eventRepository.save(event);
+	}
+
+	public void validateEventInfoExistence(Event event) {
+		if (!event.hasEventInfo()) throw CannotOpenEventException.EXCEPTION;
 	}
 
 }

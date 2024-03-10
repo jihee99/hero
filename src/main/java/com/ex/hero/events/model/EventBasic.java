@@ -9,13 +9,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EventBasic {
     @Column(length = 25)
     private String name;
-
     private LocalDateTime startAt;
     private Long runTime;
 

@@ -12,13 +12,18 @@ import lombok.Getter;
 @Getter
 @Builder
 public class EventResponse {
+
 	private Long eventId;
+
 	private Long hostId;
+
 	private EventStatus status;
 
 	@JsonUnwrapped
 	private EventBasicVo eventBasic;
-	@JsonUnwrapped private EventDetailVo eventDetail;
+
+	@JsonUnwrapped
+	private EventDetailVo eventDetail;
 
 	public static EventResponse of(Event event) {
 		return EventResponse.builder()

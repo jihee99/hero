@@ -1,5 +1,6 @@
 package com.ex.hero.events.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ex.hero.common.util.MemberUtils;
@@ -12,6 +13,7 @@ import com.ex.hero.group.service.GroupService;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class CreateEventUseCase {
     private final MemberUtils memberUtils;
@@ -19,7 +21,6 @@ public class CreateEventUseCase {
     private final EventService eventService;
     private final EventMapper eventMapper;
 
-    @Transactional
     public EventResponse execute(CreateEventRequest createEventRequest) {
         final Long userId = memberUtils.getCurrentMemberId();
         // 매니저 이상만 공연 생성 가능

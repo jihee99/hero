@@ -3,6 +3,7 @@ package com.ex.hero.events.model.dto.request;
 import java.time.LocalDateTime;
 
 import org.hibernate.validator.constraints.Length;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Future;
@@ -26,11 +27,12 @@ public class CreateEventRequest {
 
 	@Schema(
 		type = "string",
-		pattern = "yyyy.MM.dd",
-		defaultValue = "2024.03.01",
+		pattern = "yyyy.MM.dd HH:mm",
+		defaultValue = "2024.03.01 10:00",
 		description = "전시 시작 시각")
 	@NotNull(message = "전시 시작일을 입력하세요.")
 	@Future(message = "전시 시작일은 현재보다 이후여야 합니다.")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd HH:mm", timezone = "Asia/Seoul")
 	private LocalDateTime startAt;
 
 	@Schema(defaultValue = "30", description = "소요시간")
