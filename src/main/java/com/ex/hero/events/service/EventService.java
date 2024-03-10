@@ -41,8 +41,6 @@ public class EventService {
 	}
 
 	public Event updateEventStatus(Event event, EventStatus status) {
-		log.info(" @@ {}", status);
-
 		if (status == EventStatus.CLOSED) event.close();
 		else if (status == EventStatus.PREPARING) event.prepare();
 		else throw UseOtherApiException.EXCEPTION;

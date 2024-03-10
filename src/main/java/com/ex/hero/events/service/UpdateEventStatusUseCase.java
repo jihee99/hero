@@ -19,11 +19,8 @@ public class UpdateEventStatusUseCase {
 
 	public EventResponse execute(Long eventId, UpdateEventStatusRequest updateEventStatusRequest) {
 		final Event event = commonEventService.findById(eventId);
-		log.info("@@@@@ event {}", eventId);
 		final EventStatus status = updateEventStatusRequest.getStatus();
 
-		log.info("2@@@@@@ event status : {}", updateEventStatusRequest.getStatus());
-		log.info("2@@@@@@ event status : {}", status.getName());
 		return EventResponse.of(eventService.updateEventStatus(event, status));
 	}
 }
