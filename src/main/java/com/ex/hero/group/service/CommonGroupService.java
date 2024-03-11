@@ -7,7 +7,7 @@ import com.ex.hero.group.model.GroupUserRole;
 import com.ex.hero.group.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
-import com.ex.hero.group.dto.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.exception.GroupNotFoundException;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupUser;

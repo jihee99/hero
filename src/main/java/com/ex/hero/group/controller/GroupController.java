@@ -2,8 +2,8 @@ package com.ex.hero.group.controller;
 
 import java.util.List;
 
-import com.ex.hero.group.dto.response.GroupEventProfileResponse;
-import com.ex.hero.group.dto.response.GroupProfileResponse;
+import com.ex.hero.group.model.dto.request.response.GroupEventProfileResponse;
+import com.ex.hero.group.model.dto.request.response.GroupProfileResponse;
 import com.ex.hero.group.service.*;
 import com.ex.hero.common.vo.MemberProfileVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,10 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import com.ex.hero.group.dto.request.CreateGroupRequest;
-import com.ex.hero.group.dto.request.UpdateGroupRequest;
-import com.ex.hero.group.dto.response.GroupDetailResponse;
-import com.ex.hero.group.dto.response.GroupResponse;
+import com.ex.hero.group.model.dto.request.CreateGroupRequest;
+import com.ex.hero.group.model.dto.request.UpdateGroupRequest;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.response.GroupResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

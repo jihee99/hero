@@ -1,4 +1,4 @@
-package com.ex.hero.group.dto.request;
+package com.ex.hero.group.model.dto.request;
 
 
 import org.hibernate.validator.constraints.Length;

@@ -1,4 +1,4 @@
-package com.ex.hero.group.dto.response;
+package com.ex.hero.group.model.dto.request.response;
 
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupUser;

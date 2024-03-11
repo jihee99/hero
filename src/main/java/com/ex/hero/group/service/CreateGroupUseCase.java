@@ -1,19 +1,16 @@
 package com.ex.hero.group.service;
 
-import java.util.UUID;
-
 import com.ex.hero.member.model.MemberType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ex.hero.common.util.MemberUtils;
-import com.ex.hero.group.dto.request.CreateGroupRequest;
-import com.ex.hero.group.dto.response.GroupResponse;
+import com.ex.hero.group.model.dto.request.CreateGroupRequest;
+import com.ex.hero.group.model.dto.request.response.GroupResponse;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupUserRole;
 import com.ex.hero.group.model.GroupUser;
 import com.ex.hero.member.model.Member;
-import com.ex.hero.member.model.MemberType;
 
 import lombok.RequiredArgsConstructor;
 

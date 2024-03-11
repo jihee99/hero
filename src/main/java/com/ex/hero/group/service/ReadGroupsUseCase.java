@@ -3,10 +3,8 @@ package com.ex.hero.group.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.ex.hero.common.SliceResponse;
 import com.ex.hero.common.util.MemberUtils;
-import com.ex.hero.group.dto.response.GroupProfileResponse;
-import com.ex.hero.group.model.Group;
+import com.ex.hero.group.model.dto.request.response.GroupProfileResponse;
 import com.ex.hero.member.model.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

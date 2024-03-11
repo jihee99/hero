@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ex.hero.common.util.MemberUtils;
-import com.ex.hero.group.dto.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
-import com.ex.hero.member.model.Member;
-import com.ex.hero.member.model.MemberType;
 
 import lombok.RequiredArgsConstructor;
 

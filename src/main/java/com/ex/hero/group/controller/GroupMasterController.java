@@ -1,8 +1,8 @@
 package com.ex.hero.group.controller;
 
-import com.ex.hero.group.dto.request.InviteGroupRequest;
-import com.ex.hero.group.dto.request.UpdateGroupUserRoleRequest;
-import com.ex.hero.group.dto.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.InviteGroupRequest;
+import com.ex.hero.group.model.dto.request.UpdateGroupUserRoleRequest;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.service.InviteGroupUseCase;
 import com.ex.hero.group.service.UpdateGroupUserRoleUseCase;
 import io.swagger.v3.oas.annotations.Operation;

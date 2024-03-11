@@ -1,13 +1,10 @@
 package com.ex.hero.group.service;
 
-import java.util.UUID;
-
-import com.ex.hero.group.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.hero.group.dto.request.UpdateGroupRequest;
-import com.ex.hero.group.dto.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.UpdateGroupRequest;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupProfile;
 

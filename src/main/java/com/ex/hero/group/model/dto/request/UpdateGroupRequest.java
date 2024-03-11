@@ -1,4 +1,4 @@
-package com.ex.hero.group.dto.request;
+package com.ex.hero.group.model.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

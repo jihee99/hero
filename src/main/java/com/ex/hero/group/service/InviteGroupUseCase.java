@@ -5,8 +5,8 @@ import com.ex.hero.mail.service.GroupUserInvitationEmailService;
 import com.ex.hero.member.service.CommonMemberService;
 import org.springframework.stereotype.Service;
 
-import com.ex.hero.group.dto.request.InviteGroupRequest;
-import com.ex.hero.group.dto.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.InviteGroupRequest;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupUserRole;
 import com.ex.hero.group.model.GroupUser;

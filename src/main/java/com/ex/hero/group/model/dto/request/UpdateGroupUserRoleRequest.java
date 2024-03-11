@@ -1,4 +1,4 @@
-package com.ex.hero.group.dto.request;
+package com.ex.hero.group.model.dto.request;
 
 import java.util.UUID;
 

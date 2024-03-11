@@ -3,7 +3,7 @@ package com.ex.hero.group.service;
 import org.springframework.stereotype.Service;
 
 import com.ex.hero.common.util.MemberUtils;
-import com.ex.hero.group.dto.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
 
 import lombok.RequiredArgsConstructor;
