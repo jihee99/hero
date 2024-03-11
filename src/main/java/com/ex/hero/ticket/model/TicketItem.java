@@ -111,7 +111,6 @@ public class TicketItem {
 	}
 
 
-	/* 티켓 수량이 감소되었는지 확인하는 메서드 */
 	public Boolean isQuantityReduced() {
 		return !this.quantity.equals(this.supplyCount);
 	}
@@ -182,4 +181,7 @@ public class TicketItem {
 		}
 	}
 
+	public Boolean isFCFS() {
+		return this.type.isFCFS();
+	}
 }

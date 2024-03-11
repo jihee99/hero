@@ -1,4 +1,4 @@
-package com.ex.hero.group.dto.response;
+package com.ex.hero.group.model.dto.request.response;
 
 import java.util.ArrayList;
 import java.util.List;

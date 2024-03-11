@@ -21,7 +21,7 @@ public class Profile {
 	}
 
 	@Builder
-	public Profile(String name, String email, String phoneNumber, String profileImage) {
+	public Profile(String name, String email, String phoneNumber) {
 		this.name = name;
 		this.email = email;
 		this.phoneNumber = phoneNumber;

@@ -1,5 +1,7 @@
 package com.ex.hero.order.model;
 
+import java.util.List;
+
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.common.vo.Money;
 import com.ex.hero.ticket.model.TicketItem;
@@ -16,14 +18,14 @@ import lombok.NoArgsConstructor;
 public class OrderItem extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id")
+    @Column(name = "order_item_id")
     private Long id;
 
     @Column(nullable = false)
-    private Long itemId;
+    private Long ticketId;
 
     @Column(nullable = false)
-    private Money itemPrice;
+    private Money ticketPrice;
 
     // 상품 수량
     @Column(nullable = false)
@@ -32,11 +34,33 @@ public class OrderItem extends BaseTimeEntity {
 
     @Builder
     public OrderItem(TicketItem item, Long quantity) {
-        this.itemId = item.getId();
-        this.itemPrice = item.getPrice();
+        this.ticketId = item.getId();
+        this.ticketPrice = item.getPrice();
         this.quantity = quantity;
     }
 
 
+    @Builder
+    public static OrderItem of(Order order, TicketItem ticketItem) {
+        List<OrderItem> orderItems = order.getOrderItems().stream().map(OrderItem::from).toList();
+        return OrderLineItem.builder()
+            .orderOptionAnswer(orderOptionAnswers)
+            .quantity(cartLineItem.getQuantity())
+            .orderItemVo(OrderItemVo.from(ticketItem))
+            .build();
+    }
+
+    public static OrderItem from(Order order) {
+        return OrderOptionAnswer.builder()
+            .answer(cartOptionAnswer.getAnswer())
+            .optionId(cartOptionAnswer.getOptionId())
+            .additionalPrice(cartOptionAnswer.getAdditionalPrice())
+            .build();
+    }
+
+
+    public Money getTotalOrderLinePrice() {
+        return getTicketPrice().plus(ticketPrice).times(quantity);
+    }
 
 }
