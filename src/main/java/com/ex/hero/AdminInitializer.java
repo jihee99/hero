@@ -23,12 +23,11 @@
 //
 //     @Override
 //     public void run(ApplicationArguments args) {
+//
 //         Member admin = Member.builder()
 //                 .email("admin@test.com")
 //                 .password(passwordEncoder.encode("1234"))
 //                 .name("관리자")
-//                 .accountRole(MemberType.ADMIN)
-//                 .createdAt(LocalDateTime.now())
 //                 .accountState(AccountState.NORMAL)
 //                 .build();
 //
@@ -37,25 +36,22 @@
 //                 .password(passwordEncoder.encode("1234"))
 //                 .name("그룹마스터")
 //                 .accountRole(MemberType.MASTER)
-//                 .createdAt(LocalDateTime.now())
 //                 .accountState(AccountState.NORMAL)
 //                 .build();
 //
 //         Member manager = Member.builder()
-//                 .email("user1@test.com")
+//                 .email("manager@test.com")
 //                 .password(passwordEncoder.encode("1234"))
 //                 .name("매니저")
 //                 .accountRole(MemberType.MANAGER)
-//                 .createdAt(LocalDateTime.now())
 //                 .accountState(AccountState.NORMAL)
 //                 .build();
 //
 //         Member user = Member.builder()
-//                 .email("user2@test.com")
+//                 .email("user@test.com")
 //                 .password(passwordEncoder.encode("1234"))
 //                 .name("테스트사용자")
 //                 .accountRole(MemberType.USER)
-//                 .createdAt(LocalDateTime.now())
 //                 .accountState(AccountState.NORMAL)
 //                 .build();
 //

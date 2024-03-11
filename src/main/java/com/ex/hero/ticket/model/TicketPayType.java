@@ -1,7 +1,9 @@
 package com.ex.hero.ticket.model;
 
+import com.ex.hero.common.deserializer.CustomEnumDeserializer;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,9 +12,9 @@ import lombok.Getter;
 public enum TicketPayType {
 
     // 무료티켓
-    FREE_TICKET("FREE_TICKET", "무료티켓"),
+    FREE_TICKET("FREE_TICKET", "무료"),
     // 유료티켓
-    PRICE_TICKET("PRICE_TICKET", "유료티켓");
+    PRICE_TICKET("PRICE_TICKET", "유료");
 
     private String value;
 

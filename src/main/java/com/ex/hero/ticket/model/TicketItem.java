@@ -3,6 +3,11 @@ package com.ex.hero.ticket.model;
 import java.time.LocalDateTime;
 
 import com.ex.hero.member.model.AccountInfo;
+import com.ex.hero.ticket.model.exception.ForbiddenTicketItemDeleteException;
+import com.ex.hero.ticket.model.exception.InvalidTicketItemException;
+import com.ex.hero.ticket.model.exception.InvalidTicketPriceException;
+import com.ex.hero.ticket.model.exception.InvalidTicketTypeException;
+import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
@@ -36,11 +41,6 @@ public class TicketItem {
 	@Comment("티켓 아이디")
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "id")
-	@Comment("회원 아이디(Long)")
-	private Member member;
-
 	@Enumerated(EnumType.STRING)
 	@Comment("결제 타입 (무료|유료)")
 	private TicketPayType payType;
@@ -63,8 +63,8 @@ public class TicketItem {
 	@Enumerated(EnumType.STRING)
 	private TicketType type;
 
-	@Embedded
-	private AccountInfo accountInfo;
+//	@Embedded
+//	private AccountInfo accountInfo;
 
 	@Comment("판매 가능 여부")
 	private Boolean isSellable;
@@ -81,6 +81,34 @@ public class TicketItem {
 	private TicketItemStatus ticketItemStatus = TicketItemStatus.VALID;
 
 	private Long eventId;
+
+	@Builder
+	public TicketItem(
+			TicketPayType payType,
+			String name,
+			String description,
+			Money price,
+			Long quantity,
+			Long supplyCount,
+			Long purchaseLimit,
+			TicketType type,
+			Boolean isSellable,
+			LocalDateTime saleStartAt,
+			LocalDateTime saleEndAt,
+			Long eventId) {
+		this.payType = payType;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
+		this.supplyCount = supplyCount;
+		this.purchaseLimit = purchaseLimit;
+		this.type = type;
+		this.isSellable = isSellable;
+		this.saleStartAt = saleStartAt;
+		this.saleEndAt = saleEndAt;
+		this.eventId = eventId;
+	}
 
 
 	/* 티켓 수량이 감소되었는지 확인하는 메서드 */
@@ -119,6 +147,39 @@ public class TicketItem {
 
 	public Boolean isQuantityLeft() {
 		return quantity > 0;
+	}
+
+	public void validateEventId(Long eventId) {
+		if (!this.getEventId().equals(eventId)) {
+			throw InvalidTicketItemException.EXCEPTION;
+		}
+	}
+
+	public void deleteTicketItem() {
+		// 재고 감소된 티켓상품은 삭제 불가
+		if (this.isQuantityReduced()) {
+			throw ForbiddenTicketItemDeleteException.EXCEPTION;
+		}
+		this.ticketItemStatus = TicketItemStatus.DELETED;
+	}
+
+	public static final Long MINIMUM_PAYMENT_WON = 1000L;
+	public void validateTicketPayType() {
+
+ 		if (payType == TicketPayType.PRICE_TICKET) {
+			// 유료티켓은 무조건 선착순 + 1000원 이상
+			 if (type != TicketType.FIRST_COME_FIRST_SERVED) {
+				throw InvalidTicketTypeException.EXCEPTION;
+			 }
+			if (price.isLessThan(Money.wons(MINIMUM_PAYMENT_WON))) {
+				throw InvalidTicketPriceException.EXCEPTION;
+			}
+		} else {
+			 // 무료 티켓은 0
+			 if (!price.equals(Money.ZERO)) {
+				throw InvalidTicketPriceException.EXCEPTION;
+			 }
+		}
 	}
 
 }
