@@ -23,7 +23,7 @@ public class CreateEventUseCase {
 
     public EventResponse execute(CreateEventRequest createEventRequest) {
         final Long userId = memberUtils.getCurrentMemberId();
-        // 매니저 이상만 공연 생성 가능
+        // 매니저 이상만 생성 가능
         groupService.validateManagerGroupUser(createEventRequest.getGroupId(), userId);
         final Event event = eventMapper.toEntity(createEventRequest);
         return EventResponse.of(eventService.createEvent(event));

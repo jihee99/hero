@@ -14,7 +14,6 @@ public class OpenEventUseCase {
 	private final EventService eventService;
 	private final CommonEventService commonEventService;
 
-	@Transactional
 	public EventResponse execute(Long eventId) {
 		final Event event = commonEventService.findById(eventId);
 		return EventResponse.of(eventService.openEvent(event));

@@ -3,6 +3,7 @@ package com.ex.hero.member.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.mail.dto.EmailUserInfo;
 import com.ex.hero.member.vo.MemberProfileVo;
 import org.hibernate.annotations.ColumnDefault;
@@ -29,9 +30,12 @@ import lombok.*;
 
 @Entity
 @Table(name = "tbl_member")
+@Builder
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+@AllArgsConstructor
+public class Member extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="member_id")
@@ -52,9 +56,6 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private AccountState accountState = AccountState.NORMAL;
 
-	@CreatedDate
-	private LocalDateTime createdAt;
-
 
 	private LocalDateTime lastLoginAt = LocalDateTime.now();
 
@@ -62,26 +63,24 @@ public class Member {
 		return MemberProfileVo.from(this);
 	}
 
-	@Builder
+
 	public Member(SignUpRequest request, PasswordEncoder passwordEncoder) {
 		this.email = request.email();
 		this.password = passwordEncoder.encode(request.password());
 		this.name = request.name();
 		this.accountRole = MemberType.USER;
-		this.createdAt = LocalDateTime.now();
 		this.accountState = AccountState.NORMAL;
 	}
 
-	// public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
-	// 	return Member.builder()
-	// 		.email(request.email())
-	// 		.password(passwordEncoder.encode(request.password()))
-	// 		.name(request.name())
-	// 		.accountRole(MemberType.USER)
-	// 		.createdAt(LocalDateTime.now())
-	// 		.accountState(AccountState.NORMAL)
-	// 		.build();
-	// }
+	 public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
+	 	return Member.builder()
+	 		.email(request.email())
+	 		.password(passwordEncoder.encode(request.password()))
+	 		.name(request.name())
+	 		.accountRole(MemberType.USER)
+	 		.accountState(AccountState.NORMAL)
+	 		.build();
+	 }
 
 	public void login() {
 		if (!AccountState.NORMAL.equals(this.accountState)) {

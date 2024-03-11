@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@Tag(name = "이벤트 관리 API(그룹용)")
+@Tag(name = "3. 이벤트 관리 API(그룹용)")
 @RequestMapping("/api/v1/manager")
 @RequiredArgsConstructor
 public class GroupEventController {
@@ -64,11 +64,10 @@ public class GroupEventController {
 	public EventResponse updateEventStatus(
 		@PathVariable Long eventId,
 		@RequestBody @Valid UpdateEventStatusRequest updateEventDetailRequest) {
-		System.out.println("@@@");
 		return updateEventStatusUseCase.execute(eventId, updateEventDetailRequest);
 	}
 
-	@Operation(summary = "공연을 삭제합니다. 조건에 맞지 않을 경우 삭제할 수 없습니다.")
+	@Operation(summary = "이벤트를 삭제합니다.")
 	@GetMapping("/{eventId}/delete")
 	public EventResponse deleteEvent(@PathVariable Long eventId) {
 		return deleteEventUseCase.execute(eventId);

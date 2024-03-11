@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Tag(name = "그룹용 API")
+@Tag(name = "2. 그룹 관리 API")
 @RequestMapping("/api/v1/group")
 @RestController
 @RequiredArgsConstructor
@@ -90,7 +90,7 @@ public class GroupController {
 
 	/* 그룹 정보 업데이트 api (단, 매니저이상부터 가능) */
 	@Operation(summary = "그룹 정보를 업데이트 합니다. 매니저 이상부터 가능")
-	@PatchMapping("/{groupId}/profile")
+	@PostMapping("/{groupId}/profile")
 	public GroupDetailResponse patchGroupById(
 		@PathVariable Long groupId, @RequestBody @Valid UpdateGroupRequest updateGroupRequest
 	) {

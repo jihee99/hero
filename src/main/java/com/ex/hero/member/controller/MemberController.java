@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Tag(name="로그인 후 사용자가 접근할 수 있는 API")
+@Tag(name="9. 개인정보 관리 API")
 @RequiredArgsConstructor
 // @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 @RestController

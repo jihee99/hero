@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Tag(name = "그룹용 API(마스터용)")
+@Tag(name = "2. 그룹관리 API(마스터용)")
 @RequestMapping("/api/v1/master")
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +35,7 @@ public class GroupMasterController {
 
     /* 그룹 유저의 권한을 변경하는 api (단, 마스터만 가능) */
     @Operation(summary = "그룹 유저의 권한을 변경합니다. 마스터 이상만 가능합니다.")
-    @PatchMapping("/admin/{groupId}/role")
+    @PostMapping("/admin/{groupId}/role")
     public GroupDetailResponse patchGroupUserRole(
             @PathVariable Long groupId,
             @RequestBody @Valid UpdateGroupUserRoleRequest updateGroupUserRoleRequest
