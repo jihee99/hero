@@ -9,6 +9,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class HeroException extends RuntimeException{
 	public BaseErrorCode errorCode;
-
 	public ErrorReason getErrorReason() {return this.errorCode.getErrorReason();}
 }

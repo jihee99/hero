@@ -5,8 +5,13 @@ import com.ex.hero.common.vo.IssuedTicketItemInfoVo;
 import com.ex.hero.common.vo.IssuedTicketUserInfoVo;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,6 +32,38 @@ public class IssuedTicket extends BaseTimeEntity {
     @Embedded
     private IssuedTicketItemInfoVo itemInfo;
 
+    // 발급 uuid ( 회원 > 티켓 발급 )
+    private String orderUuid;
+
+    private LocalDateTime enteredAt;
+
+    private Long orderLineId;
+
+    @Column(nullable = false)
+    private String uuid;
+
     @Enumerated(EnumType.STRING)
     private IssuedTicketStatus issuedTicketStatus = IssuedTicketStatus.ENTRANCE_INCOMPLETE;
+
+    @Builder
+    public IssuedTicket(
+            Long eventId,
+            IssuedTicketUserInfoVo userInfo,
+            String orderUuid,
+            Long orderLineId,
+            IssuedTicketItemInfoVo itemInfo,
+            IssuedTicketStatus issuedTicketStatus) {
+        this.eventId = eventId;
+        this.userInfo = userInfo;
+        this.itemInfo = itemInfo;
+        this.orderUuid = orderUuid;
+        this.orderLineId = orderLineId;
+        this.issuedTicketStatus = issuedTicketStatus;
+    }
+
+
+    @PrePersist
+    public void createUUID() {
+        this.uuid = UUID.randomUUID().toString();
+    }
 }

@@ -6,7 +6,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ErrorReason {
-    private final Integer status;
-    private final String code;
-    private final String reason;
+
+    private final int errorCode;
+
+    private final String errorMessage;
+
 }
