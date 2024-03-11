@@ -5,7 +5,7 @@ import com.ex.hero.ticket.service.CommonIssuedTicketService;
 import org.springframework.stereotype.Service;
 
 import com.ex.hero.events.exception.CannotOpenEventException;
-import com.ex.hero.events.exception.UseOtherApiException;
+import com.ex.hero.events.exception.UseAnotherApiException;
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventBasic;
 import com.ex.hero.events.model.EventDetail;
@@ -46,7 +46,7 @@ public class EventService {
 	public Event updateEventStatus(Event event, EventStatus status) {
 		if (status == EventStatus.CLOSED) event.close();
 		else if (status == EventStatus.PREPARING) event.prepare();
-		else throw UseOtherApiException.EXCEPTION;
+		else throw UseAnotherApiException.EXCEPTION;
 		return eventRepository.save(event);
 	}
 
