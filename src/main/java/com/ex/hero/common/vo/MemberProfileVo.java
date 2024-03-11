@@ -1,4 +1,4 @@
-package com.ex.hero.member.vo;
+package com.ex.hero.common.vo;
 
 import com.ex.hero.member.model.Member;
 import lombok.Builder;

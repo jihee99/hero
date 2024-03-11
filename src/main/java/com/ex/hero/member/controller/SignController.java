@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.hero.common.dto.ApiResponse;
-import com.ex.hero.member.dto.request.SignInRequest;
-import com.ex.hero.member.dto.request.SignUpRequest;
+import com.ex.hero.member.model.dto.request.SignInRequest;
+import com.ex.hero.member.model.dto.request.SignUpRequest;
 import com.ex.hero.member.service.SignService;
 
 import io.swagger.v3.oas.annotations.Operation;

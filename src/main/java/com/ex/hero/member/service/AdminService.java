@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.hero.member.dto.response.MemberInfoResponse;
+import com.ex.hero.member.model.dto.response.MemberInfoResponse;
 import com.ex.hero.member.model.MemberType;
 import com.ex.hero.member.repository.MemberRepository;
 

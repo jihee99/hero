@@ -4,7 +4,7 @@ import com.ex.hero.group.exception.AlreadyJoinedGroupException;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.service.CommonMemberService;
-import com.ex.hero.member.vo.MemberProfileVo;
+import com.ex.hero.common.vo.MemberProfileVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,23 +1,19 @@
 package com.ex.hero.member.service;
 
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
-import java.util.UUID;
 
 import com.ex.hero.member.model.SellerApplyType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.hero.member.dto.request.MemberUpdateRequest;
-import com.ex.hero.member.dto.response.MemberDeleteResponse;
-import com.ex.hero.member.dto.response.MemberInfoResponse;
-import com.ex.hero.member.dto.response.MemberUpdateResponse;
+import com.ex.hero.member.model.dto.request.MemberUpdateRequest;
+import com.ex.hero.member.model.dto.response.MemberDeleteResponse;
+import com.ex.hero.member.model.dto.response.MemberInfoResponse;
+import com.ex.hero.member.model.dto.response.MemberUpdateResponse;
 import com.ex.hero.member.exception.AlreadyAppliedUserException;
 import com.ex.hero.member.exception.InvalidMemberException;
 import com.ex.hero.member.exception.UserNotFoundException;
-import com.ex.hero.member.model.Member;
-import com.ex.hero.member.model.MemberType;
 import com.ex.hero.member.model.Seller;
 import com.ex.hero.member.repository.MemberRepository;
 import com.ex.hero.member.repository.SellerRepository;

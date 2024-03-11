@@ -5,10 +5,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.hero.member.dto.request.SignInRequest;
-import com.ex.hero.member.dto.response.SignInResponse;
-import com.ex.hero.member.dto.request.SignUpRequest;
-import com.ex.hero.member.dto.response.SignUpResponse;
+import com.ex.hero.member.model.dto.request.SignInRequest;
+import com.ex.hero.member.model.dto.response.SignInResponse;
+import com.ex.hero.member.model.dto.request.SignUpRequest;
+import com.ex.hero.member.model.dto.response.SignUpResponse;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.repository.MemberRefreshTokenRepository;
 import com.ex.hero.member.repository.MemberRepository;

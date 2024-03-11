@@ -1,4 +1,4 @@
-package com.ex.hero.member.dto.response;
+package com.ex.hero.member.model.dto.response;
 
 
 import com.ex.hero.member.model.Member;

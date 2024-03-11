@@ -1,7 +1,6 @@
-package com.ex.hero.member.dto.response;
+package com.ex.hero.member.model.dto.response;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.model.MemberType;

@@ -1,19 +1,16 @@
 package com.ex.hero.member.model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.mail.dto.EmailUserInfo;
-import com.ex.hero.member.vo.MemberProfileVo;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.data.annotation.CreatedDate;
+import com.ex.hero.common.vo.MemberProfileVo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.ex.hero.member.dto.request.MemberUpdateRequest;
-import com.ex.hero.member.dto.request.SignUpRequest;
+import com.ex.hero.member.model.dto.request.MemberUpdateRequest;
+import com.ex.hero.member.model.dto.request.SignUpRequest;
 import com.ex.hero.member.exception.ForbiddenUserException;
-import com.ex.hero.member.vo.MemberInfoVo;
+import com.ex.hero.common.vo.MemberInfoVo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,12 +48,14 @@ public class Member extends BaseTimeEntity {
 	private String phoneNumber;
 
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private MemberType accountRole = MemberType.USER;
 
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private AccountState accountState = AccountState.NORMAL;
 
-
+	@Builder.Default
 	private LocalDateTime lastLoginAt = LocalDateTime.now();
 
 	public MemberProfileVo toMemberProfileVo() {

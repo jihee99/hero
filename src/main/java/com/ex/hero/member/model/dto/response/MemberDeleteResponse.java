@@ -1,4 +1,4 @@
-package com.ex.hero.member.dto.response;
+package com.ex.hero.member.model.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

@@ -1,7 +1,6 @@
-package com.ex.hero.member.vo;
+package com.ex.hero.common.vo;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import com.ex.hero.member.model.AccountState;
 import com.ex.hero.member.model.Member;

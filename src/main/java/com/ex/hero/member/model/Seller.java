@@ -1,14 +1,9 @@
 package com.ex.hero.member.model;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.ex.hero.member.dto.request.MemberUpdateRequest;
-import com.ex.hero.member.dto.response.MemberInfoResponse;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

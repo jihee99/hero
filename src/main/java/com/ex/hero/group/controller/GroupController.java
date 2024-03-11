@@ -1,19 +1,14 @@
 package com.ex.hero.group.controller;
 
 import java.util.List;
-import java.util.UUID;
 
-import com.ex.hero.common.SliceResponse;
-import com.ex.hero.common.dto.PageResponse;
 import com.ex.hero.group.dto.response.GroupEventProfileResponse;
 import com.ex.hero.group.dto.response.GroupProfileResponse;
 import com.ex.hero.group.service.*;
-import com.ex.hero.member.model.Profile;
-import com.ex.hero.member.vo.MemberProfileVo;
+import com.ex.hero.common.vo.MemberProfileVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import jakarta.validation.constraints.Email;
-import lombok.SneakyThrows;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import com.ex.hero.group.dto.request.CreateGroupRequest;
-import com.ex.hero.group.dto.request.InviteGroupRequest;
 import com.ex.hero.group.dto.request.UpdateGroupRequest;
-import com.ex.hero.group.dto.request.UpdateGroupUserRoleRequest;
 import com.ex.hero.group.dto.response.GroupDetailResponse;
 import com.ex.hero.group.dto.response.GroupResponse;
 

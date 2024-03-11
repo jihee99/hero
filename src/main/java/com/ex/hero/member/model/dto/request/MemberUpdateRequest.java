@@ -1,4 +1,4 @@
-package com.ex.hero.member.dto.request;
+package com.ex.hero.member.model.dto.request;
 
 import com.ex.hero.member.model.MemberType;
 
