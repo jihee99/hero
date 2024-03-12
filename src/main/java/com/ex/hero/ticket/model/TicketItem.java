@@ -2,28 +2,23 @@ package com.ex.hero.ticket.model;
 
 import java.time.LocalDateTime;
 
-import com.ex.hero.member.model.AccountInfo;
-import com.ex.hero.ticket.model.exception.ForbiddenTicketItemDeleteException;
-import com.ex.hero.ticket.model.exception.InvalidTicketItemException;
-import com.ex.hero.ticket.model.exception.InvalidTicketPriceException;
-import com.ex.hero.ticket.model.exception.InvalidTicketTypeException;
+import com.ex.hero.ticket.exception.ForbiddenTicketItemDeleteException;
+import com.ex.hero.ticket.exception.InvalidTicketItemException;
+import com.ex.hero.ticket.exception.InvalidTicketPriceException;
+import com.ex.hero.ticket.exception.InvalidTicketTypeException;
 import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 
 import com.ex.hero.common.vo.Money;
-import com.ex.hero.member.model.Member;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;

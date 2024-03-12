@@ -21,17 +21,23 @@ import com.ex.hero.ticket.model.TicketItem;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "tbl_order")
 public class Order {
+    public static final Long NO_START_NUMBER = 1000000L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false)
     private Long userId;
 
     @Column(nullable = false)
     private Long eventId;
+
+    @Column(nullable = false)
+    private String uuid;
+
+    private String orderNo;
 
     @Column(nullable = false)
     private String orderName;
@@ -43,7 +49,7 @@ public class Order {
     private LocalDateTime approvedAt;
 
     // 철회된 시간
-    private LocalDateTime withDrawAt;
+    // private LocalDateTime withDrawAt;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -71,6 +77,17 @@ public class Order {
             .map(OrderItem::getTotalOrderPrice)
             .reduce(Money.ZERO, Money::plus);
     }
+
+    @PrePersist
+    public void addUUID() {
+        this.uuid = UUID.randomUUID().toString();
+    }
+
+    @PostPersist
+    public void createOrder() {
+        this.orderNo = "C" + Long.sum(NO_START_NUMBER, this.id);
+    }
+
 
     public Money getTotalPaymentPrice() {
         return getTotalSupplyPrice();

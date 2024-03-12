@@ -1,4 +1,4 @@
-package com.ex.hero.ticket.model.exception;
+package com.ex.hero.ticket.exception;
 
 import com.ex.hero.common.annotation.ExplainError;
 import com.ex.hero.common.dto.ErrorReason;

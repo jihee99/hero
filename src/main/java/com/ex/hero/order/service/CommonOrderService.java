@@ -23,14 +23,14 @@ public class CommonOrderService {
 		return orderRepository.save(order);
 	}
 
-	public Order findById(UUID orderId) {
+	public Order findById(Long orderId) {
 		return orderRepository
 			.findById(orderId)
 			.orElseThrow(() -> new RuntimeException());
 		// OrderNotFoundException
 	}
 
-	public List<Order> findByEventId(Long eventId){
+	public List<Order> findByEventId(Long eventId) {
 		return orderRepository.findByEventId(eventId);
 	}
 
@@ -40,11 +40,16 @@ public class CommonOrderService {
 
 	public OrderItem queryOrderItem(Long orderItemId, Long userId) {
 		return orderItemRepository
-				.findById(orderItemId)
-//				.findByIdAndUserId(orderItemId, userId)
-				.orElseThrow(() -> new RuntimeException());
+			.findById(orderItemId)
+			//				.findByIdAndUserId(orderItemId, userId)
+			.orElseThrow(() -> new RuntimeException());
 		// OrderItemNotFoundException.EXCEPTION
 	}
 
-
+	public Order findByOrderUuid(String uuid) {
+		return orderRepository
+			.findByOrderUuid(uuid)
+			.orElseThrow(() -> new RuntimeException("exception"));
+	//		OrderNotFoundException.EXCEPTION
+	}
 }

@@ -26,7 +26,7 @@ public class FreeOrderUseCase {
     }
 
     public String freeOrderExecute(String orderUuid, Long currentUserId) {
-        Order order = commonOrderService.findById(UUID.fromString(orderUuid));
+        Order order = commonOrderService.findByOrderUuid(orderUuid);
         order.freeConfirm(currentUserId, orderValidator);
         return orderUuid;
     }

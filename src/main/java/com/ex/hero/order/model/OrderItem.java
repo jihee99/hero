@@ -53,6 +53,11 @@ public class OrderItem extends BaseTimeEntity {
         return orderItem.getItemId();
     }
 
+    public String getItemName() {
+        return orderItem.getName();
+    }
+
+
     public Long getItemGroupId() {
         return orderItem.getItemGroupId();
     }

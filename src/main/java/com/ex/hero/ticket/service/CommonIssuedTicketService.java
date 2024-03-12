@@ -1,6 +1,8 @@
 package com.ex.hero.ticket.service;
 
+import com.ex.hero.order.model.mapper.OrderMapper;
 import com.ex.hero.ticket.model.IssuedTicket;
+import com.ex.hero.ticket.model.IssuedTickets;
 import com.ex.hero.ticket.repository.IssuedTicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,8 +22,10 @@ public class CommonIssuedTicketService {
     }
 
     public Long countPaidTicket(Long userId, Long itemId) {
-//        return null;
         return issuedTicketRepository.countPaidTickets(userId, itemId);
     }
+
+    public IssuedTickets findOrderIssuedTickets(Long orderId) {
+        return IssuedTickets.from(issuedTicketRepository.findAllByOrderId(orderId));
+    }
 }
-//    String jpql = "SELECT COUNT(i) FROM IssuedTicket i WHERE i.userId = :userId AND i.issuedTicketId = :issuedTicketId AND i.paid = true";

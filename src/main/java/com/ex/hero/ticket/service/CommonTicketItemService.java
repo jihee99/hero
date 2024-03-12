@@ -2,7 +2,7 @@ package com.ex.hero.ticket.service;
 
 import com.ex.hero.ticket.model.TicketItem;
 import com.ex.hero.ticket.model.TicketItemStatus;
-import com.ex.hero.ticket.model.exception.TicketItemNotFoundException;
+import com.ex.hero.ticket.exception.TicketItemNotFoundException;
 import com.ex.hero.ticket.repository.TicketItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

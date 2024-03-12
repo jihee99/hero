@@ -1,6 +1,7 @@
 package com.ex.hero.ticket.model;
 
 import com.ex.hero.common.model.BaseTimeEntity;
+import com.ex.hero.common.vo.IssuedTicketInfoVo;
 import com.ex.hero.common.vo.IssuedTicketItemInfoVo;
 import com.ex.hero.common.vo.IssuedTicketUserInfoVo;
 import jakarta.persistence.*;
@@ -37,7 +38,7 @@ public class IssuedTicket extends BaseTimeEntity {
 
     private LocalDateTime enteredAt;
 
-    private Long orderLineId;
+    private Long orderId;
 
     @Column(nullable = false)
     private String uuid;
@@ -50,20 +51,23 @@ public class IssuedTicket extends BaseTimeEntity {
             Long eventId,
             IssuedTicketUserInfoVo userInfo,
             String orderUuid,
-            Long orderLineId,
+            Long orderId,
             IssuedTicketItemInfoVo itemInfo,
             IssuedTicketStatus issuedTicketStatus) {
         this.eventId = eventId;
         this.userInfo = userInfo;
         this.itemInfo = itemInfo;
         this.orderUuid = orderUuid;
-        this.orderLineId = orderLineId;
+        this.orderId = orderId;
         this.issuedTicketStatus = issuedTicketStatus;
     }
-
 
     @PrePersist
     public void createUUID() {
         this.uuid = UUID.randomUUID().toString();
+    }
+
+    public IssuedTicketInfoVo toIssuedTicketInfoVo() {
+        return IssuedTicketInfoVo.from(this);
     }
 }
