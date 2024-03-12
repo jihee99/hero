@@ -60,24 +60,6 @@ public class Order {
 
     @Embedded private PaymentInfo totalPaymentInfo;
 
-    @Builder
-    public Order(
-        Long userId,
-        String orderName,
-        List<OrderItem> orderItems,
-        Long eventId) {
-        this.userId = userId;
-        this.orderName = orderName;
-        this.orderItems.addAll(orderItems);
-        this.eventId = eventId;
-    }
-
-    public Money getTotalSupplyPrice() {
-        return orderItems.stream()
-            .map(OrderItem::getTotalOrderPrice)
-            .reduce(Money.ZERO, Money::plus);
-    }
-
     @PrePersist
     public void addUUID() {
         this.uuid = UUID.randomUUID().toString();
@@ -87,6 +69,30 @@ public class Order {
     public void createOrder() {
         this.orderNo = "C" + Long.sum(NO_START_NUMBER, this.id);
     }
+
+    @Builder
+    public Order(
+        Long userId,
+        String orderName,
+        List<OrderItem> orderItems,
+        OrderStatus orderStatus,
+        OrderMethod orderMethod,
+        Long eventId
+    ) {
+        this.userId = userId;
+        this.orderName = orderName;
+        this.orderItems.addAll(orderItems);
+        this.orderStatus = orderStatus;
+        this.orderMethod = orderMethod;
+        this.eventId = eventId;
+    }
+
+    public Money getTotalSupplyPrice() {
+        return orderItems.stream()
+            .map(OrderItem::getTotalOrderPrice)
+            .reduce(Money.ZERO, Money::plus);
+    }
+
 
 
     public Money getTotalPaymentPrice() {
