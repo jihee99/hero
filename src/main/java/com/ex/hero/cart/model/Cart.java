@@ -24,6 +24,8 @@ public class Cart extends BaseTimeEntity {
     @Column(nullable = false)
     private Long userId;
 
+    private String cartName;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private List<CartItem> cartItems = new ArrayList<>();
@@ -34,11 +36,13 @@ public class Cart extends BaseTimeEntity {
         this.cartItems.addAll(cartItems);
     }
 
-    public static Cart of(
+    public static Cart of (
             List<CartItem> cartItems,
             String itemName,
-            Long userId) {
+            Long userId
+    ) {
         Cart cart = Cart.builder().cartItems(cartItems).userId(userId).build();
+        cart.updateCartName(itemName);
         return cart;
     }
 
@@ -50,6 +54,10 @@ public class Cart extends BaseTimeEntity {
 
     public Long getItemId() {
         return getCartItem().getItemId();
+    }
+
+    public void updateCartName(String name) {
+        cartName = name;
     }
 
     public CartItem getCartItem() {

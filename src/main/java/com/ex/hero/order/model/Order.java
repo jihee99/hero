@@ -1,5 +1,7 @@
 package com.ex.hero.order.model;
 
+import com.ex.hero.cart.model.Cart;
+import com.ex.hero.order.service.OrderValidationService;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -12,10 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.aspectj.weaver.ast.Or;
-
 import com.ex.hero.common.vo.Money;
-import com.ex.hero.order.service.OrderValidator;
 import com.ex.hero.ticket.model.TicketItem;
 
 @Getter
@@ -53,6 +52,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus; // 주문상태
 
+    @Embedded private PaymentInfo totalPaymentInfo;
+
     @Builder
     public Order(
         Long userId,
@@ -79,6 +80,7 @@ public class Order {
         return Money.ZERO.isLessThan(getTotalPaymentPrice()) && orderMethod.isPayment();
     }
 
+
     private OrderItem getOrderItem() {
         return orderItems.stream()
             .findFirst()
@@ -86,14 +88,78 @@ public class Order {
         // OrderLineNotFountException.EXCEPTION
     }
 
-    public Long getItemId() {
-        return getOrderItem().getTicketId();
+    @NotNull
+    private static List<OrderItem> getOrderItems(Cart cart, TicketItem item) {
+        return cart.getCartItems().stream()
+                .map(cartItem -> OrderItem.of(cartItem, item))
+                .toList();
     }
 
-//    public static Order createPaymentOrder(
-//            Long userId, OrderItem orderItem OrderValidator orderValidator
-//    ){
-//
-//    }
+    public Long getItemId() {
+        return getOrderItem().getItemId();
+    }
+
+    public Long getTotalQuantity() {
+        return orderItems.stream().map(OrderItem::getQuantity).reduce(0L, Long::sum);
+    }
+
+    public void freeConfirm(Long currentUserId, OrderValidationService orderValidator) {
+        orderValidator.validOwner(this, currentUserId);
+        orderValidator.validCanFreeConfirm(this);
+        this.approvedAt = LocalDateTime.now();
+        this.orderStatus = OrderStatus.APPROVED;
+    }
+
+    public static Order createPaymentOrder(
+            Long userId, Cart cart, TicketItem item, OrderValidationService orderValidator
+    ){
+        Order order = Order.builder()
+                .userId(userId)
+                .orderName(cart.getCartName())
+                .orderItems(getOrderItems(cart, item))
+                .eventId(item.getEventId())
+                .build();
+        orderValidator.validCreate(order);
+        order.calculatePaymentInfo();
+        return order;
+    }
+
+
+    public static Order createApproveOrder(
+            Long userId, Cart cart, TicketItem item, OrderValidationService orderValidator
+            ) {
+        Order order = Order.builder()
+                .userId(userId)
+                .orderName(cart.getCartName())
+                .orderItems(getOrderItems(cart, item))
+                .eventId(item.getEventId())
+                .build();
+
+        orderValidator.validCreate(order);
+//        orderValidator.validApproveStatePurchaseLimit(order);
+        order.calculatePaymentInfo();
+        return order;
+    }
+
+    public List<Long> getDistinctItemIds() {
+        return this.orderItems.stream().map(OrderItem::getItemId).distinct().toList();
+    }
+
+    public Long getItemGroupId() {
+        return getOrderItem().getItemGroupId();
+    }
+
+    public void calculatePaymentInfo() {
+        totalPaymentInfo =
+                PaymentInfo.builder()
+                        .paymentAmount(getTotalPaymentPrice())
+                        .supplyAmount(getTotalSupplyPrice())
+                        .build();
+    }
+
+    public Boolean isNeedPaid() {
+        // 총 금액이 0 보다 큰지
+        return Money.ZERO.isLessThan(getTotalPaymentPrice()) && orderMethod.isPayment();
+    }
 
 }

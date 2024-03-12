@@ -6,13 +6,7 @@ import com.ex.hero.common.vo.EventBasicVo;
 import com.ex.hero.common.vo.EventDetailVo;
 import com.ex.hero.common.vo.EventInfoVo;
 import com.ex.hero.common.vo.EventProfileVo;
-import com.ex.hero.events.exception.AlreadyCloseStatusException;
-import com.ex.hero.events.exception.AlreadyDeletedStatusException;
-import com.ex.hero.events.exception.AlreadyOpenStatusException;
-import com.ex.hero.events.exception.AlreadyPreparingStatusException;
-import com.ex.hero.events.exception.CannotDeleteByOpenEventException;
-import com.ex.hero.events.exception.CannotModifyOpenEventException;
-import com.ex.hero.events.exception.EventOpenTimeExpiredException;
+import com.ex.hero.events.exception.*;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -84,6 +78,18 @@ public class Event extends BaseTimeEntity {
 
     public void validateOpenStatus() {
         if (status == EventStatus.OPEN) throw CannotModifyOpenEventException.EXCEPTION;
+    }
+
+    public void validateNotOpenStatus() {
+        if (status != EventStatus.OPEN) throw EventNotOpenException.EXCEPTION;
+    }
+
+    public void validateTicketingTime() {
+        if (!isTimeBeforeStartAt()) throw AlreadyOpenStatusException.EXCEPTION;
+    }
+
+    public boolean isTimeBeforeStartAt() {
+        return LocalDateTime.now().isBefore(getStartAt());
     }
 
     public void validateStartAt() {

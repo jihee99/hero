@@ -153,8 +153,12 @@ public class OrderValidationService {
     }
 
 
-
-
+    public void validOwner(Order order, Long currentUserId) {
+        if (!order.getUserId().equals(currentUserId)) {
+            throw new RuntimeException();
+//            NotOwnerOrderException.EXCEPTION;
+        }
+    }
 
     private Event getEvent(Order order) {
         Long itemGroupId = order.getItemGroupId();

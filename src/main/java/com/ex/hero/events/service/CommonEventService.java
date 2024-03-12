@@ -44,8 +44,8 @@ public class CommonEventService {
         return eventRepository.queryEventsByStatus(status);
     }
 
-    // public List<Event> queryEventsByKeyword(String keyword) {
-    //     return eventRepository.queryEventsByKeyword(keyword);
-    // }
+    public List<Event> findAllByIds(List<Long> ids) {
+        return eventRepository.findAllByIdIn(ids);
+    }
 
 }

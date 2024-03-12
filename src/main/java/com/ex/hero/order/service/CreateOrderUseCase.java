@@ -1,5 +1,7 @@
 package com.ex.hero.order.service;
 
+import com.ex.hero.cart.model.Cart;
+import com.ex.hero.cart.service.CommonCartService;
 import com.ex.hero.order.model.OrderItem;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +24,13 @@ public class CreateOrderUseCase {
 	private final MemberUtils memberUtils;
 	private final CommonTicketItemService commonTicketItemService;
 	private final CommonOrderService commonOrderService;
-//	private final OrderValidator orderValidator;
+	private final CommonCartService commonCartService;
 	private final OrderMapper orderMapper;
+	private final OrderValidationService orderValidator;
 
 	public CreateOrderResponse execute(CreateOrderRequest createOrderRequest) {
 		Member member = memberUtils.getCurrentMember();
+		Long cartId = createOrderRequest.getCartId();
 		// 주문서를 생성하는 코드
 		Order order = createOrder(createOrderRequest, member.getUserId());
 		return orderMapper.toCreateOrderResponse(order.getId());
@@ -35,19 +39,18 @@ public class CreateOrderUseCase {
 
 	// 주문서 생성 함수
 	private Order createOrder(CreateOrderRequest request, Long userId){
-		TicketItem ticketItem = commonTicketItemService.queryTicketItem(request.getTicketId());
+		Cart cart = commonCartService.queryCart(request.getCartId());
+		TicketItem ticketItem = commonTicketItemService.queryTicketItem(request.getCartId());
 		TicketPayType payType = ticketItem.getPayType();
-		OrderItem orderItem = OrderItem.of(ticketItem, request.getQuantity());
 
-		return null;
-//		if(payType == TicketPayType.FREE_TICKET){
-//			if (ticketItem.isFCFS()) {
-//				return Order.createPaymentOrder(userId, ticketItem, orderValidator);
-//			}
-//			// 승인 티켓
-//			return Order.createApproveOrder(userId, ticketItem, orderValidator);
-//		}
-//		return Order.createPaymentOrder(userId, cart, ticketItem, orderValidator);
+		if(payType == TicketPayType.FREE_TICKET){
+			if (ticketItem.isFCFS()) {
+				return Order.createPaymentOrder(userId, cart, ticketItem, orderValidator);
+			}
+			// 승인 티켓
+			return Order.createApproveOrder(userId, cart, ticketItem, orderValidator);
+		}
+		return Order.createPaymentOrder(userId, cart, ticketItem, orderValidator);
 	}
 
 }

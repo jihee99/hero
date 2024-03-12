@@ -18,4 +18,10 @@ public class CommonIssuedTicketService {
     public Boolean existsByEventId(Long eventId) {
         return issuedTicketRepository.existsByEventId(eventId);
     }
+
+    public Long countPaidTicket(Long userId, Long itemId) {
+//        return null;
+        return issuedTicketRepository.countPaidTickets(userId, itemId);
+    }
 }
+//    String jpql = "SELECT COUNT(i) FROM IssuedTicket i WHERE i.userId = :userId AND i.issuedTicketId = :issuedTicketId AND i.paid = true";

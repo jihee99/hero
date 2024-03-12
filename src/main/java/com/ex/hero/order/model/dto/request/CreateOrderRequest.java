@@ -6,10 +6,7 @@ import lombok.Getter;
 @Getter
 public class CreateOrderRequest {
 
-	@Schema(nullable = false, description = "구매할 쿠폰 아이디")
-	private Long ticketId;
-
-	@Schema(nullable = false, defaultValue = "1")
-	private Long quantity;
+	@Schema(nullable = false, description = "장바구니 아이디")
+	private Long cartId;
 
 }
