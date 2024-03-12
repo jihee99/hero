@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
-@Tag(name = "3. 티켓 상품 api(그룹용)")
+@Tag(name = "4. 티켓 상품 관리 API (그룹용)")
 @RestController
 @RequestMapping("/api/v1/events/{eventId}/ticketItems")
 @RequiredArgsConstructor

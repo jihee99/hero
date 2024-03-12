@@ -12,7 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "3-3. 발급 티켓 관리 api (그룹용)")
+@Tag(name = "4. 발급 티켓 관리 API (그룹용)")
 @RestController
 @RequestMapping("/api/v1/events/{eventId}/issuedTickets")
 @RequiredArgsConstructor

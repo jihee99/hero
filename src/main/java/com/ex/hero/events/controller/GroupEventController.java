@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@Tag(name = "3. 이벤트 관리 API(그룹용)")
+@Tag(name = "3. 이벤트 관리 API (그룹용)")
 @RequestMapping("/api/v1/manager")
 @RequiredArgsConstructor
 public class GroupEventController {
