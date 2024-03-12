@@ -48,7 +48,10 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderMethod orderMethod;
+    private OrderMethod orderMethod; // 주문타입
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus; // 주문상태
 
     @Builder
     public Order(
@@ -64,7 +67,7 @@ public class Order {
 
     public Money getTotalSupplyPrice() {
         return orderItems.stream()
-            .map(OrderItem::getTotalOrderLinePrice)
+            .map(OrderItem::getTotalOrderPrice)
             .reduce(Money.ZERO, Money::plus);
     }
 
@@ -87,6 +90,10 @@ public class Order {
         return getOrderItem().getTicketId();
     }
 
-
+//    public static Order createPaymentOrder(
+//            Long userId, OrderItem orderItem OrderValidator orderValidator
+//    ){
+//
+//    }
 
 }

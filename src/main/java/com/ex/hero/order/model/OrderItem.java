@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 
 
 @Getter
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class OrderItem extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_item_id")
+    @Column(name = "item_id")
     private Long id;
 
     @Column(nullable = false)
@@ -31,7 +32,6 @@ public class OrderItem extends BaseTimeEntity {
     @Column(nullable = false)
     private Long quantity;
 
-
     @Builder
     public OrderItem(TicketItem item, Long quantity) {
         this.ticketId = item.getId();
@@ -39,28 +39,15 @@ public class OrderItem extends BaseTimeEntity {
         this.quantity = quantity;
     }
 
-
-    @Builder
-    public static OrderItem of(Order order, TicketItem ticketItem) {
-        List<OrderItem> orderItems = order.getOrderItems().stream().map(OrderItem::from).toList();
-        return OrderLineItem.builder()
-            .orderOptionAnswer(orderOptionAnswers)
-            .quantity(cartLineItem.getQuantity())
-            .orderItemVo(OrderItemVo.from(ticketItem))
-            .build();
-    }
-
-    public static OrderItem from(Order order) {
-        return OrderOptionAnswer.builder()
-            .answer(cartOptionAnswer.getAnswer())
-            .optionId(cartOptionAnswer.getOptionId())
-            .additionalPrice(cartOptionAnswer.getAdditionalPrice())
-            .build();
-    }
-
-
-    public Money getTotalOrderLinePrice() {
+    public Money getTotalOrderPrice() {
         return getTicketPrice().plus(ticketPrice).times(quantity);
+    }
+
+    public static OrderItem of(TicketItem ticketItem, Long quantity){
+        return OrderItem.builder()
+                .item(ticketItem)
+                .quantity(quantity)
+                .build();
     }
 
 }

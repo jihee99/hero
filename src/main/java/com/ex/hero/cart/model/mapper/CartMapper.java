@@ -13,6 +13,7 @@ import com.ex.hero.events.service.CommonEventService;
 import com.ex.hero.ticket.model.TicketItem;
 import com.ex.hero.ticket.service.CommonTicketItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,12 +24,13 @@ public class CartMapper {
     private final CommonTicketItemService commonTicketItemService;
     private final CommonEventService commonEventService;
     private final CommonCartService commonCartService;
-
+    @Transactional(readOnly = true)
     public CartResponse toCartResponse(Long cartId){
         Cart cart = commonCartService.queryCart(cartId);
         return getCartResponse(cart);
     }
 
+    @Transactional(readOnly = true)
     public CartResponse toCartResponse(Cart cart) {
         return getCartResponse(cart);
     }

@@ -2,10 +2,8 @@ package com.ex.hero.cart.service;
 
 import com.ex.hero.cart.model.dto.response.CartResponse;
 import com.ex.hero.cart.model.mapper.CartMapper;
-import com.ex.hero.cart.repository.CartRepository;
 import com.ex.hero.common.util.MemberUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -4,13 +4,13 @@ import com.ex.hero.cart.model.Cart;
 import com.ex.hero.cart.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CommonCartService {
-
     private final CartRepository cartRepository;
 
     public Cart save(Cart cart) {
@@ -40,7 +40,9 @@ public class CommonCartService {
         //CartNotFoundException.EXCEPTION
     }
 
+    @Transactional
     public void deleteByUserId(Long userId) {
         cartRepository.deleteByUserId(userId);
     }
+
 }

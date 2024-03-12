@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateCartUseCase {
 
-    private CommonCartService commonCartService;
+    private final CommonCartService commonCartService;
     private final MemberUtils memberUtils;
     private final CartMapper cartMapper;
 
