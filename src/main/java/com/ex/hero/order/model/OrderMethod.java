@@ -17,6 +17,8 @@ public enum OrderMethod {
     private String kr;
 
     public Boolean isPayment() {
+        System.out.println("########");
+        System.out.println(this);
         // Payment > true, APPROVE > false
         return this.equals(OrderMethod.PAYMENT);
     }

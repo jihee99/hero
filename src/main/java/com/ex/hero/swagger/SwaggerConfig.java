@@ -18,7 +18,6 @@ public class SwaggerConfig {
 
     private static final String SECURITY_SCHEME_NAME = "authorization";	// 추가
 
-
     @Bean
     public OpenAPI swaggerApi() {
         return new OpenAPI()

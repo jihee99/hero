@@ -37,7 +37,6 @@ public class MemberService {
 			.orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
 
-	@Transactional
 	public MemberDeleteResponse deleteMember(Long id) {
 		if (!memberRepository.existsById(id)) return new MemberDeleteResponse(false);
 		memberRepository.deleteById(id);

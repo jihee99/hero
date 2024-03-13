@@ -18,7 +18,6 @@ public class FreeOrderUseCase {
     private final MemberUtils memberUtils;
     private final OrderValidationService orderValidator;
 
-
     public OrderResponse execute(String orderUuid) {
         String confirmOrderUuid = freeOrderExecute(orderUuid, memberUtils.getCurrentMemberId());
         return orderMapper.toOrderResponse(confirmOrderUuid);
@@ -27,6 +26,7 @@ public class FreeOrderUseCase {
     public String freeOrderExecute(String orderUuid, Long currentUserId) {
         Order order = commonOrderService.findByOrderUuid(orderUuid);
         order.freeConfirm(currentUserId, orderValidator);
+        commonOrderService.save(order);
         return orderUuid;
     }
 }

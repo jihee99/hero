@@ -33,7 +33,6 @@ public class OrderController {
 	public OrderResponse freeOrder(@PathVariable("order_uuid") String orderUuid) {
 		/* 선착순 방식의 0원 */
 		return freeOrderUseCase.execute(orderUuid);
-
 	}
 
 }

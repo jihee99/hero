@@ -39,7 +39,6 @@ public class OrderMapper {
 		return CreateOrderResponse.from(order, item, member);
 	}
 
-	@Transactional(readOnly = true)
 	public OrderResponse toOrderResponse(String orderUuid) {
 		Order order = commonOrderService.findByOrderUuid(orderUuid);
 		Event event = getEvent(order);
