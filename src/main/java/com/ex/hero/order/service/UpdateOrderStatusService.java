@@ -14,12 +14,14 @@ public class UpdateOrderStatusService {
     public String approveExecute(String orderUuid){
         Order order = commonOrderService.findByOrderUuid(orderUuid);
         order.approve(orderValidator);
+        commonOrderService.save(order);
         return orderUuid;
     }
 
     public String refuseOrder(String orderUuid) {
         Order order = commonOrderService.findByOrderUuid(orderUuid);
         order.refuse(orderValidator);
+        commonOrderService.save(order);
         return orderUuid;
     }
 }

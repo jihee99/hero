@@ -89,8 +89,8 @@ public class OrderValidationService {
     /* 주문 거부 여부 검증 */
     public void validCanRefuse(Order order) {
         validAvailableRefundDate(order);
-//        validStatusCanRefuse(getOrderStatus(order));
-//        validCanWithDraw(order);
+        validStatusCanRefuse(getOrderStatus(order));
+        validCanWithDraw(order);
     }
 
     /* 이벤트 오픈 여부 검증 */
@@ -134,6 +134,22 @@ public class OrderValidationService {
         if (!Objects.equals(orderStatus, OrderStatus.PENDING_APPROVE)) {
             throw NotPendingOrderException.EXCEPTION;
         }
+    }
+
+    /* 주문 상태가 취소가능한 상태인지 검증 */
+    public void validStatusCanRefuse(OrderStatus orderStatus) {
+        if (!isStatusCanRefuse(orderStatus)) {
+            throw CanNotCancelOrderException.EXCEPTION;
+        }
+    }
+
+    /* 주문 철회가 가능한 상태인지 검증 */
+    public void validCanWithDraw(Order order) {
+        Event event = getEvent(order);
+        // 이벤트가 열려있는 상태인지
+        validEventIsOpen(event);
+        // 티켓 예매 가능 시간이 아직 안지났는지
+        validTicketingTime(event);
     }
 
 
@@ -201,6 +217,11 @@ public class OrderValidationService {
         List<Event> events = commonEventService.findAllByIds(getEventIds(order));
         return true;
 //        return reduceEventRefundAvailable(events);
+    }
+
+    /* 주문상태가 철회가능 상태인지를 반환합니다. */
+    public Boolean isStatusCanRefuse(OrderStatus orderStatus) {
+        return Objects.equals(orderStatus, OrderStatus.PENDING_APPROVE);
     }
 
     private List<Long> getEventIds(Order order) {

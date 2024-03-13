@@ -43,9 +43,9 @@ public class OrderMapper {
 		Order order = commonOrderService.findByOrderUuid(orderUuid);
 		Event event = getEvent(order);
 
-		List<OrderTicketResponse> orderLineTicketResponses = getOrderTicketResponses(order);
+		List<OrderTicketResponse> orderTicketResponses = getOrderTicketResponses(order);
 
-		return OrderResponse.of(order, event, orderLineTicketResponses);
+		return OrderResponse.of(order, event, orderTicketResponses);
 	}
 
 
