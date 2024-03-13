@@ -2,10 +2,7 @@ package com.ex.hero.ticket.model;
 
 import java.time.LocalDateTime;
 
-import com.ex.hero.ticket.exception.ForbiddenTicketItemDeleteException;
-import com.ex.hero.ticket.exception.InvalidTicketItemException;
-import com.ex.hero.ticket.exception.InvalidTicketPriceException;
-import com.ex.hero.ticket.exception.InvalidTicketTypeException;
+import com.ex.hero.ticket.exception.*;
 import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
@@ -112,7 +109,7 @@ public class TicketItem {
 
 	public void reduceQuantity(Long quantity) {
 		if (this.quantity < 0) {
-			// throw TicketItemQuantityException.EXCEPTION;
+			 throw TicketItemQuantityException.EXCEPTION;
 		}
 		validEnoughQuantity(quantity);
 		this.quantity = this.quantity - quantity;
@@ -126,7 +123,7 @@ public class TicketItem {
 
 	public void validPurchaseLimit(Long quantity) {
 		if (isPurchaseLimitExceed(quantity)) {
-			// throw TicketPurchaseLimitException.EXCEPTION;
+			 throw TicketPurchaseLimitException.EXCEPTION;
 		}
 	}
 
