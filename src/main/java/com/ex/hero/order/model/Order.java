@@ -143,7 +143,7 @@ public class Order {
 
     public static Order createApproveOrder(
             Long userId, Cart cart, TicketItem item, OrderValidationService orderValidator
-            ) {
+    ) {
         Order order = Order.builder()
                 .userId(userId)
                 .orderName(cart.getCartName())
