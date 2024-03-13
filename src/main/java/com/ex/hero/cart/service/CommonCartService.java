@@ -1,5 +1,6 @@
 package com.ex.hero.cart.service;
 
+import com.ex.hero.cart.exception.CartNotFoundException;
 import com.ex.hero.cart.model.Cart;
 import com.ex.hero.cart.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,17 +19,11 @@ public class CommonCartService {
     }
 
     public Cart queryCart(Long cartId) {
-        return cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException());
-        // TODO 예외처리 추가
-        //CartNotFoundException.EXCEPTION
+        return cartRepository.findById(cartId).orElseThrow(() -> CartNotFoundException.EXCEPTION);
     }
 
     public Cart queryCart(Long cartId, Long userId) {
-        return cartRepository
-                .findByIdAndUserId(cartId, userId)
-                .orElseThrow(() -> new RuntimeException());
-        // TODO 예외처리 추가
-        //CartNotFoundException.EXCEPTION
+        return cartRepository.findByIdAndUserId(cartId, userId).orElseThrow(() -> CartNotFoundException.EXCEPTION);
     }
 
     public Optional<Cart> findCartByUserId(Long userId) {
@@ -36,8 +31,7 @@ public class CommonCartService {
     }
 
     public Cart find(Long cartId) {
-        return cartRepository.findById(cartId).orElseThrow(() -> new RuntimeException());
-        //CartNotFoundException.EXCEPTION
+        return cartRepository.findById(cartId).orElseThrow(() -> CartNotFoundException.EXCEPTION);
     }
 
     @Transactional

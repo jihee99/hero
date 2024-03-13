@@ -27,7 +27,8 @@ public enum OrderErrorCode implements BaseErrorCode {
     @ExplainError("장바구니 정책을 위반하였을 때 발생하는 오류입니다. 하나의 장바구니에는 관련된 하나의 이벤트만 담을 수 있음")
     ORDER_INVALID_ITEM_KIND_POLICY(HttpStatus.BAD_REQUEST, 4010, "장바구니 정책을 위반하였습니다."),
     CAN_NOT_DELETED_USER_APPROVE(HttpStatus.BAD_REQUEST, 4011, "유저가 탈퇴를 했습니다."),
-
+    ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, 4040, "주문을 찾을 수 없습니다."),
+    ORDER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, 4041, "주문상품을 찾을 수 없습니다."),
     ;
 
     private HttpStatus httpStatus;

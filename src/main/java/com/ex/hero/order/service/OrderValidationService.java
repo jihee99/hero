@@ -4,6 +4,7 @@ import com.ex.hero.events.model.Event;
 import com.ex.hero.events.service.CommonEventService;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.service.CommonMemberService;
+import com.ex.hero.order.exception.*;
 import com.ex.hero.order.model.Order;
 import com.ex.hero.order.model.OrderStatus;
 import com.ex.hero.ticket.model.TicketItem;
@@ -94,9 +95,7 @@ public class OrderValidationService {
     public void validItemKindIsOneType(Order order) {
         List<Long> itemIds = order.getDistinctItemIds();
         if (itemIds.size() != 1) {
-            throw new RuntimeException();
-            //TODO Exception Handling
-            //OrdeItemNotOneTypeException.EXCEPTION
+            throw OrdeItemNotOneTypeException.EXCEPTION;
         }
     }
 
@@ -110,17 +109,13 @@ public class OrderValidationService {
     /* 주문 승인 가능 여부 */
     public void validMethodIsCanApprove(Order order) {
         if (isMethodPayment(order)) {
-            throw new RuntimeException();
-            //TODO Exception Handling
-            //NotApprovalOrderException.EXCEPTION
+            throw NotApprovalOrderException.EXCEPTION;
         }
     }
 
     public void validStatusCanApprove(OrderStatus orderStatus) {
         if (!Objects.equals(orderStatus, OrderStatus.PENDING_APPROVE)) {
-            throw new RuntimeException();
-//             TODO ExceptionHandling
-//            throw NotPendingOrderException.EXCEPTION;
+            throw NotPendingOrderException.EXCEPTION;
         }
     }
 
@@ -141,43 +136,37 @@ public class OrderValidationService {
     public void validUserNotDeleted(Order order) {
         Member member = commonMemberService.queryMember(order.getUserId());
         if (member.isDeletedUser()) {
-            throw new RuntimeException();
-            //CanNotApproveDeletedUserOrderException.EXCEPTION
+            throw CanNotApproveDeletedUserOrderException.EXCEPTION;
         }
     }
 
     public void validMethodIsPaymentOrder(Order order) {
         if (!isMethodPayment(order)) {
-            throw new RuntimeException();
-            //NotPaymentOrderException.EXCEPTION;
+            throw NotPaymentOrderException.EXCEPTION;
         }
     }
 
     public void validAvailableRefundDate(Order order) {
         if (!isRefundDateNotPassed(order)) {
-            throw new RuntimeException();
-//            throw NotRefundAvailableDateOrderException.EXCEPTION;
+            throw NotRefundAvailableDateOrderException.EXCEPTION;
         }
     }
 
     public void validStatusCanPaymentConfirm(OrderStatus orderStatus) {
         if (!Objects.equals(orderStatus, OrderStatus.PENDING_PAYMENT)) {
-            throw new RuntimeException();
-//            NotPendingOrderException.EXCEPTION;
+            throw NotPendingOrderException.EXCEPTION;
         }
     }
 
     public void validAmountIsFree(Order order) {
         if (order.isNeedPaid()) {
-            throw new RuntimeException();
-            //NotFreeOrderException.EXCEPTION
+            throw NotFreeOrderException.EXCEPTION;
         }
     }
 
     public void validOwner(Order order, Long currentUserId) {
         if (!order.getUserId().equals(currentUserId)) {
-            throw new RuntimeException();
-//            NotOwnerOrderException.EXCEPTION;
+            throw NotOwnerOrderException.EXCEPTION;
         }
     }
 
@@ -210,4 +199,10 @@ public class OrderValidationService {
                 .map(orderLineItem -> orderLineItem.getOrderItem().getItemGroupId())
                 .toList();
     }
+
+//    private Boolean reduceEventRefundAvailable(List<Event> events) {
+//        return events.stream()
+//                .map(Event::isRefundDateNotPassed)
+//                .reduce(Boolean.TRUE, (Boolean::logicalAnd));
+//    }
 }

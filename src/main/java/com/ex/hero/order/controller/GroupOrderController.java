@@ -6,10 +6,7 @@ import com.ex.hero.order.service.RefuseOrderUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "6. 그룹 이벤트 주문 관리 api")
 @RestController
@@ -33,6 +30,17 @@ public class GroupOrderController {
             @PathVariable Long eventId, @PathVariable("order_uuid") String orderUuid) {
         return refuseOrderUseCase.execute(eventId, orderUuid);
     }
+
+//    @Operation(summary = "카카오페이 주문을 요청합니다.")
+//    public
+
+//    @Operation(summary = "결제 여부를 확인합니다.")
+//    @PostMapping("/{order_uuid}/confirm")
+//    public OrderResponse confirmOrder(
+//            @PathVariable("order_uuid") String orderUuid,
+//            @RequestBody ConfirmOrderRequest confirmOrderRequest) {
+//        return confirmOrderUseCase.execute(orderUuid, confirmOrderRequest);
+//    }
 
 }
 

@@ -3,6 +3,8 @@ package com.ex.hero.order.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.ex.hero.order.exception.OrderItemNotFoundException;
+import com.ex.hero.order.exception.OrderNotFoundException;
 import com.ex.hero.order.model.OrderItem;
 import com.ex.hero.order.repository.OrderItemRepository;
 import org.springframework.stereotype.Service;
@@ -26,8 +28,7 @@ public class CommonOrderService {
 	public Order findById(Long orderId) {
 		return orderRepository
 			.findById(orderId)
-			.orElseThrow(() -> new RuntimeException());
-		// OrderNotFoundException
+			.orElseThrow(() -> OrderNotFoundException.EXCEPTION);
 	}
 
 	public List<Order> findByEventId(Long eventId) {
@@ -42,15 +43,12 @@ public class CommonOrderService {
 		return orderItemRepository
 			.findById(orderItemId)
 			//				.findByIdAndUserId(orderItemId, userId)
-			.orElseThrow(() -> new RuntimeException());
-		// OrderItemNotFoundException.EXCEPTION
+			.orElseThrow(() -> OrderItemNotFoundException.EXCEPTION);
 	}
 
 	public Order findByOrderUuid(String orderUuid) {
-		System.out.println(orderUuid);
 		return orderRepository
 			.findByOrderUuid(orderUuid)
-			.orElseThrow(() -> new RuntimeException("exception"));
-	//		OrderNotFoundException.EXCEPTION
+			.orElseThrow(() -> OrderNotFoundException.EXCEPTION);
 	}
 }

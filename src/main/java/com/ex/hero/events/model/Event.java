@@ -136,5 +136,4 @@ public class Event extends BaseTimeEntity {
         if (this.status == EventStatus.DELETED) throw AlreadyDeletedStatusException.EXCEPTION;
         this.status = EventStatus.DELETED;
     }
-
 }

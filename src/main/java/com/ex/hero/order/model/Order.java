@@ -1,6 +1,7 @@
 package com.ex.hero.order.model;
 
 import com.ex.hero.cart.model.Cart;
+import com.ex.hero.order.exception.OrderItemNotFoundException;
 import com.ex.hero.order.service.OrderValidationService;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -101,8 +102,7 @@ public class Order {
     private OrderItem getOrderItem() {
         return orderItems.stream()
             .findFirst()
-            .orElseThrow(() -> new RuntimeException());
-        // OrderLineNotFountException.EXCEPTION
+            .orElseThrow(() -> OrderItemNotFoundException.EXCEPTION);
     }
 
     @NotNull

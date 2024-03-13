@@ -43,11 +43,10 @@ public class TicketItemMapper {
 
         Event event = commonEventService.findById(eventId);
         List<TicketItem> ticketItems = commonTicketItemService.findAllByEventId(event.getId());
-        return null;
-//        return GetEventTicketItemsResponse.from(
-//                ticketItems.stream()
-//                        .map(ticketItem -> TicketItemResponse.from(ticketItem, isAdmin))
-//                        .toList());
+        return GetEventTicketItemsResponse.from(
+                ticketItems.stream()
+                        .map(ticketItem -> TicketItemResponse.from(ticketItem, isAdmin))
+                        .toList());
     }
 
 //    @Transactional(readOnly = true)

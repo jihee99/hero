@@ -1,5 +1,6 @@
 package com.ex.hero.cart.model;
 
+import com.ex.hero.cart.exception.CartItemNotFoundException;
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.common.vo.Money;
 import jakarta.persistence.*;
@@ -63,9 +64,7 @@ public class Cart extends BaseTimeEntity {
     public CartItem getCartItem() {
         return cartItems.stream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException());
-        // TODO 예외처리 추가
-        // CartLineItemNotFoundException.EXCEPTION
+                .orElseThrow(() -> CartItemNotFoundException.EXCEPTION);
     }
 
     public Boolean isNeedPaid() {
