@@ -28,10 +28,12 @@ public class OrderController {
 		 return createOrderUseCase.execute(createOrderRequest);
 	}
 
-	@Operation(summary = "주문을 무료로 결제합니다. 선착순 방식 결제 0원일 때 지원")
-	@PostMapping("/{orderId}/free")
-	public OrderResponse freeOrder(@PathVariable("orderId") String orderId) {
-		return freeOrderUseCase.execute(orderId);
+	@Operation(summary = "주문을 무료로 결제합니다.")
+	@PostMapping("/{order_uuid}/free")
+	public OrderResponse freeOrder(@PathVariable("order_uuid") String orderUuid) {
+		/* 선착순 방식의 0원 */
+		return freeOrderUseCase.execute(orderUuid);
+
 	}
 
 }

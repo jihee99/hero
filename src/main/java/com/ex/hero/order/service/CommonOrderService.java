@@ -46,10 +46,10 @@ public class CommonOrderService {
 		// OrderItemNotFoundException.EXCEPTION
 	}
 
-	public Order findByOrderUuid(String uuid) {
-		System.out.println(uuid);
+	public Order findByOrderUuid(String orderUuid) {
+		System.out.println(orderUuid);
 		return orderRepository
-			.findByOrderUuid(uuid)
+			.findByOrderUuid(orderUuid)
 			.orElseThrow(() -> new RuntimeException("exception"));
 	//		OrderNotFoundException.EXCEPTION
 	}

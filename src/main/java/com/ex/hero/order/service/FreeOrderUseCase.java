@@ -16,18 +16,17 @@ public class FreeOrderUseCase {
     private final OrderMapper orderMapper;
     private final CommonOrderService commonOrderService;
     private final MemberUtils memberUtils;
-    private OrderValidationService orderValidator;
+    private final OrderValidationService orderValidator;
 
 
-    public OrderResponse execute(String orderId) {
-        String confirmOrderUuid = freeOrderExecute(orderId, memberUtils.getCurrentMemberId());
-//        return null;
+    public OrderResponse execute(String orderUuid) {
+        String confirmOrderUuid = freeOrderExecute(orderUuid, memberUtils.getCurrentMemberId());
         return orderMapper.toOrderResponse(confirmOrderUuid);
     }
 
-    public String freeOrderExecute(String orderId, Long currentUserId) {
-        Order order = commonOrderService.findByOrderUuid(orderId);
+    public String freeOrderExecute(String orderUuid, Long currentUserId) {
+        Order order = commonOrderService.findByOrderUuid(orderUuid);
         order.freeConfirm(currentUserId, orderValidator);
-        return orderId;
+        return orderUuid;
     }
 }

@@ -24,6 +24,7 @@ public class OrderValidationService {
     private final CommonMemberService commonMemberService;
     private final CommonOrderService commonOrderService;
 
+    /* 주문 생성 가능 여부 */
     public void validCreate (Order order) {
         TicketItem item = getItem(order);
         Event event = getEvent(order);
@@ -40,6 +41,7 @@ public class OrderValidationService {
         validItemPurchaseLimit(order, item);
     }
 
+    /* 주문 승인 가능 여부 */
     public void validCanApproveOrder(Order order) {
         validMethodIsCanApprove(order);
         validStatusCanApprove(getOrderStatus(order));
@@ -48,6 +50,7 @@ public class OrderValidationService {
         validUserNotDeleted(order);
     }
 
+    /* 결제 방식의 주문인지 검증 */
     public void validCanConfirmPayment(Order order) {
         // 주문 방식이 결제 방식인지
         validMethodIsPaymentOrder(order);
@@ -57,6 +60,7 @@ public class OrderValidationService {
         validCanDone(order);
     }
 
+    /* 선착순 방식의 무료 주문인지 검증 */
     public void validCanFreeConfirm(Order order) {
         // 무료인지
         validAmountIsFree(order);
@@ -65,15 +69,24 @@ public class OrderValidationService {
         validCanDone(order);
     }
 
-    
+    /* 주문 거부 여부 검증 */
+    public void validCanRefuse(Order order) {
+        validAvailableRefundDate(order);
+//        validStatusCanRefuse(getOrderStatus(order));
+//        validCanWithDraw(order);
+    }
+
+    /* 이벤트 오픈 여부 검증 */
     public void validEventIsOpen(Event event) {
         event.validateNotOpenStatus();
     }
 
+    /* 티켓팅 가능 시간인지 검증 */
     public void validTicketingTime(Event event) {
         event.validateTicketingTime();
     }
 
+    /* 재고 여부 검증 */
     public void validItemStockEnough(Order order, TicketItem item) {
         item.validEnoughQuantity(order.getTotalQuantity());
     }
@@ -87,12 +100,14 @@ public class OrderValidationService {
         }
     }
 
+    /* 주문 수량이 최소 구매 수량과 일치하는지 검증 */
     public void validItemPurchaseLimit(Order order, TicketItem item) {
         Long paidTicketCount = commonIssuedTicketService.countPaidTicket(order.getUserId(), item.getId());
         Long totalIssuedCount = paidTicketCount + order.getTotalQuantity();
         item.validPurchaseLimit(totalIssuedCount);
     }
 
+    /* 주문 승인 가능 여부 */
     public void validMethodIsCanApprove(Order order) {
         if (isMethodPayment(order)) {
             throw new RuntimeException();
@@ -138,6 +153,13 @@ public class OrderValidationService {
         }
     }
 
+    public void validAvailableRefundDate(Order order) {
+        if (!isRefundDateNotPassed(order)) {
+            throw new RuntimeException();
+//            throw NotRefundAvailableDateOrderException.EXCEPTION;
+        }
+    }
+
     public void validStatusCanPaymentConfirm(OrderStatus orderStatus) {
         if (!Objects.equals(orderStatus, OrderStatus.PENDING_PAYMENT)) {
             throw new RuntimeException();
@@ -152,7 +174,6 @@ public class OrderValidationService {
         }
     }
 
-
     public void validOwner(Order order, Long currentUserId) {
         if (!order.getUserId().equals(currentUserId)) {
             throw new RuntimeException();
@@ -164,6 +185,7 @@ public class OrderValidationService {
         Long itemGroupId = order.getItemGroupId();
         return commonEventService.findById(itemGroupId);
     }
+
     private TicketItem getItem(Order order) {
         Long itemId = order.getItemId();
         return commonTicketItemService.queryTicketItem(itemId);
@@ -177,5 +199,15 @@ public class OrderValidationService {
         return order.getOrderStatus();
     }
 
+    public Boolean isRefundDateNotPassed(Order order) {
+        List<Event> events = commonEventService.findAllByIds(getEventIds(order));
+        return true;
+//        return reduceEventRefundAvailable(events);
+    }
 
+    private List<Long> getEventIds(Order order) {
+        return order.getOrderItems().stream()
+                .map(orderLineItem -> orderLineItem.getOrderItem().getItemGroupId())
+                .toList();
+    }
 }

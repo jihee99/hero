@@ -48,15 +48,14 @@ public class Order {
 
     private LocalDateTime approvedAt;
 
-    // 철회된 시간
-    // private LocalDateTime withDrawAt;
+     private LocalDateTime withDrawAt;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderMethod orderMethod; // 주문타입
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus; // 주문상태
+    private OrderStatus orderStatus = OrderStatus.READY; // 주문상태
 
     @Embedded private PaymentInfo totalPaymentInfo;
 
@@ -87,22 +86,17 @@ public class Order {
         this.eventId = eventId;
     }
 
+
+
     public Money getTotalSupplyPrice() {
         return orderItems.stream()
             .map(OrderItem::getTotalOrderPrice)
             .reduce(Money.ZERO, Money::plus);
     }
 
-
-
     public Money getTotalPaymentPrice() {
         return getTotalSupplyPrice();
     }
-
-    public Boolean isPaid(){
-        return Money.ZERO.isLessThan(getTotalPaymentPrice()) && orderMethod.isPayment();
-    }
-
 
     private OrderItem getOrderItem() {
         return orderItems.stream()
@@ -126,12 +120,9 @@ public class Order {
         return orderItems.stream().map(OrderItem::getQuantity).reduce(0L, Long::sum);
     }
 
-    public void freeConfirm(Long currentUserId, OrderValidationService orderValidator) {
-        orderValidator.validOwner(this, currentUserId);
-        orderValidator.validCanFreeConfirm(this);
-        this.approvedAt = LocalDateTime.now();
-        this.orderStatus = OrderStatus.APPROVED;
-    }
+
+
+
 
     public static Order createPaymentOrder(
             Long userId, Cart cart, TicketItem item, OrderValidationService orderValidator
@@ -168,6 +159,10 @@ public class Order {
         return order;
     }
 
+
+
+
+
     public List<Long> getDistinctItemIds() {
         return this.orderItems.stream().map(OrderItem::getItemId).distinct().toList();
     }
@@ -184,9 +179,37 @@ public class Order {
                         .build();
     }
 
+    public void approve(OrderValidationService orderValidator){
+//        issueDoneOrderEvent();
+        orderValidator.validCanApproveOrder(this);
+        this.approvedAt = LocalDateTime.now();
+        this.orderStatus = OrderStatus.APPROVED;
+    }
+
+    public void freeConfirm(Long currentUserId, OrderValidationService orderValidator) {
+        // 선착순 방식의 0원 결제시
+        orderValidator.validOwner(this, currentUserId);
+        /*주문상태가 0일때*/
+        orderValidator.validCanFreeConfirm(this);
+        this.approvedAt = LocalDateTime.now();
+        this.orderStatus = OrderStatus.APPROVED;
+    }
+
+    public void refuse(OrderValidationService orderValidator) {
+        orderValidator.validCanRefuse(this);
+        this.orderStatus = OrderStatus.CANCELED;
+        this.withDrawAt = LocalDateTime.now();
+    }
+
+
     public Boolean isNeedPaid() {
         // 총 금액이 0 보다 큰지
         return Money.ZERO.isLessThan(getTotalPaymentPrice()) && orderMethod.isPayment();
     }
+
+    public Boolean isPaid(){
+        return Money.ZERO.isLessThan(getTotalPaymentPrice()) && orderMethod.isPayment();
+    }
+
 
 }
