@@ -40,14 +40,14 @@ public class OrderMapper {
 	}
 
 	@Transactional(readOnly = true)
-	public OrderResponse toOrderResponse(Order order) {
+	public OrderResponse toOrderResponse(String orderUuid) {
+		Order order = commonOrderService.findByOrderUuid(orderUuid);
 		Event event = getEvent(order);
+
 		List<OrderTicketResponse> orderLineTicketResponses = getOrderTicketResponses(order);
 
 		return OrderResponse.of(order, event, orderLineTicketResponses);
 	}
-
-
 
 
 

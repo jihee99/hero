@@ -140,6 +140,8 @@ public class Order {
                 .userId(userId)
                 .orderName(cart.getCartName())
                 .orderItems(getOrderItems(cart, item))
+                .orderStatus(OrderStatus.PENDING_PAYMENT)
+                .orderMethod(OrderMethod.PAYMENT)
                 .eventId(item.getEventId())
                 .build();
         orderValidator.validCreate(order);
@@ -155,6 +157,8 @@ public class Order {
                 .userId(userId)
                 .orderName(cart.getCartName())
                 .orderItems(getOrderItems(cart, item))
+                .orderStatus(OrderStatus.PENDING_APPROVE)
+                .orderMethod(OrderMethod.APPROVAL)
                 .eventId(item.getEventId())
                 .build();
 

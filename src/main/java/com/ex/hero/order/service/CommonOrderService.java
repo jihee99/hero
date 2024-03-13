@@ -47,6 +47,7 @@ public class CommonOrderService {
 	}
 
 	public Order findByOrderUuid(String uuid) {
+		System.out.println(uuid);
 		return orderRepository
 			.findByOrderUuid(uuid)
 			.orElseThrow(() -> new RuntimeException("exception"));

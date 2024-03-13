@@ -31,23 +31,26 @@ public class CreateOrderUseCase {
 	public CreateOrderResponse execute(CreateOrderRequest createOrderRequest) {
 		Member member = memberUtils.getCurrentMember();
 		Long cartId = createOrderRequest.getCartId();
-		// 주문서를 생성하는 코드
-		Order order = createOrder(createOrderRequest, member.getUserId());
+
+		// 주문서 생성
+		Order order = createOrder(cartId, member.getUserId());
+		commonOrderService.save(order).getUuid();
+
 		return orderMapper.toCreateOrderResponse(order.getId());
 	}
 
 
 	// 주문서 생성 함수
-	private Order createOrder(CreateOrderRequest request, Long userId){
-		Cart cart = commonCartService.queryCart(request.getCartId());
-		TicketItem ticketItem = commonTicketItemService.queryTicketItem(request.getCartId());
+	private Order createOrder(Long cartId, Long userId){
+		Cart cart = commonCartService.queryCart(cartId);
+		TicketItem ticketItem = commonTicketItemService.queryTicketItem(cart.getItemId());
 		TicketPayType payType = ticketItem.getPayType();
 
 		if(payType == TicketPayType.FREE_TICKET){
 			if (ticketItem.isFCFS()) {
 				return Order.createPaymentOrder(userId, cart, ticketItem, orderValidator);
 			}
-			// 승인 티켓
+			// 승인 티켓 (무료)
 			return Order.createApproveOrder(userId, cart, ticketItem, orderValidator);
 		}
 		return Order.createPaymentOrder(userId, cart, ticketItem, orderValidator);
