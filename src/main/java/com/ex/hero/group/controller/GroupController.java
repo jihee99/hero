@@ -47,17 +47,16 @@ public class GroupController {
 		return createGroupUseCase.execute(createEventRequest);
 	}
 
-	@Operation(summary = "내가 속한 호스트 리스트를 가져옵니다.")
+	@Operation(summary = "내가 속한 그룹 리스트를 가져옵니다.")
 	@GetMapping
-	public List<GroupProfileResponse> getAllHosts(
-			@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-		return readGroupsUseCase.execute(pageable);
+	public List<GroupProfileResponse> getAllHosts() {
+		return readGroupsUseCase.execute();
 	}
 
 	@Operation(summary = "고유 아이디에 해당하는 그룹 정보를 가져옵니다.")
-	@GetMapping("/{hostId}")
-	public GroupDetailResponse getHostById(@PathVariable Long hostId) {
-		return readGroupUseCase.execute(hostId);
+	@GetMapping("/{groupId}")
+	public GroupDetailResponse getHostById(@PathVariable Long groupId) {
+		return readGroupUseCase.execute(groupId);
 	}
 
 	@Operation(summary = "해당 그룹에 가입하지 않은 유저를 이메일로 검색합니다.")
@@ -92,11 +91,9 @@ public class GroupController {
 
 	// TODO 이벤트 리스트 조회 서비스 생성하기
 	@Operation(summary = "해당 그룹에서 관리중인 이벤트 리스트를 가져옵니다.")
-	@GetMapping("/{hostId}/events")
-	public Page<GroupEventProfileResponse> getHostEventsById(
-		@PathVariable Long groupId,
-		@ParameterObject @PageableDefault(size = 10) Pageable pageable) {
-		return readGroupEventsUseCase.execute(groupId, pageable);
+	@GetMapping("/{groupId}/events")
+	public List<GroupEventProfileResponse> getHostEventsById (@PathVariable Long groupId) {
+		return readGroupEventsUseCase.execute(groupId);
 	}
 
 

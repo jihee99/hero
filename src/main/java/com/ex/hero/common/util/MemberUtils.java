@@ -45,6 +45,7 @@ public class MemberUtils {
 	}
 
 	public Member getCurrentMember(){
+		System.out.println(getCurrentMemberId());
 		return memberRepository.findById(getCurrentMemberId()).orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
 

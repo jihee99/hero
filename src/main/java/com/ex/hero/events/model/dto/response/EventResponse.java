@@ -15,7 +15,7 @@ public class EventResponse {
 
 	private Long eventId;
 
-	private Long hostId;
+	private Long groupId;
 
 	private EventStatus status;
 
@@ -28,7 +28,7 @@ public class EventResponse {
 	public static EventResponse of(Event event) {
 		return EventResponse.builder()
 			.eventId(event.getId())
-			.hostId(event.getGroupId())
+			.groupId(event.getGroupId())
 			.eventBasic(EventBasicVo.from(event))
 			.eventDetail(EventDetailVo.from(event))
 			.status(event.getStatus())

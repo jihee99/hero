@@ -20,7 +20,7 @@ public class ReadGroupsUseCase {
 
 
     @Transactional(readOnly = true)
-    public List<GroupProfileResponse> execute(Pageable pageable) {
+    public List<GroupProfileResponse> execute() {
         final Member member = memberUtils.getCurrentMember();
         final Long userId = member.getUserId();
 

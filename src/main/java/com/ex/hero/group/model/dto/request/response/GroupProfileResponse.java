@@ -11,7 +11,7 @@ import lombok.Getter;
 @Builder
 public class GroupProfileResponse {
     @Schema(description = "그룹 고유 아이디")
-    private final Long hostId;
+    private final Long groupId;
 
     @Schema(description = "그룹 이름")
     private final String name;
@@ -31,7 +31,7 @@ public class GroupProfileResponse {
     public static GroupProfileResponse of(Group group, Long userId) {
         GroupUser groupUser = group.getGroupUserByUserId(userId);
         return GroupProfileResponse.builder()
-                .hostId(group.getId())
+                .groupId(group.getId())
                 .name(group.getProfile().getName())
                 .introduce(group.getProfile().getIntroduce())
 //                .profileImage(group.getProfile().getProfileImage())

@@ -17,8 +17,8 @@ public class ReadInviteUsersUseCase {
     private final CommonMemberService commonMemberService;
 
     @Transactional(readOnly = true)
-    public MemberProfileVo execute(Long hostId, String email) {
-        return toGroupInviteUserList(hostId, email);
+    public MemberProfileVo execute(Long groupId, String email) {
+        return toGroupInviteUserList(groupId, email);
     }
 
     public MemberProfileVo toGroupInviteUserList(Long groupId, String email) {

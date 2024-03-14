@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	/* 매개변수에 헤더이름 추가 */
 	private String parseBearerToken(HttpServletRequest request, String headerName) {
 		return Optional.ofNullable(request.getHeader(headerName))
-			.filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
+			.filter(token -> token.substring(0, 7).equalsIgnoreCase("z "))
 			.map(token -> token.substring(7))
 			.orElse(null);
 	}

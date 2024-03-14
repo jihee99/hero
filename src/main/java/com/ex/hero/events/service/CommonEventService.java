@@ -5,12 +5,8 @@ import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventStatus;
 import com.ex.hero.events.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,15 +24,15 @@ public class CommonEventService {
                 .orElseThrow(() -> EventNotFoundException.EXCEPTION);
     }
 
-    public List<Event> findAllByHostId(Long groupId) {
+    public List<Event> findAllByGroupId(Long groupId) {
         return eventRepository.findAllByGroupId(groupId);
     }
 
-    public List<Event> findAllByHostIdIn(List<Long> groupId) {
+    public List<Event> findAllByGroupIdIn(List<Long> groupId) {
         return eventRepository.findAllByGroupIdIn(groupId);
     }
 
-    public List<Event> queryEventsByHostIdIn(List<Long> groupId) {
+    public List<Event> queryEventsByGroupIdIn(List<Long> groupId) {
         return eventRepository.queryEventsByGroupIdIn(groupId);
     }
 
