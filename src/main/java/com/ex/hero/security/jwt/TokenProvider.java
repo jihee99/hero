@@ -38,7 +38,7 @@ public class TokenProvider {
 	private final String issuer;
 	private final long reissueLimit;
 	private final MemberRefreshTokenRepository memberRefreshTokenRepository;
-
+	public static final int MILLI_TO_SECOND = 1000;
 
 	private final ObjectMapper objectMapper = new ObjectMapper();	// JWT 역직렬화를 위한 ObjectMapper
 
@@ -61,12 +61,16 @@ public class TokenProvider {
 
 
 	public String createAccessToken(String userSpecification) {
+
+		final Date issuedAt = new Date();
+		final Date accessTokenExpiresIn = new Date(issuedAt.getTime() + 360 * MILLI_TO_SECOND);
+
 		 return Jwts.builder()
 			 .signWith(new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS512.getJcaName()))
 			 .setSubject(userSpecification) // Jwt 토큰 제목
 			 .setIssuer(issuer)		// Jwt 토큰 발급자
 			 .setIssuedAt(Timestamp.valueOf(LocalDateTime.now()))	// Jwt 토큰 발급 시간
-			 .setExpiration(Date.from(Instant.now().plus(expirationMinutes, ChronoUnit.HOURS)))	// Jwt 토큰 만료 시간
+			 .setExpiration(accessTokenExpiresIn)	// Jwt 토큰 만료 시간
 			 .compact();	// Jwt 토큰 생성
 	}
 

@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.ex.hero.security.filter.JwtAuthenticationFilter;
@@ -27,8 +29,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
-	private final AuthenticationEntryPoint entryPoint;
+//	private final AuthenticationEntryPoint entryPoint;
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
+
+//	private final AccessDeniedFilter accessDeniedFilter;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -54,9 +58,10 @@ public class SecurityConfig {
 				requests
 					.requestMatchers(allowedUrls).permitAll()
 
-					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("MEMBER", "MASTER", "MANAGER", "ADMIN")
-					.requestMatchers("/api/v[0-9]+/orders/**").hasAnyAuthority("MEMBER", "MASTER", "MANAGER", "ADMIN")
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
+					.requestMatchers("/api/v[0-9]+/orders/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-1]+/group").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/manager/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
@@ -72,9 +77,12 @@ public class SecurityConfig {
 			// 		.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
 			// )
 
-			.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class)
-			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
-		;
+		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+		.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class);
+
+//			.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class)
+//			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
+
 		return http.build();
 	}
 

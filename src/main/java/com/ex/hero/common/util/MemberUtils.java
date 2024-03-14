@@ -34,8 +34,7 @@ public class MemberUtils {
 			throw SecurityContextNotFoundException.EXCEPTION;
 		}
 
-		if (authentication.isAuthenticated()
-				&& !CollectionUtils.containsAny(
+		if (authentication.isAuthenticated() && !CollectionUtils.containsAny(
 				authentication.getAuthorities(), notUserAuthority)) {
 			return Long.valueOf(authentication.getName());
 		}
@@ -45,7 +44,6 @@ public class MemberUtils {
 	}
 
 	public Member getCurrentMember(){
-		System.out.println(getCurrentMemberId());
 		return memberRepository.findById(getCurrentMemberId()).orElseThrow(() -> UserNotFoundException.EXCEPTION);
 	}
 
