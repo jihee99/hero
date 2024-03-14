@@ -30,9 +30,11 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
 //	private final AuthenticationEntryPoint entryPoint;
-	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
+//	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
 
 //	private final AccessDeniedFilter accessDeniedFilter;
+
+	private final FilterConfig filterConfig;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -67,7 +69,7 @@ public class SecurityConfig {
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
 					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
-			)
+			);
 
 			// .authorizeHttpRequests(requests ->
 			// 	requests.requestMatchers(allowedUrls).permitAll()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
@@ -77,12 +79,13 @@ public class SecurityConfig {
 			// 		.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
 			// )
 
-		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-		.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class);
+//		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//		.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class);
+
 
 //			.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class)
 //			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
-
+		http.apply(filterConfig);
 		return http.build();
 	}
 

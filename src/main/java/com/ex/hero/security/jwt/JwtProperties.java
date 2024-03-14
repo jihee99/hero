@@ -1,18 +1,18 @@
 package com.ex.hero.security.jwt;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
-@PropertySource("classpath:auth-jwt.yml")
+@AllArgsConstructor
+@ConfigurationProperties(prefix = "auth.jwt")
 public class JwtProperties {
 
-    private final String secretKey;
+    private String secretKey;
 
-    public JwtProperties(
-            @Value("${secret-key}") String secretKey
-    ) {
-        this.secretKey = secretKey;
-    }
+    private Long accessExp;
+
+    private Long refreshExp;
 }
+
