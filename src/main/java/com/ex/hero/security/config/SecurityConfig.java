@@ -2,16 +2,13 @@ package com.ex.hero.security.config;
 
 import com.ex.hero.member.repository.MemberRepository;
 import com.ex.hero.security.filter.JwtAuthorizationFilter;
+import com.ex.hero.security.filter.JwtTokenFilter;
 import com.ex.hero.security.filter.NewJwtAuthenticationFilter;
 import com.ex.hero.security.jwt.TokenProviderUp;
+import jakarta.websocket.RemoteEndpoint;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
-import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,10 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -80,7 +75,7 @@ public class SecurityConfig {
 					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/orders/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
-					.requestMatchers("/api/v[0-1]+/group").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
+//					.requestMatchers("/api/v[0-1]+/group").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/manager/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
@@ -94,14 +89,15 @@ public class SecurityConfig {
 
 
 //			.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class)
-//			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
 
 		http.addFilterBefore(new NewJwtAuthenticationFilter(
 				authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
-		http.addFilterBefore(new JwtAuthorizationFilter(
-				authenticationManager(authenticationConfiguration), tokenProvider, memberRepository), BasicAuthenticationFilter.class);
+//		http.addFilterBefore(new JwtAuthorizationFilter(
+//				authenticationManager(authenticationConfiguration), tokenProvider, memberRepository), BasicAuthenticationFilter.class);
 
+		http.addFilterBefore(new JwtTokenFilter(tokenProvider), BasicAuthenticationFilter.class);
+//		http.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint));
 //		http.apply(filterConfig);
 
 		return http.build();
