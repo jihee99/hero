@@ -1,9 +1,8 @@
 package com.ex.hero.security.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import static com.ex.hero.security.HeroStatic.*;
+
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,10 +17,6 @@ import java.util.Date;
 public class TokenProviderUp {
 
     private final JwtProperties jwtProperties;
-    private final String TOKEN_TYPE = "type";
-    private final String TOKEN_ROLE = "role";
-    private static final Duration ACCESS_TOKEN_EXPIRATION_TIME = Duration.ofMinutes(30);
-    private static final Duration REFRESH_TOKEN_EXPIRATION_TIME = Duration.ofMinutes(60);
 
     private Jws<Claims> getJws(String token) {
         try {
@@ -41,7 +36,7 @@ public class TokenProviderUp {
         return Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateAccessToken(Long id, String role) {
+    public String generateAccessToken(String email, String role) {
         final Date issuedAt = new Date();
         final Date accessTokenExpiresIn =  new Date(issuedAt.getTime() + ACCESS_TOKEN_EXPIRATION_TIME.toMillis());
 
@@ -49,7 +44,7 @@ public class TokenProviderUp {
         return Jwts.builder()
 //                .setIssuer(TOKEN_ISSUER)
                 .setIssuedAt(issuedAt)
-                .setSubject(id.toString())
+                .setSubject(email)
                 .claim(TOKEN_TYPE, "ACCESS_TOKEN")
                 .claim(TOKEN_ROLE, role)
                 .setExpiration(accessTokenExpiresIn)
@@ -74,11 +69,11 @@ public class TokenProviderUp {
     }
 
     public boolean isAccessToken(String token) {
-        return getJws(token).getBody().get(TOKEN_TYPE).equals("ACCESS_TOKEN");
+        return getJws(token).getBody().get(TOKEN_TYPE).equals(ACCESS_TOKEN);
     }
 
     public boolean isRefreshToken(String token) {
-        return getJws(token).getBody().get(TOKEN_TYPE).equals("REFRESH_TOKEN");
+        return getJws(token).getBody().get(TOKEN_TYPE).equals(REFRESH_TOKEN);
     }
 
     public AccessTokenInfo parseAccessToken(String token) {
@@ -118,4 +113,31 @@ public class TokenProviderUp {
         return jwtProperties.getAccessExp();
     }
 
+    public boolean validateTokenExpirationTimeNotExpired(String token) {
+        if (token == null || token.isEmpty()) {
+            return false;
+        }
+
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getSecretKey())
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (ExpiredJwtException exception) {
+            return false;
+        } catch (JwtException | IllegalArgumentException exception) {
+
+            return false;
+        }
+    }
+
+    public String getEmail(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSecretKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
 }

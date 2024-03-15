@@ -1,28 +1,32 @@
 package com.ex.hero.security.config;
 
+import com.ex.hero.member.repository.MemberRepository;
+import com.ex.hero.security.filter.JwtAuthorizationFilter;
+import com.ex.hero.security.filter.NewJwtAuthenticationFilter;
+import com.ex.hero.security.jwt.TokenProviderUp;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
-import com.ex.hero.security.filter.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -30,11 +34,13 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
 //	private final AuthenticationEntryPoint entryPoint;
-//	private final JwtAuthenticationFilter jwtAuthenticationFilter;	// JwtAuthenticationFilter 주입
-
+//	private final CorsFilter corsFilter;
+	private final AuthenticationConfiguration authenticationConfiguration;
+	private final TokenProviderUp tokenProvider;
+	private final MemberRepository memberRepository;
 //	private final AccessDeniedFilter accessDeniedFilter;
 
-	private final FilterConfig filterConfig;
+//	private final FilterConfig filterConfig;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -52,9 +58,20 @@ public class SecurityConfig {
 
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+	@Bean
+	public SecurityFilterChain filterChainForActuator(HttpSecurity http) throws Exception {
+
 		http
 			.csrf(AbstractHttpConfigurer::disable)
+//			.addFilterBefore(corsFilter, ChannelProcessingFilter.class)
+
+			.formLogin((formLogin) -> formLogin.disable())
+			.httpBasic((httpBasic) -> httpBasic.disable())
+
 			.sessionManagement( sessionManageMent -> sessionManageMent.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authorizeHttpRequests(requests ->
 				requests
@@ -71,13 +88,6 @@ public class SecurityConfig {
 					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
 			);
 
-			// .authorizeHttpRequests(requests ->
-			// 	requests.requestMatchers(allowedUrls).permitAll()	// requestMatchers의 인자로 전달된 url은 모두에게 허용
-			//
-			//
-			//
-			// 		.anyRequest().authenticated()	// 그 외의 모든 요청은 인증 필요
-			// )
 
 //		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 //		.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class);
@@ -85,7 +95,15 @@ public class SecurityConfig {
 
 //			.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class)
 //			.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))	// 추가
-		http.apply(filterConfig);
+
+		http.addFilterBefore(new NewJwtAuthenticationFilter(
+				authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+		http.addFilterBefore(new JwtAuthorizationFilter(
+				authenticationManager(authenticationConfiguration), tokenProvider, memberRepository), BasicAuthenticationFilter.class);
+
+//		http.apply(filterConfig);
+
 		return http.build();
 	}
 

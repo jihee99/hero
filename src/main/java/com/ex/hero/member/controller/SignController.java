@@ -1,5 +1,7 @@
 package com.ex.hero.member.controller;
 
+import com.ex.hero.security.jwt.Token;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +31,24 @@ public class SignController {
 	}
 
 
+//	@Operation(summary = "로그인")
+//	@PostMapping("/login")
+//	public ApiResponse signIn(@RequestBody SignInRequest request) {
+//		return ApiResponse.success(signService.signIn(request));
+//	}
+
+	@Operation(summary = "회원가입 API")
+	@PostMapping("/new")
+	public ResponseEntity<Void> signUp3(@RequestBody SignUpRequest signUpRequest) {
+		signService.signUp(signUpRequest.email(), signUpRequest.name(), signUpRequest.password());
+		return ResponseEntity.ok().build();
+	}
 	@Operation(summary = "로그인")
-	@PostMapping("/sign-in")
-	public ApiResponse signIn(@RequestBody SignInRequest request) {
-		return ApiResponse.success(signService.signIn(request));
+	@PostMapping("/login")
+	public ResponseEntity<Void> login(@RequestBody SignInRequest request) {
+
+
+		return ResponseEntity.ok().build();
 	}
 
 }

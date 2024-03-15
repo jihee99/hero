@@ -1,8 +1,9 @@
 package com.ex.hero.security.filter;
 
+import static com.ex.hero.security.HeroStatic.*;
+
 import com.ex.hero.security.AuthDetails;
 import com.ex.hero.security.jwt.AccessTokenInfo;
-import com.ex.hero.security.jwt.TokenProvider;
 import com.ex.hero.security.jwt.TokenProviderUp;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Component
@@ -39,10 +39,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     private String resolveToken(HttpServletRequest request, String headerName) {
-        return Optional.ofNullable(request.getHeader(headerName))
-                .filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
-                .map(token -> token.substring(7))
-                .orElse(null);
+        String rawHeader = request.getHeader(headerName);
+        System.out.println(rawHeader);
+        if (rawHeader != null
+                && rawHeader.length() > BEARER.length()
+                && rawHeader.startsWith(BEARER)) {
+            return rawHeader.substring(BEARER.length());
+        }
+        return null;
+
+//        return Optional.ofNullable(request.getHeader(headerName))
+//                .filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
+//                .map(token -> token.substring(7))
+//                .orElse(null);
     }
 
     public Authentication getAuthentication(String token) {
@@ -51,4 +60,5 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         UserDetails userDetails = new AuthDetails(accessTokenInfo.getEmail(), accessTokenInfo.getRole());
         return new UsernamePasswordAuthenticationToken(userDetails, "user", userDetails.getAuthorities());
     }
+
 }

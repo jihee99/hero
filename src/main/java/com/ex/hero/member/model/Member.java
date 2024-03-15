@@ -71,11 +71,11 @@ public class Member extends BaseTimeEntity {
 		this.accountState = AccountState.NORMAL;
 	}
 
-	 public static Member from(SignUpRequest request, PasswordEncoder passwordEncoder) {
+	 public static Member from(String email, String name, String password) {
 	 	return Member.builder()
-	 		.email(request.email())
-	 		.password(passwordEncoder.encode(request.password()))
-	 		.name(request.name())
+	 		.email(email)
+	 		.password(password)
+	 		.name(name)
 	 		.accountRole(MemberType.USER)
 	 		.accountState(AccountState.NORMAL)
 	 		.build();
