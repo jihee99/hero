@@ -4,27 +4,29 @@ import static com.ex.hero.security.HeroStatic.*;
 
 import com.ex.hero.security.AuthDetails;
 import com.ex.hero.security.jwt.AccessTokenInfo;
-import com.ex.hero.security.jwt.TokenProviderUp;
+import com.ex.hero.security.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Slf4j
 @RequiredArgsConstructor
 //@Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    private final TokenProviderUp tokenProvider;
+    private final TokenProvider tokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -40,7 +42,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     private String resolveToken(HttpServletRequest request, String headerName) {
         String rawHeader = request.getHeader(headerName);
-        System.out.println(rawHeader);
+        log.info("{}", rawHeader);
+
         if (rawHeader != null
                 && rawHeader.length() > BEARER.length()
                 && rawHeader.startsWith(BEARER)) {

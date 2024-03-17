@@ -1,11 +1,10 @@
 package com.ex.hero.security.config;
 
 import com.ex.hero.member.repository.MemberRepository;
-import com.ex.hero.security.filter.JwtAuthorizationFilter;
 import com.ex.hero.security.filter.JwtTokenFilter;
-import com.ex.hero.security.filter.NewJwtAuthenticationFilter;
-import com.ex.hero.security.jwt.TokenProviderUp;
-import jakarta.websocket.RemoteEndpoint;
+import com.ex.hero.security.filter.JwtAuthenticationFilter;
+import com.ex.hero.security.jwt.TokenProvider;
+
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,15 +26,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in"};
-//	private final AuthenticationEntryPoint entryPoint;
-//	private final CorsFilter corsFilter;
+	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/login"};
 	private final AuthenticationConfiguration authenticationConfiguration;
-	private final TokenProviderUp tokenProvider;
-	private final MemberRepository memberRepository;
-//	private final AccessDeniedFilter accessDeniedFilter;
+	private final TokenProvider tokenProvider;
 
-//	private final FilterConfig filterConfig;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -90,7 +84,7 @@ public class SecurityConfig {
 
 //			.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class)
 
-		http.addFilterBefore(new NewJwtAuthenticationFilter(
+		http.addFilterBefore(new JwtAuthenticationFilter(
 				authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class);
 
 //		http.addFilterBefore(new JwtAuthorizationFilter(
