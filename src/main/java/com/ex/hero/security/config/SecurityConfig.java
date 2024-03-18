@@ -78,20 +78,11 @@ public class SecurityConfig {
 					.hasRole("USER")
 			);
 
-
-//		.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//		.addFilterBefore(jwtAuthenticationFilter, BasicAuthenticationFilter.class);
-
-
 //			.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class)
 
-		http.addFilterBefore(new JwtAuthenticationFilter(
-				authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class);
-
-//		http.addFilterBefore(new JwtAuthorizationFilter(
-//				authenticationManager(authenticationConfiguration), tokenProvider, memberRepository), BasicAuthenticationFilter.class);
-
+		http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class);
 		http.addFilterBefore(new JwtTokenFilter(tokenProvider), BasicAuthenticationFilter.class);
+
 //		http.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class);
 //		http.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint));
 //		http.apply(filterConfig);

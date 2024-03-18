@@ -31,9 +31,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             SignInRequest signInRequest = getSignInRequest(request.getInputStream());
-
-            UsernamePasswordAuthenticationToken authenticationToken
-                    = createUsernamePasswordAuthenticationToken(signInRequest);
+            UsernamePasswordAuthenticationToken authenticationToken = createUsernamePasswordAuthenticationToken(signInRequest);
 
             return authenticationManager.authenticate(authenticationToken);
         } catch (IOException e) {
@@ -56,10 +54,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String grantedAuthority = authResult.getAuthorities().stream().findAny().orElseThrow().toString();
         String accessToken = tokenProvider.generateAccessToken(authResult.getPrincipal().toString(), grantedAuthority);
-
+//        String refreshToken = tokenProvider.generateRefreshToken(authResult.getPrincipal().toString());
         response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
         response.addHeader(AUTH_HEADER, ACCESS_TOKEN + accessToken);
-
+//        response.addHeader(AUTH_HEADER, REFRESH_TOKEN + refreshToken);
+//
     }
 
     @Override

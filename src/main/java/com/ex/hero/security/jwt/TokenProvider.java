@@ -22,11 +22,9 @@ public class TokenProvider {
             return Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
             throw new RuntimeException("만료된 토큰");
-//            TODO 예외처리
 //            throw ExpiredTokenException.EXCEPTION;
         } catch (Exception e) {
             throw new RuntimeException("유효하지 않은 토큰");
-//            TODO 예외처리
 //            throw InvalidTokenException.EXCEPTION;
         }
     }
@@ -44,7 +42,7 @@ public class TokenProvider {
 //                .setIssuer(TOKEN_ISSUER)
                 .setIssuedAt(issuedAt)
                 .setSubject(email)
-                .claim(TOKEN_TYPE, "ACCESS_TOKEN")
+                .claim(TOKEN_TYPE, ACCESS_TOKEN)
                 .claim(TOKEN_ROLE, role)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(encodedKey)
@@ -52,7 +50,7 @@ public class TokenProvider {
 
     }
 
-    public String generateRefreshToken(Long id) {
+    public String generateRefreshToken(String email) {
         final Date issuedAt = new Date();
         final Date refreshTokenExpiresIn = new Date(issuedAt.getTime() + REFRESH_TOKEN_EXPIRATION_TIME.toMillis());
 
@@ -60,8 +58,8 @@ public class TokenProvider {
         return Jwts.builder()
 //                .setIssuer(TOKEN_ISSUER)
                 .setIssuedAt(issuedAt)
-                .setSubject(id.toString())
-                .claim(TOKEN_TYPE, "REFRESH_TOKEN")
+                .setSubject(email)
+                .claim(TOKEN_TYPE, REFRESH_TOKEN)
                 .setExpiration(refreshTokenExpiresIn)
                 .signWith(encodedKey)
                 .compact();

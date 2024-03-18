@@ -46,8 +46,6 @@ public class SignController {
 	@Operation(summary = "로그인")
 	@PostMapping("/login")
 	public ResponseEntity<Void> login(@RequestBody SignInRequest request) {
-
-
 		return ResponseEntity.ok().build();
 	}
 

@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,17 +45,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String rawHeader = request.getHeader(headerName);
         log.info("{}", rawHeader);
 
-        if (rawHeader != null
-                && rawHeader.length() > BEARER.length()
-                && rawHeader.startsWith(BEARER)) {
-            return rawHeader.substring(BEARER.length());
-        }
-        return null;
+//        if (rawHeader != null
+//                && rawHeader.length() > BEARER.length()
+//                && rawHeader.startsWith(BEARER)) {
+//            return rawHeader.substring(BEARER.length());
+//        }
+//        return null;
 
-//        return Optional.ofNullable(request.getHeader(headerName))
-//                .filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
-//                .map(token -> token.substring(7))
-//                .orElse(null);
+        return Optional.ofNullable(request.getHeader(headerName))
+                .filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
+                .map(token -> token.substring(7))
+                .orElse(null);
     }
 
     public Authentication getAuthentication(String token) {
