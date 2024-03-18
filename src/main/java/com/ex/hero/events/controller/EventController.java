@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 // @SecurityRequirement(name = "access-token")
 @RestController
 @Tag(name = "3. 이벤트 관련 API (사용자용)")
-@RequestMapping("/v1/event")
+@RequestMapping("/api/v1/events")
 @RequiredArgsConstructor
 public class EventController {
 

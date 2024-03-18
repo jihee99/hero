@@ -1,4 +1,4 @@
-package com.ex.hero.events.controller;
+package com.ex.hero.events.service;
 
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.dto.response.EventResponse;

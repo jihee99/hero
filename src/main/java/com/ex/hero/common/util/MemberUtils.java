@@ -34,9 +34,10 @@ public class MemberUtils {
 			throw SecurityContextNotFoundException.EXCEPTION;
 		}
 
-		if (authentication.isAuthenticated() && !CollectionUtils.containsAny(
-				authentication.getAuthorities(), notUserAuthority)) {
-			return Long.valueOf(authentication.getName());
+		if (authentication.isAuthenticated() && !CollectionUtils.containsAny(authentication.getAuthorities(), notUserAuthority)) {
+			Member member = memberRepository.findByEmail(authentication.getName())
+					.orElseThrow(() -> UserNotFoundException.EXCEPTION);
+			return member.getUserId();
 		}
 		// 스웨거 유저일시 익명 유저 취급
 		// 익명유저시 userId 0 반환

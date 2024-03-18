@@ -26,10 +26,9 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/login"};
+	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in", "/login", "/new"};
 	private final AuthenticationConfiguration authenticationConfiguration;
 	private final TokenProvider tokenProvider;
-
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -45,7 +44,6 @@ public class SecurityConfig {
 			.requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
 
-
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
@@ -53,7 +51,6 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChainForActuator(HttpSecurity http) throws Exception {
-
 		http
 			.csrf(AbstractHttpConfigurer::disable)
 //			.addFilterBefore(corsFilter, ChannelProcessingFilter.class)
@@ -65,7 +62,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests(requests ->
 				requests
 					.requestMatchers(allowedUrls).permitAll()
-
+//						.requestMatchers("/api/v[0-9]+/event")
 					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/orders/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
@@ -74,7 +71,9 @@ public class SecurityConfig {
 					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
-					.anyRequest().authenticated() // 그 외의 모든 요청은 인증 필요
+					// 인증이 필요한 모든 요청은 최소 USER 권한을 갖고 있어야 한다.
+					.anyRequest()
+					.hasRole("USER")
 			);
 
 
