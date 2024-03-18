@@ -19,19 +19,7 @@
 //
 //    @Override
 //    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
-//		// JwtAuthenticationFilter에서 request에 담아서 보내준 예외를 처리@Slf4j
-//        //@Component
-//        //public class JwtAccessDeniedHandler implements AccessDeniedHandler {
-//        //
-//        //    @Override
-//        //    public void handle(HttpServletRequest request,
-//        //                       HttpServletResponse response,
-//        //                       AccessDeniedException accessDeniedException) throws IOException {
-//        //
-//        //        response.setCharacterEncoding("utf-8");
-//        //        response.sendError(403, "권한이 없습니다.");
-//        //    }
-//        //}
+//		// JwtAuthenticationFilter에서 request에 담아서 보내준 예외를 처리
 //		resolver.resolveException(request, response, null, (Exception) request.getAttribute("exception"));
 //	}
 //}

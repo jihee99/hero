@@ -1,4 +1,4 @@
-package com.ex.hero.security;
+package com.ex.hero.security.principal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package com.ex.hero.security.filter;
 
 import static com.ex.hero.security.HeroStatic.*;
 
-import com.ex.hero.security.AuthDetails;
+import com.ex.hero.security.principal.AuthDetails;
 import com.ex.hero.security.jwt.AccessTokenInfo;
 import com.ex.hero.security.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
@@ -63,5 +63,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         UserDetails userDetails = new AuthDetails(accessTokenInfo.getEmail(), accessTokenInfo.getRole());
         return new UsernamePasswordAuthenticationToken(userDetails, "user", userDetails.getAuthorities());
     }
+
 
 }

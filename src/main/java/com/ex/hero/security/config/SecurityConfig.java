@@ -1,6 +1,5 @@
 package com.ex.hero.security.config;
 
-import com.ex.hero.member.repository.MemberRepository;
 import com.ex.hero.security.filter.JwtTokenFilter;
 import com.ex.hero.security.filter.JwtAuthenticationFilter;
 import com.ex.hero.security.jwt.TokenProvider;
@@ -29,6 +28,7 @@ public class SecurityConfig {
 	private final String[] allowedUrls = {"/swagger-ui/**", "/v3/**", "/sign-up", "/sign-in", "/login", "/new"};
 	private final AuthenticationConfiguration authenticationConfiguration;
 	private final TokenProvider tokenProvider;
+//	private final AccessDeniedFilter accessDeniedFilter;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -62,11 +62,13 @@ public class SecurityConfig {
 			.authorizeHttpRequests(requests ->
 				requests
 					.requestMatchers(allowedUrls).permitAll()
-//						.requestMatchers("/api/v[0-9]+/event")
-					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
-					.requestMatchers("/api/v[0-9]+/orders/**").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
-					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN") // seller, admin 권한 허용
-//					.requestMatchers("/api/v[0-1]+/group").hasAnyAuthority("USER", "MASTER", "MANAGER", "ADMIN")
+//
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "MANAGER", "MASTER")
+					.requestMatchers("/api/v[0-9]+/orders/**").hasAnyAuthority("USER",  "MANAGER", "MASTER")
+					.requestMatchers("/api/v[0-9]+/events/**").hasAnyAuthority("USER",  "MANAGER", "MASTER")
+					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MANAGER", "MASTER") // seller, admin 권한 허용
+
+					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/manager/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
@@ -90,6 +92,7 @@ public class SecurityConfig {
 //				authenticationManager(authenticationConfiguration), tokenProvider, memberRepository), BasicAuthenticationFilter.class);
 
 		http.addFilterBefore(new JwtTokenFilter(tokenProvider), BasicAuthenticationFilter.class);
+//		http.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class);
 //		http.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint));
 //		http.apply(filterConfig);
 
