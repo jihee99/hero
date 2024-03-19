@@ -26,8 +26,7 @@ public class PrincipalDetails implements UserDetails {
         return List.of((GrantedAuthority) () -> member.getAccountRole().toString());
     }
 
-    @Override
-    public String getPassword() {
+    @Override    public String getPassword() {
         return member.getPassword();
     }
 

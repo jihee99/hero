@@ -1,8 +1,5 @@
 package com.ex.hero.events.exception;
 
-import static com.ex.hero.common.exception.HeroStatic.BAD_REQUEST;
-import static com.ex.hero.common.exception.HeroStatic.NOT_FOUND;
-
 import java.lang.reflect.Field;
 import java.util.Objects;
 

@@ -10,9 +10,6 @@ import org.springframework.http.HttpStatus;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-import static com.ex.hero.common.exception.HeroStatic.BAD_REQUEST;
-import static com.ex.hero.common.exception.HeroStatic.NOT_FOUND;
-
 @Getter
 @AllArgsConstructor
 public enum

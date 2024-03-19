@@ -1,7 +1,5 @@
 package com.ex.hero.member.exception;
 
-import static com.ex.hero.common.exception.HeroStatic.*;
-
 import java.lang.reflect.Field;
 import java.util.Objects;
 
