@@ -1,6 +1,5 @@
 package com.ex.hero.member.controller;
 
-import com.ex.hero.security.jwt.Token;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

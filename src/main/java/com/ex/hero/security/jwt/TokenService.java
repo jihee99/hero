@@ -1,7 +1,7 @@
 //package com.ex.hero.security.filter;
 //
 //import com.ex.hero.security.jwt.AccessTokenInfo;
-//import com.ex.hero.security.jwt.Token;
+//import com.ex.hero.security.dto.Token;
 //import io.jsonwebtoken.*;
 //import io.jsonwebtoken.security.Keys;
 //import lombok.RequiredArgsConstructor;

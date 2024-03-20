@@ -5,8 +5,11 @@ import com.ex.hero.member.exception.PasswordFormatMismatchException;
 import com.ex.hero.member.exception.PasswordIncorrectException;
 import com.ex.hero.member.exception.UserNotFoundException;
 import com.ex.hero.member.model.dto.response.SignInRequestValidationResult;
+import com.ex.hero.security.jwt.JwtTokenProvider22;
+import jakarta.persistence.Cacheable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +34,7 @@ public class SignService {
 	private final MemberRepository memberRepository;
 	private final MemberRefreshTokenRepository memberRefreshTokenRepository;
 //	private final TokenProvider tokenProvider;
+	private final JwtTokenProvider22 jwtTokenProvider;
 	private final PasswordEncoder passwordEncoder;    // 추가
 
 	private static final String PASSWORD_REGEX = "^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,20}$";
@@ -124,4 +128,28 @@ public class SignService {
 		}
 	}
 
+//	@Cacheable(cacheNames = CacheNames.LOGINUSER, key = "'login'+ #p0.getEmail()", unless = "#result== null")
+	@Transactional
+	public Member login(SignInRequest signInRequest) {
+		Member member = memberRepository.findByEmail(signInRequest.getEmail()).orElseThrow(() -> UserNotFoundException.EXCEPTION);
+		if (!passwordEncoder.matches(signInRequest.getPassword(), member.getPassword())) {
+			throw PasswordIncorrectException.EXCEPTION;
+		}
+		member.login();
+		return member;
+	}
+
+//	@CacheEvict(cacheNames = CacheNames.USERBYEMAIL, key = "'login'+#p1")
+	@Transactional
+	public ResponseEntity logout(String accessToken, String email) {
+		// 레디스에 accessToken 사용못하도록 등록
+		Long expiration = jwtTokenProvider.getExpiration(accessToken);
+//		redisDao.setBlackList(accessToken, "logout", expiration);
+//		if (redisDao.hasKey(email)) {
+//			redisDao.deleteRefreshToken(email);
+//		} else {
+//			throw new IllegalArgumentException("이미 로그아웃한 유저입니다.");
+//		}
+		return ResponseEntity.ok("로그아웃 완료");
+	}
 }

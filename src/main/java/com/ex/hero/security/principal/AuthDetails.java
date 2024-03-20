@@ -15,18 +15,18 @@ import java.util.Collections;
 @Getter
 public class AuthDetails implements UserDetails {
 
-//    private Member memeber;
+    private Member member;
     private String email;
-    private String role;
+//    private String role;
 
-    public AuthDetails(String email, String role) {
+    public AuthDetails(Member member, String email) {
+        this.member = member;
         this.email = email;
-        this.role = role;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + role));
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + member.getAccountRole()));
     }
 
     @Override
@@ -58,4 +58,5 @@ public class AuthDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

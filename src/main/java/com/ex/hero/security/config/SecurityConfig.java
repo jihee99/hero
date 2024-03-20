@@ -1,7 +1,5 @@
 package com.ex.hero.security.config;
 
-import com.ex.hero.security.filter.JwtTokenFilter;
-import com.ex.hero.security.filter.JwtAuthenticationFilter;
 import com.ex.hero.security.jwt.TokenProvider;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -80,8 +78,8 @@ public class SecurityConfig {
 
 //			.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class)
 
-		http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class);
-		http.addFilterBefore(new JwtTokenFilter(tokenProvider), BasicAuthenticationFilter.class);
+//		http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), tokenProvider), UsernamePasswordAuthenticationFilter.class);
+//		http.addFilterBefore(new JwtTokenFilter(tokenProvider), BasicAuthenticationFilter.class);
 
 //		http.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class);
 //		http.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint));
@@ -103,6 +101,5 @@ public class SecurityConfig {
 	// 	expressionHandler.setRoleHierarchy(roleHierarchy);
 	// 	return expressionHandler;
 	// }
-
 
 }
