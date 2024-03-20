@@ -1,7 +1,9 @@
 package com.ex.hero.security.principal;
 
+import com.ex.hero.member.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,13 +11,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class AuthDetails implements UserDetails {
 
+//    private Member memeber;
     private String email;
-
     private String role;
+
+    public AuthDetails(String email, String role) {
+        this.email = email;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
