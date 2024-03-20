@@ -31,8 +31,9 @@ public enum MemberErrorCode implements BaseErrorCode {
 	SECURITY_CONTEXT_NOT_FOUND(HttpStatus.NOT_FOUND, 1007, "security context not found"),
 	@ExplainError("헤더에 올바른 accessToken을 담지않았을 때 발생하는 오류(형식 불일치 등)")
 	ACCESS_TOKEN_NOT_EXIST(HttpStatus.FORBIDDEN, 1008, "알맞은 accessToken을 넣어주세요."),
-	PASSWORD_FORMAT_MISMATCH(HttpStatus.BAD_REQUEST, 1009, "형식에 맞는 비밀번호를 입력하세요.");
-
+	PASSWORD_FORMAT_MISMATCH(HttpStatus.BAD_REQUEST, 1009, "형식에 맞는 비밀번호를 입력하세요."),
+	@ExplainError("인증토큰이 잘못됐을 때 발생하는 오류")
+	INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 1011, "잘못된 토큰입니다. 재 로그인 해주세요");
 	private HttpStatus httpStatus;
 	private int errorCode;
 	private String errorMessage;

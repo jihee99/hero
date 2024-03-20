@@ -1,4 +1,4 @@
-package com.ex.hero.common.config;
+package com.ex.hero.config;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;

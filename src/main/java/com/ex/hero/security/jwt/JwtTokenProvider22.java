@@ -1,6 +1,9 @@
 package com.ex.hero.security.jwt;
 import static com.ex.hero.security.HeroStatic.*;
 
+import com.ex.hero.config.redis.RedisDao;
+import com.ex.hero.member.exception.InvalidTokenException;
+import com.ex.hero.member.exception.UserNotFoundException;
 import com.ex.hero.member.model.MemberType;
 import com.ex.hero.security.dto.Token;
 import io.jsonwebtoken.*;
@@ -9,6 +12,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.codehaus.groovy.syntax.TokenMismatchException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,7 +32,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Component
 public class JwtTokenProvider22 {
 
-    @Value("${jwt.secret.key}")
+    @Value("${auth.jwt.secret-key}")
     private String secretKey;
 
     //HMAC-SHA 키를 생성
@@ -37,7 +41,7 @@ public class JwtTokenProvider22 {
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     private final UserDetailsService userDetailsService;
-//    private final RedisDao redisDao;
+    private final RedisDao redisDao;
 
     // 이 코드는 HMAC-SHA 키를 생성하는 데 사용되는 Base64 인코딩된 문자열을 디코딩하여 키를 초기화하는 용도로 사용
     @PostConstruct//의존성 주입이 이루어진 후 초기화를 수행하는 어노테이션
@@ -51,9 +55,12 @@ public class JwtTokenProvider22 {
 
     /* Header 에서 토큰 가져오기 */
     public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION);
+        String bearerToken = request.getHeader(AUTH_HEADER);
+        System.out.println("####");
+        System.out.println(bearerToken);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER)) {
-            return bearerToken.substring(7);
+            System.out.println("DDD");
+            return bearerToken.substring(BEARER.length());
         }
         return null;
     }
@@ -74,17 +81,17 @@ public class JwtTokenProvider22 {
     public Token createTokenByLogin(String email, MemberType role) {
         String accessToken = createToken(email, role, ACCESS_TOKEN_TIME);
         String refreshToken = createToken(email, role, REFRESH_TOKEN_TIME);
-//        redisDao.setRefreshToken(email, refreshToken, REFRESH_TOKEN_TIME);
+        redisDao.setRefreshToken(email, refreshToken, REFRESH_TOKEN_TIME);
         return new Token(accessToken, refreshToken);
     }
 
     /* Access token 재발행 + refresh token 함께 발행 */
     public Token reissueAtk(String email, MemberType role, String reToken) {
         // 레디스 저장된 리프레쉬토큰값을 가져와서 입력된 reToken 같은지 유무 확인
-//        if (!redisDao.getRefreshToken(email).equals(reToken)) {
-//            throw new CustomException(
-//                    ExceptionStatus.AUTHENTICATION);
-//        }
+        if (!redisDao.getRefreshToken(email).equals(reToken)) {
+            throw InvalidTokenException.EXCEPTION;
+//            throw new CustomException(ExceptionStatus.AUTHENTICATION);
+        }
         String accessToken = createToken(email, role, ACCESS_TOKEN_TIME);
         String refreshToken = createToken(email, role, REFRESH_TOKEN_TIME);
 //        redisDao.setRefreshToken(email, refreshToken, REFRESH_TOKEN_TIME);

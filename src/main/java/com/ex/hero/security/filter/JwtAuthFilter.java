@@ -1,5 +1,6 @@
 package com.ex.hero.security.filter;
 
+import com.ex.hero.config.redis.RedisDao;
 import com.ex.hero.security.dto.SecurityExceptionDto;
 import com.ex.hero.security.jwt.JwtTokenProvider22;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,19 +23,19 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-//    private final RedisDao redisDao;
+    private final RedisDao redisDao;
     private final JwtTokenProvider22 jwtTokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = jwtTokenProvider.resolveToken(request);
         if (token != null) {
-//            String blackList = redisDao.getBlackList(token);
-//            if (blackList != null) {
-//                if (blackList.equals("logout")) {
-//                    throw new IllegalArgumentException("Please Login again.");
-//                }
-//            }
+            String blackList = redisDao.getBlackList(token);
+            if (blackList != null) {
+                if (blackList.equals("logout")) {
+                    throw new IllegalArgumentException("Please Login again.");
+                }
+            }
 
             if(!jwtTokenProvider.validateToken(token)){
                 response.sendError(401, "만료되었습니다.");

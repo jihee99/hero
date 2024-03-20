@@ -1,8 +1,10 @@
 package com.ex.hero.security.dto;
 
 import lombok.Getter;
+import org.springframework.data.redis.core.RedisHash;
 
 @Getter
+@RedisHash(value = "refreshToken")
 public class Token {
 
     private final String accessToken;

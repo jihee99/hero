@@ -1,5 +1,9 @@
 package com.ex.hero.security.config;
 
+import com.ex.hero.config.redis.RedisDao;
+import com.ex.hero.security.filter.JwtAuthFilter;
+import com.ex.hero.security.jwt.CustomAuthenticationEntryPoint;
+import com.ex.hero.security.jwt.JwtTokenProvider22;
 import com.ex.hero.security.jwt.TokenProvider;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -27,6 +31,10 @@ public class SecurityConfig {
 	private final AuthenticationConfiguration authenticationConfiguration;
 	private final TokenProvider tokenProvider;
 //	private final AccessDeniedFilter accessDeniedFilter;
+
+	private final JwtTokenProvider22 jwtTokenProvider;
+	private final RedisDao redisDao;
+	private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -84,6 +92,8 @@ public class SecurityConfig {
 //		http.addFilterBefore(accessDeniedFilter, FilterSecurityInterceptor.class);
 //		http.exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint));
 //		http.apply(filterConfig);
+
+		http.addFilterBefore(new JwtAuthFilter(redisDao, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}

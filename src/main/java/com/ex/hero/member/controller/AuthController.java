@@ -24,7 +24,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @Tag(name = "0. 회원 가입 및 로그인 관련 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v2")
+@RequestMapping("/v3")
 public class AuthController {
 
     private final SignService signService;
