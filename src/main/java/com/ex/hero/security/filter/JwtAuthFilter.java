@@ -42,6 +42,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 jwtExceptionHandler(response,"401", HttpStatus.BAD_REQUEST.value() );
                 return;
             }
+
             // 검증 후 인증 객체 생성하여 securityContextHolder에서 관리
             Claims userInfo = jwtTokenProvider.getUserInfoFromToken(token);
             setAuthentication(userInfo.getSubject());//subject = email
@@ -49,12 +50,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request,response);
     }
 
-    private void setAuthentication(String email ) {
+    private void setAuthentication(String email) {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication = jwtTokenProvider.createUserAuthentication(email);
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
     }
+
 
     public void jwtExceptionHandler(HttpServletResponse response, String msg, int statusCode) {
         response.setStatus(statusCode);

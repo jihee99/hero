@@ -21,7 +21,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -58,6 +57,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChainForActuator(HttpSecurity http) throws Exception {
 		http
+//			.csrf((csrf) -> csrf.ignoringRequestMatchers("/api/*"))
 			.csrf(AbstractHttpConfigurer::disable)
 //			.addFilterBefore(corsFilter, ChannelProcessingFilter.class)
 
@@ -69,14 +69,13 @@ public class SecurityConfig {
 				requests
 					.requestMatchers(allowedUrls).permitAll()
 //
-					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "MANAGER", "MASTER")
-					.requestMatchers("/api/v[0-9]+/orders/**").hasAnyAuthority("USER",  "MANAGER", "MASTER")
-					.requestMatchers("/api/v[0-9]+/events/**").hasAnyAuthority("USER",  "MANAGER", "MASTER")
-					.requestMatchers("/api/v[0-9]+/group/**").hasAnyAuthority("MANAGER", "MASTER") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/orders/**").permitAll()
+					.requestMatchers("/api/v[0-9]+/events/**").permitAll()
+					.requestMatchers("/api/v[0-9]+/group/**").permitAll()
 
 					.requestMatchers("/api/v[0-9]+/member/**").hasAnyAuthority("USER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/manager/**").hasAnyAuthority("MASTER", "MANAGER", "ADMIN")
-					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN") // seller, admin 권한 허용
+					.requestMatchers("/api/v[0-9]+/master/**").hasAnyAuthority("MASTER", "ADMIN")
 					.requestMatchers("/api/v[0-9]+/system/**").hasAuthority("ADMIN") // admin 권한 허용
 
 					// 인증이 필요한 모든 요청은 최소 USER 권한을 갖고 있어야 한다.

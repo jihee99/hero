@@ -56,10 +56,9 @@ public class JwtTokenProvider22 {
     /* Header 에서 토큰 가져오기 */
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTH_HEADER);
-        System.out.println("####");
+        System.out.println("resolveToken method");
         System.out.println(bearerToken);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER)) {
-            System.out.println("DDD");
             return bearerToken.substring(BEARER.length());
         }
         return null;
@@ -107,7 +106,7 @@ public class JwtTokenProvider22 {
     /* header에서 가져온 토큰 검증 메소드 */
     public boolean validateToken(String token){
         try {
-            //parser : parsing을 하는 도구. parsing : token에 내재된 자료 구조를 빌드하고 문법을 검사
+            // parser : parsing을 하는 도구. parsing : token에 내재된 자료 구조를 빌드하고 문법을 검사
             // Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)는
             // 주어진 토큰을 파싱하기 위해 JWT 파서를 설정하고, 서명 키를 설정한 뒤, 토큰을 파싱하여 JWT 서명 검사를 수행
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -132,6 +131,7 @@ public class JwtTokenProvider22 {
     /* 일반 유저 인증 객체 생성 */
     public Authentication createUserAuthentication(String email) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+        System.out.println(userDetails.getAuthorities());
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
 

@@ -25,14 +25,12 @@ public class GroupOrderController {
     }
 
     @Operation(summary = "그룹 관리자가 주문을 승인 대기중인 주문을 거절합니다.")
-    @PostMapping("/{order_uuid}/refuse")
+    @PostMapping("/{order_uuid}")
     public OrderResponse refuseOrder(
             @PathVariable Long eventId, @PathVariable("order_uuid") String orderUuid) {
         return refuseOrderUseCase.execute(eventId, orderUuid);
     }
-
-//    @Operation(summary = "카카오페이 주문을 요청합니다.")
-//    public
+    
 
 //    @Operation(summary = "결제 여부를 확인합니다.")
 //    @PostMapping("/{order_uuid}/confirm")
@@ -42,5 +40,6 @@ public class GroupOrderController {
 //        return confirmOrderUseCase.execute(orderUuid, confirmOrderRequest);
 //    }
 
+    /* 카카오페이 주문 */
 }
 
