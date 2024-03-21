@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ex.hero.security2.jwt.MemberRefreshToken;
+import com.ex.hero.security.jwt.MemberRefreshToken;
 
 public interface MemberRefreshTokenRepository extends JpaRepository<MemberRefreshToken, Long> {
 

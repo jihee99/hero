@@ -1,4 +1,4 @@
-package com.ex.hero.security2.filter;
+package com.ex.hero.security.filter;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 

@@ -1,10 +1,10 @@
-package com.ex.hero.security2.jwt;
+package com.ex.hero.security.jwt;
 import static com.ex.hero.common.HeroStatic.*;
 
 import com.ex.hero.config.redis.RedisDao;
 import com.ex.hero.member.exception.InvalidTokenException;
 import com.ex.hero.member.model.MemberType;
-import com.ex.hero.security2.dto.Token;
+import com.ex.hero.security.dto.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;

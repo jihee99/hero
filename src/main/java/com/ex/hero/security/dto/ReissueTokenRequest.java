@@ -1,4 +1,4 @@
-package com.ex.hero.security2.dto;
+package com.ex.hero.security.dto;
 
 import lombok.AccessLevel;
 import lombok.Getter;

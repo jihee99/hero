@@ -1,4 +1,4 @@
-package com.ex.hero.security2.jwt;
+package com.ex.hero.security.jwt;
 
 import com.ex.hero.member.model.dto.request.SignInRequest;
 import com.ex.hero.member.model.dto.response.SignInRequestValidationResult;

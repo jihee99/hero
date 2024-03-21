@@ -1,4 +1,4 @@
-package com.ex.hero.security2.principal;
+package com.ex.hero.security.principal;
 
 import com.ex.hero.member.model.Member;
 import lombok.Getter;
