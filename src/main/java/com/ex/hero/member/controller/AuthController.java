@@ -55,7 +55,6 @@ public class AuthController {
         return signService.logout(accessToken,authDetails.getUsername());
     }
 
-
     /* access token 재발급 */
     // 매 API 호출 시 시큐리티 필터를 통해 인증인가를 받게 된다.
     // 이때 만료된 토큰인지 검증하고 만료시 만료된토큰임을 에러메세지로 보낸다.
