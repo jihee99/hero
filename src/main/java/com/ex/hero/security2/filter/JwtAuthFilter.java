@@ -1,8 +1,8 @@
-package com.ex.hero.security.filter;
+package com.ex.hero.security2.filter;
 
 import com.ex.hero.config.redis.RedisDao;
-import com.ex.hero.security.dto.SecurityExceptionDto;
-import com.ex.hero.security.jwt.JwtTokenProvider22;
+import com.ex.hero.security2.dto.SecurityExceptionDto;
+import com.ex.hero.security2.jwt.JwtTokenProvider22;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;

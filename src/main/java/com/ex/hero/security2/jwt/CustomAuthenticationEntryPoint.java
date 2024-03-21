@@ -1,6 +1,6 @@
-package com.ex.hero.security.jwt;
+package com.ex.hero.security2.jwt;
 
-import com.ex.hero.security.dto.SecurityExceptionDto;
+import com.ex.hero.security2.dto.SecurityExceptionDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

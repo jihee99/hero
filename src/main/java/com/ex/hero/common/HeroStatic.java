@@ -1,4 +1,4 @@
-package com.ex.hero.security;
+package com.ex.hero.common;
 
 import java.time.Duration;
 

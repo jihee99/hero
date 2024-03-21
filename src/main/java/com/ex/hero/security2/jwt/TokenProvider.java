@@ -1,6 +1,6 @@
-package com.ex.hero.security.jwt;
+package com.ex.hero.security2.jwt;
 
-import static com.ex.hero.security.HeroStatic.*;
+import static com.ex.hero.common.HeroStatic.*;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

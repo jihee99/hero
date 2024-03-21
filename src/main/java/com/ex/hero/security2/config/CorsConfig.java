@@ -1,4 +1,4 @@
-package com.ex.hero.security.config;
+package com.ex.hero.security2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.ex.hero.security.dto;
+package com.ex.hero.security2.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

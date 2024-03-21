@@ -1,4 +1,4 @@
-package com.ex.hero.security.jwt;
+package com.ex.hero.security2.jwt;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,18 +1,16 @@
-package com.ex.hero.security.jwt;
-import static com.ex.hero.security.HeroStatic.*;
+package com.ex.hero.security2.jwt;
+import static com.ex.hero.common.HeroStatic.*;
 
 import com.ex.hero.config.redis.RedisDao;
 import com.ex.hero.member.exception.InvalidTokenException;
-import com.ex.hero.member.exception.UserNotFoundException;
 import com.ex.hero.member.model.MemberType;
-import com.ex.hero.security.dto.Token;
+import com.ex.hero.security2.dto.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.codehaus.groovy.syntax.TokenMismatchException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,8 +22,6 @@ import org.springframework.util.StringUtils;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
-
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @RequiredArgsConstructor

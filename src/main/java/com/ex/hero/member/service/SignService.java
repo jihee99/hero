@@ -1,16 +1,13 @@
 package com.ex.hero.member.service;
 
-import com.ex.hero.config.redis.CacheNames;
 import com.ex.hero.config.redis.RedisDao;
 import com.ex.hero.member.exception.AlreadySignUpUserException;
 import com.ex.hero.member.exception.PasswordFormatMismatchException;
 import com.ex.hero.member.exception.PasswordIncorrectException;
 import com.ex.hero.member.exception.UserNotFoundException;
 import com.ex.hero.member.model.dto.response.SignInRequestValidationResult;
-import com.ex.hero.security.jwt.JwtTokenProvider22;
+import com.ex.hero.security2.jwt.JwtTokenProvider22;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ex.hero.member.model.dto.request.SignInRequest;
-import com.ex.hero.member.model.dto.response.SignInResponse;
 import com.ex.hero.member.model.dto.request.SignUpRequest;
 import com.ex.hero.member.model.dto.response.SignUpResponse;
 import com.ex.hero.member.model.Member;
 import com.ex.hero.member.repository.MemberRefreshTokenRepository;
 import com.ex.hero.member.repository.MemberRepository;
-import com.ex.hero.security.jwt.MemberRefreshToken;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,8 +44,6 @@ public class SignService {
 		try {
 			memberRepository.flush();
 		} catch (DataIntegrityViolationException e) {
-			// TODO
-			// 예외처리
 			throw new IllegalArgumentException("이미 사용중인 아이디입니다.");
 		}
 		return SignUpResponse.from(member);
@@ -75,29 +68,11 @@ public class SignService {
 //		return new SignInResponse(member.getEmail(), member.getAccountRole(), accessToken, refreshToken);
 //	}
 
-	//	@Transactional
-//	public SignInResponse signIn(SignInRequest request) {
-//		Member member = memberRepository.findByEmail(request.getEmail())
-//				.filter(it -> passwordEncoder.matches(request.getPassword(), it.getPassword()))
-//				.orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
-//		String accessToken = tokenProvider.createAccessToken(String.format("%s:%s", member.getUserId(), member.getAccountRole()));    // token -> accessToken
-//		String refreshToken = tokenProvider.createRefreshToken();    // 리프레시 토큰 생성
-//		// 리프레시 토큰이 이미 있으면 토큰을 갱신하고 없으면 토큰을 추가
-//		memberRefreshTokenRepository.findById(member.getUserId())
-//				.ifPresentOrElse(
-//						it -> it.updateRefreshToken(refreshToken),
-//						() -> memberRefreshTokenRepository.save(new MemberRefreshToken(member, refreshToken))
-//				);
-//
-//		member.login();
-//		return new SignInResponse(member.getEmail(), member.getAccountRole(), accessToken, refreshToken);
-//	}
-
 
 	@Transactional
 	public void signUp(String email, String name, String password) {
 		validateMemberNotExist(email);
-//		validatePasswordForm(password);
+		validatePasswordForm(password);
 
 		Member member = Member.from(email, name, passwordEncoder.encode(password));
 		log.info("회원가입 univId : {}, name : {}, role : {}", member.getEmail(), member.getName(), member.getAccountRole());
@@ -113,6 +88,7 @@ public class SignService {
 
 		return new SignInRequestValidationResult(member.getAccountRole().toString());
 	}
+
 	private void validateMemberNotExist(String email) {
 		if (memberRepository.findByEmail(email).isPresent()) {
 			log.info("[회원가입 실패] 중복 이메일 회원가입 시도 -> univId : " + email);

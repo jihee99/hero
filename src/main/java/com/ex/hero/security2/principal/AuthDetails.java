@@ -1,38 +1,41 @@
-package com.ex.hero.security.principal;
+package com.ex.hero.security2.principal;
 
 import com.ex.hero.member.model.Member;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
-@Data
-public class PrincipalDetails implements UserDetails {
+@NoArgsConstructor
+@Getter
+public class AuthDetails implements UserDetails {
 
-    private final Member member;
+    private Member member;
+    private String email;
+//    private String role;
 
-    public PrincipalDetails(Member member) {
+    public AuthDetails(Member member, String email) {
         this.member = member;
-    }
-
-    public Member getMember() {
-        return member;
+        this.email = email;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of((GrantedAuthority) () -> member.getAccountRole().toString());
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + member.getAccountRole()));
     }
 
-    @Override    public String getPassword() {
-        return member.getPassword();
+    @Override
+    public String getPassword() {
+        return null;
     }
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return email;
     }
 
     @Override
@@ -54,4 +57,5 @@ public class PrincipalDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

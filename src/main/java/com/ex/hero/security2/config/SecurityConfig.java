@@ -1,10 +1,10 @@
-package com.ex.hero.security.config;
+package com.ex.hero.security2.config;
 
 import com.ex.hero.config.redis.RedisDao;
-import com.ex.hero.security.filter.JwtAuthFilter;
-import com.ex.hero.security.jwt.CustomAuthenticationEntryPoint;
-import com.ex.hero.security.jwt.JwtTokenProvider22;
-import com.ex.hero.security.jwt.TokenProvider;
+import com.ex.hero.security2.filter.JwtAuthFilter;
+import com.ex.hero.security2.jwt.CustomAuthenticationEntryPoint;
+import com.ex.hero.security2.jwt.JwtTokenProvider22;
+import com.ex.hero.security2.jwt.TokenProvider;
 
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
