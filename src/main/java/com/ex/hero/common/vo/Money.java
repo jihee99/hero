@@ -1,18 +1,17 @@
 package com.ex.hero.common.vo;
 
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.function.Function;
-
 import com.ex.hero.common.converter.BigDecimalScale6WithBankersRoundingConverter;
 import com.fasterxml.jackson.annotation.JsonValue;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.function.Function;
 
 @Getter
 @Embeddable

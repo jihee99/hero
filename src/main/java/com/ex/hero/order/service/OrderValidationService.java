@@ -2,14 +2,14 @@ package com.ex.hero.order.service;
 
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.service.CommonEventService;
-import com.ex.hero.member.model.Member;
-import com.ex.hero.member.service.CommonMemberService;
 import com.ex.hero.order.exception.*;
 import com.ex.hero.order.model.Order;
 import com.ex.hero.order.model.OrderStatus;
 import com.ex.hero.ticket.model.TicketItem;
 import com.ex.hero.ticket.service.CommonIssuedTicketService;
 import com.ex.hero.ticket.service.CommonTicketItemService;
+import com.ex.hero.user.model.User;
+import com.ex.hero.user.service.CommonUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class OrderValidationService {
     private final CommonEventService commonEventService;
     private final CommonTicketItemService commonTicketItemService;
     private final CommonIssuedTicketService commonIssuedTicketService;
-    private final CommonMemberService commonMemberService;
+    private final CommonUserService commonUserService;
     private final CommonOrderService commonOrderService;
 
     /* 주문 생성 가능 여부 */
@@ -154,8 +154,8 @@ public class OrderValidationService {
 
 
     public void validUserNotDeleted(Order order) {
-        Member member = commonMemberService.queryMember(order.getUserId());
-        if (member.isDeletedUser()) {
+        User user = commonUserService.queryMember(order.getUserId());
+        if (user.isDeletedUser()) {
             throw CanNotApproveDeletedUserOrderException.EXCEPTION;
         }
     }

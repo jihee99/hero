@@ -1,9 +1,8 @@
 package com.ex.hero.group.model.dto.request.response;
 
-import com.ex.hero.group.model.Group;
 import com.ex.hero.common.vo.GroupInfoVo;
+import com.ex.hero.group.model.Group;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

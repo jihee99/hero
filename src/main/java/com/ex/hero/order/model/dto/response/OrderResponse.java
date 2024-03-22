@@ -1,15 +1,14 @@
 package com.ex.hero.order.model.dto.response;
 
-import java.util.List;
-
 import com.ex.hero.common.vo.EventProfileVo;
 import com.ex.hero.events.model.Event;
 import com.ex.hero.order.model.Order;
 import com.ex.hero.order.model.OrderMethod;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 @Builder

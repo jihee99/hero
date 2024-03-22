@@ -1,7 +1,6 @@
 package com.ex.hero.events.model;
 
 import com.ex.hero.common.deserializer.CustomEnumDeserializer;
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;

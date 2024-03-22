@@ -1,7 +1,6 @@
 package com.ex.hero.order.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -1,10 +1,5 @@
 package com.ex.hero.mail.service;
 
-import static com.ex.hero.common.util.EmailContents.MESSAGE_SUBJECT;
-import static com.ex.hero.common.util.EmailContents.SENDER_ADDRESS;
-import static com.ex.hero.common.util.EmailContents.MESSAGE_PREFIX;
-import static com.ex.hero.common.util.EmailContents.MESSAGE_SUFFIX;
-
 import com.ex.hero.group.model.GroupUserRole;
 import com.ex.hero.mail.dto.EmailUserInfo;
 import jakarta.mail.MessagingException;
@@ -13,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import static com.ex.hero.common.util.EmailContents.*;
 
 @Slf4j
 @Service

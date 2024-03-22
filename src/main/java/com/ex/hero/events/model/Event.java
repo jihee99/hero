@@ -7,7 +7,6 @@ import com.ex.hero.common.vo.EventDetailVo;
 import com.ex.hero.common.vo.EventInfoVo;
 import com.ex.hero.common.vo.EventProfileVo;
 import com.ex.hero.events.exception.*;
-
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

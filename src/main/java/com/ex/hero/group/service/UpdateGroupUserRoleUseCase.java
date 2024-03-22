@@ -1,14 +1,12 @@
 package com.ex.hero.group.service;
 
 
-import org.springframework.stereotype.Service;
-
-import com.ex.hero.group.model.dto.request.UpdateGroupUserRoleRequest;
-import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupUserRole;
-
+import com.ex.hero.group.model.dto.request.UpdateGroupUserRoleRequest;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

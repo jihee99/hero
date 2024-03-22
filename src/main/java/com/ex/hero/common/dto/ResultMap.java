@@ -1,10 +1,10 @@
 package com.ex.hero.common.dto;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONObject;
 
 public class ResultMap extends HashMap<String, Object> {
 	

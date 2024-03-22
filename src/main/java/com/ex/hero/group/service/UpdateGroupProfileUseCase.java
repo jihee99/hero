@@ -1,14 +1,12 @@
 package com.ex.hero.group.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.ex.hero.group.model.dto.request.UpdateGroupRequest;
-import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.model.GroupProfile;
-
+import com.ex.hero.group.model.dto.request.UpdateGroupRequest;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

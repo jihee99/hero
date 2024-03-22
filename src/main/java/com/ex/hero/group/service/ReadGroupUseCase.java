@@ -1,7 +1,7 @@
 package com.ex.hero.group.service;
 
-import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import com.ex.hero.group.model.Group;
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

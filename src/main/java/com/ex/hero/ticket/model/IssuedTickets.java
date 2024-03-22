@@ -1,11 +1,10 @@
 package com.ex.hero.ticket.model;
 
-import java.util.List;
-
 import com.ex.hero.common.vo.IssuedTicketInfoVo;
 import com.ex.hero.events.model.Event;
-
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class IssuedTickets {

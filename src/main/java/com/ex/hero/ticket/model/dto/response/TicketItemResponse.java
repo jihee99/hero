@@ -1,11 +1,9 @@
 package com.ex.hero.ticket.model.dto.response;
 
 import com.ex.hero.common.vo.Money;
-import com.ex.hero.member.model.Member;
 import com.ex.hero.ticket.model.TicketItem;
 import com.ex.hero.ticket.model.TicketPayType;
 import com.ex.hero.ticket.model.TicketType;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,9 +1,7 @@
 package com.ex.hero.group.model.dto.request;
 
 import com.ex.hero.common.annotation.Enum;
-
 import com.ex.hero.group.model.GroupUserRole;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;

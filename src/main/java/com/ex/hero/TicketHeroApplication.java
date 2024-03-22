@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-@EnableCaching
 public class TicketHeroApplication {
 
 	public static void main(String[] args) {

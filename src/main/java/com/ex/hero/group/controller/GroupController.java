@@ -1,29 +1,22 @@
 package com.ex.hero.group.controller;
 
-import java.util.List;
-
-import com.ex.hero.group.model.dto.request.response.GroupEventProfileResponse;
-import com.ex.hero.group.model.dto.request.response.GroupProfileResponse;
-import com.ex.hero.group.service.*;
-import com.ex.hero.common.vo.MemberProfileVo;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
-import jakarta.validation.constraints.Email;
-import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
-
+import com.ex.hero.common.vo.UserProfileVo;
 import com.ex.hero.group.model.dto.request.CreateGroupRequest;
 import com.ex.hero.group.model.dto.request.UpdateGroupRequest;
 import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
+import com.ex.hero.group.model.dto.request.response.GroupEventProfileResponse;
+import com.ex.hero.group.model.dto.request.response.GroupProfileResponse;
 import com.ex.hero.group.model.dto.request.response.GroupResponse;
-
+import com.ex.hero.group.service.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Tag(name = "2. 그룹 관리 API")
@@ -61,7 +54,7 @@ public class GroupController {
 
 	@Operation(summary = "해당 그룹에 가입하지 않은 유저를 이메일로 검색합니다.")
 	@GetMapping("/{groupId}/invite/users")
-	public MemberProfileVo getInviteUserListByEmail(
+	public UserProfileVo getInviteUserListByEmail(
 			@PathVariable Long groupId, @RequestParam(value = "email") @Email String email) {
 		return readInviteUsersUseCase.execute(groupId, email);
 	}

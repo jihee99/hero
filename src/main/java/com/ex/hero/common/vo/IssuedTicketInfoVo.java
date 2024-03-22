@@ -1,14 +1,13 @@
 package com.ex.hero.common.vo;
 
-import java.time.LocalDateTime;
-
 import com.ex.hero.common.annotation.DateFormat;
 import com.ex.hero.ticket.model.IssuedTicket;
 import com.ex.hero.ticket.model.IssuedTicketStatus;
 import com.ex.hero.ticket.model.TicketPayType;
-
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Builder

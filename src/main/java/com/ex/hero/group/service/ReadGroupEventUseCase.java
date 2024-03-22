@@ -1,13 +1,10 @@
 package com.ex.hero.group.service;
 
 
-import com.ex.hero.events.model.Event;
 import com.ex.hero.events.service.CommonEventService;
-import com.ex.hero.group.model.dto.request.response.GroupEventProfileResponse;
 import com.ex.hero.group.model.Group;
+import com.ex.hero.group.model.dto.request.response.GroupEventProfileResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

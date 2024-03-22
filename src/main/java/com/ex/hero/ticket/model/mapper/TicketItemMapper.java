@@ -12,7 +12,6 @@ import com.ex.hero.ticket.service.CommonTicketItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper

@@ -1,9 +1,9 @@
 package com.ex.hero.common.converter;
 
+import jakarta.persistence.AttributeConverter;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import jakarta.persistence.AttributeConverter;
 
 public class BigDecimalScale6WithBankersRoundingConverter implements AttributeConverter<BigDecimal, String> {
 

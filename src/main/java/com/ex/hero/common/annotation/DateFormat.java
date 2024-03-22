@@ -1,10 +1,10 @@
 package com.ex.hero.common.annotation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 @JacksonAnnotationsInside
 @Retention(RetentionPolicy.RUNTIME)

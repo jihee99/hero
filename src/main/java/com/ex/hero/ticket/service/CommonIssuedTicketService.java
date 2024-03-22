@@ -1,6 +1,5 @@
 package com.ex.hero.ticket.service;
 
-import com.ex.hero.order.model.mapper.OrderMapper;
 import com.ex.hero.ticket.model.IssuedTicket;
 import com.ex.hero.ticket.model.IssuedTickets;
 import com.ex.hero.ticket.repository.IssuedTicketRepository;

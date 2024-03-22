@@ -1,28 +1,27 @@
 package com.ex.hero.group.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.ex.hero.common.util.MemberUtils;
+import com.ex.hero.common.util.UserUtils;
 import com.ex.hero.group.model.dto.request.response.GroupProfileResponse;
-import com.ex.hero.member.model.Member;
+import com.ex.hero.user.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
 public class ReadGroupsUseCase {
-    private final MemberUtils memberUtils;
+    private final UserUtils userUtils;
     private final GroupService groupService;
 
 
     @Transactional(readOnly = true)
     public List<GroupProfileResponse> execute() {
-        final Member member = memberUtils.getCurrentMember();
-        final Long userId = member.getUserId();
+        final User user = userUtils.getCurrentMember();
+        final Long userId = user.getUserId();
 
         return groupService.findAllByGroupUsers_UserId(userId)
             .stream()

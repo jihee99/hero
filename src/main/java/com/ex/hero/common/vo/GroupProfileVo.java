@@ -1,7 +1,6 @@
 package com.ex.hero.common.vo;
 
 import com.ex.hero.group.model.Group;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

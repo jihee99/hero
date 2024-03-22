@@ -1,7 +1,6 @@
 package com.ex.hero.common.exception;
 
 import com.ex.hero.common.dto.ErrorReason;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

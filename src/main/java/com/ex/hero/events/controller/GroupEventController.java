@@ -1,18 +1,16 @@
 package com.ex.hero.events.controller;
 
-import com.ex.hero.events.service.*;
-import org.springframework.web.bind.annotation.*;
-
 import com.ex.hero.events.model.dto.request.CreateEventRequest;
 import com.ex.hero.events.model.dto.request.UpdateEventBasicRequest;
 import com.ex.hero.events.model.dto.request.UpdateEventDetailRequest;
 import com.ex.hero.events.model.dto.request.UpdateEventStatusRequest;
 import com.ex.hero.events.model.dto.response.EventResponse;
-
+import com.ex.hero.events.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Tag(name = "3. 이벤트 관리 API (그룹용)")

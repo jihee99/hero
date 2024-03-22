@@ -1,7 +1,6 @@
 package com.ex.hero.group.model;
 
 import com.ex.hero.common.model.BaseTimeEntity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;

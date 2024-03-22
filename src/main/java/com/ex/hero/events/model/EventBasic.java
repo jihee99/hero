@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

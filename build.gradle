@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.9'
+    id 'org.springframework.boot' version '3.1.10'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -81,9 +81,6 @@ dependencies {
 
     implementation 'com.bucket4j:bucket4j-core:8.7.0'
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-jcache:2.0.0'
-
-
-
 
 }
 

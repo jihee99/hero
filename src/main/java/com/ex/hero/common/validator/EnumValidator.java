@@ -1,10 +1,10 @@
 package com.ex.hero.common.validator;
 
 import com.ex.hero.common.annotation.Enum;
-import java.util.Arrays;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+
+import java.util.Arrays;
 
 public class EnumValidator implements ConstraintValidator<Enum, java.lang.Enum> {
 	@Override

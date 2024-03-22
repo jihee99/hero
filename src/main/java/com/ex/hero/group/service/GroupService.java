@@ -1,21 +1,18 @@
 package com.ex.hero.group.service;
 
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-
+import com.ex.hero.group.exception.GroupNotFoundException;
+import com.ex.hero.group.model.Group;
+import com.ex.hero.group.model.GroupProfile;
+import com.ex.hero.group.model.GroupUser;
+import com.ex.hero.group.model.GroupUserRole;
+import com.ex.hero.group.repository.GroupRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ex.hero.group.exception.GroupNotFoundException;
-import com.ex.hero.group.model.Group;
-import com.ex.hero.group.model.GroupProfile;
-import com.ex.hero.group.model.GroupUserRole;
-import com.ex.hero.group.model.GroupUser;
-import com.ex.hero.group.repository.GroupRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j

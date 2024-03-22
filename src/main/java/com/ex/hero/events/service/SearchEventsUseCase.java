@@ -1,10 +1,8 @@
 package com.ex.hero.events.service;
 
-import org.springframework.stereotype.Service;
-
 import com.ex.hero.events.model.mapper.EventMapper;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

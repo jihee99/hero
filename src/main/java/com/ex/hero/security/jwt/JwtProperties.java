@@ -8,11 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @AllArgsConstructor
 @ConfigurationProperties(prefix = "auth.jwt")
 public class JwtProperties {
-
     private String secretKey;
-
     private Long accessExp;
-
     private Long refreshExp;
 }
-

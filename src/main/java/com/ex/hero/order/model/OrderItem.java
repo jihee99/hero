@@ -1,7 +1,5 @@
 package com.ex.hero.order.model;
 
-import java.util.List;
-
 import com.ex.hero.cart.model.CartItem;
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.common.vo.Money;
@@ -12,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 
 
 @Getter

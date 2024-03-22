@@ -1,16 +1,15 @@
 package com.ex.hero.group.model.dto.request.response;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.ex.hero.group.model.Group;
 import com.ex.hero.common.vo.GroupInfoVo;
 import com.ex.hero.common.vo.GroupUserVo;
+import com.ex.hero.group.model.Group;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -31,7 +30,7 @@ public class GroupDetailResponse {
 		List<GroupUserVo> groupUserVoList = new ArrayList<>();
 		groupUserVoSet.forEach(
 				groupUserVo -> {
-				if (groupUserVo.getMemberInfoVo().getMemberId().equals(group.getMasterUserId())) {
+				if (groupUserVo.getUserInfoVo().getUserId().equals(group.getMasterUserId())) {
 					builder.masterUser(groupUserVo);
 				} else {
 					groupUserVoList.add(groupUserVo);

@@ -1,10 +1,10 @@
 package com.ex.hero.group.service;
 
+import com.ex.hero.common.vo.UserProfileVo;
 import com.ex.hero.group.exception.AlreadyJoinedGroupException;
 import com.ex.hero.group.model.Group;
-import com.ex.hero.member.model.Member;
-import com.ex.hero.member.service.CommonMemberService;
-import com.ex.hero.common.vo.MemberProfileVo;
+import com.ex.hero.user.model.User;
+import com.ex.hero.user.service.CommonUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,19 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReadInviteUsersUseCase {
 
     private final CommonGroupService commonGroupService;
-    private final CommonMemberService commonMemberService;
+    private final CommonUserService commonUserService;
 
     @Transactional(readOnly = true)
-    public MemberProfileVo execute(Long groupId, String email) {
+    public UserProfileVo execute(Long groupId, String email) {
         return toGroupInviteUserList(groupId, email);
     }
 
-    public MemberProfileVo toGroupInviteUserList(Long groupId, String email) {
+    public UserProfileVo toGroupInviteUserList(Long groupId, String email) {
         final Group group = commonGroupService.findById(groupId);
-        final Member inviteUser = commonMemberService.queryUserByEmail(email);
+        final User inviteUser = commonUserService.queryUserByEmail(email);
         if (group.hasGroupUserId(inviteUser.getUserId())) {
             throw AlreadyJoinedGroupException.EXCEPTION;
         }
-        return inviteUser.toMemberProfileVo();
+        return inviteUser.toUserProfileVo();
     }
 }

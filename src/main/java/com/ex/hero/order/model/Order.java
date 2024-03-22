@@ -1,8 +1,10 @@
 package com.ex.hero.order.model;
 
 import com.ex.hero.cart.model.Cart;
+import com.ex.hero.common.vo.Money;
 import com.ex.hero.order.exception.OrderItemNotFoundException;
 import com.ex.hero.order.service.OrderValidationService;
+import com.ex.hero.ticket.model.TicketItem;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -14,9 +16,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.ex.hero.common.vo.Money;
-import com.ex.hero.ticket.model.TicketItem;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

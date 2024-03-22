@@ -1,10 +1,7 @@
 package com.ex.hero.group.model;
 
-import java.util.UUID;
-
 import com.ex.hero.common.model.BaseTimeEntity;
 import com.ex.hero.group.exception.AlreadyJoinedGroupException;
-
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

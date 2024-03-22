@@ -6,7 +6,6 @@ import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventStatus;
 import com.ex.hero.group.model.Group;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-
 import lombok.Builder;
 import lombok.Getter;
 

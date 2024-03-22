@@ -1,22 +1,20 @@
 package com.ex.hero.group.service;
 
-import org.springframework.stereotype.Service;
-
-import com.ex.hero.common.util.MemberUtils;
-import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
+import com.ex.hero.common.util.UserUtils;
 import com.ex.hero.group.model.Group;
-
+import com.ex.hero.group.model.dto.request.response.GroupDetailResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class RejectGroupUseCase {
 	private final CommonGroupService commonGroupService;
 	private final GroupService groupService;
-	private final MemberUtils memberUtils;
+	private final UserUtils userUtils;
 
 	public GroupDetailResponse execute(Long groupId) {
-		final Long userId = memberUtils.getCurrentMemberId();
+		final Long userId = userUtils.getCurrentMemberId();
 		final Group group = commonGroupService.findById(groupId);
 
 		return commonGroupService.toGroupDetailResponseExecute(groupService.removeGroupUser(group, userId));

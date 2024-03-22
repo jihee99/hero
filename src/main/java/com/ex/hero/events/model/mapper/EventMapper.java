@@ -1,8 +1,5 @@
 package com.ex.hero.events.model.mapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.ex.hero.common.annotation.Mapper;
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventBasic;
@@ -16,8 +13,10 @@ import com.ex.hero.events.service.CommonEventService;
 import com.ex.hero.group.model.Group;
 import com.ex.hero.group.service.CommonGroupService;
 import com.ex.hero.group.service.GroupService;
-
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper
 @RequiredArgsConstructor

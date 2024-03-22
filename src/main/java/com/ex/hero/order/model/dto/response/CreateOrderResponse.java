@@ -1,16 +1,12 @@
 package com.ex.hero.order.model.dto.response;
 
-import java.util.UUID;
-
 import com.ex.hero.common.vo.Money;
-import com.ex.hero.member.model.Member;
-import com.ex.hero.member.model.Profile;
 import com.ex.hero.order.model.Order;
 import com.ex.hero.order.model.OrderMethod;
 import com.ex.hero.ticket.model.TicketItem;
 import com.ex.hero.ticket.model.TicketPayType;
 import com.ex.hero.ticket.model.TicketType;
-
+import com.ex.hero.user.model.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,10 +41,10 @@ public class CreateOrderResponse {
 	@Schema(description = "지불방식")
 	private final TicketPayType ticketPayType;
 
-	public static CreateOrderResponse from(Order order, TicketItem item, Member member) {
+	public static CreateOrderResponse from(Order order, TicketItem item, User user) {
 		return CreateOrderResponse.builder()
-			.userEmail(member.getEmail())
-			.userName(member.getName())
+			.userEmail(user.getEmail())
+			.userName(user.getName())
 			.orderName(order.getOrderName())
 			.orderId(order.getUuid())
 			.amount(order.getTotalPaymentPrice())

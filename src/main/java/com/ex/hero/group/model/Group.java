@@ -1,10 +1,9 @@
 package com.ex.hero.group.model;
 
-import com.ex.hero.group.model.dto.request.CreateGroupRequest;
-import com.ex.hero.group.exception.*;
 import com.ex.hero.common.vo.GroupInfoVo;
 import com.ex.hero.common.vo.GroupProfileVo;
-
+import com.ex.hero.group.exception.*;
+import com.ex.hero.group.model.dto.request.CreateGroupRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

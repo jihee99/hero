@@ -1,12 +1,8 @@
 package com.ex.hero.ticket.service;
 
-import com.ex.hero.events.model.Event;
-import com.ex.hero.events.service.CommonEventService;
-import com.ex.hero.group.model.Group;
-import com.ex.hero.group.service.CommonGroupService;
+import com.ex.hero.ticket.model.TicketItem;
 import com.ex.hero.ticket.model.dto.request.CreateTicketItemRequest;
 import com.ex.hero.ticket.model.dto.response.TicketItemResponse;
-import com.ex.hero.ticket.model.TicketItem;
 import com.ex.hero.ticket.model.mapper.TicketItemMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

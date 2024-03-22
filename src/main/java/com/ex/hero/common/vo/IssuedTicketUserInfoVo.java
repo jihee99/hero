@@ -1,6 +1,6 @@
 package com.ex.hero.common.vo;
 
-import com.ex.hero.member.model.Member;
+import com.ex.hero.user.model.User;
 import jakarta.persistence.Embeddable;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,11 +25,11 @@ public class IssuedTicketUserInfoVo {
         this.email = email;
     }
 
-    public static IssuedTicketUserInfoVo from(Member member) {
+    public static IssuedTicketUserInfoVo from(User user) {
         return IssuedTicketUserInfoVo.builder()
-                .userId(member.getUserId())
-                .userName(member.getName())
-                .email(member.getEmail())
+                .userId(user.getUserId())
+                .userName(user.getName())
+                .email(user.getEmail())
                 .build();
     }
 

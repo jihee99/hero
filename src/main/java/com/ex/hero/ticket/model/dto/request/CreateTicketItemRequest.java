@@ -1,10 +1,8 @@
 package com.ex.hero.ticket.model.dto.request;
 
 import com.ex.hero.common.annotation.Enum;
-
 import com.ex.hero.ticket.model.TicketPayType;
 import com.ex.hero.ticket.model.TicketType;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotEmpty;

@@ -1,13 +1,11 @@
 package com.ex.hero.order.service;
 
-import com.ex.hero.common.util.MemberUtils;
+import com.ex.hero.common.util.UserUtils;
 import com.ex.hero.order.model.Order;
 import com.ex.hero.order.model.dto.response.OrderResponse;
 import com.ex.hero.order.model.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -15,11 +13,11 @@ public class FreeOrderUseCase {
 
     private final OrderMapper orderMapper;
     private final CommonOrderService commonOrderService;
-    private final MemberUtils memberUtils;
+    private final UserUtils userUtils;
     private final OrderValidationService orderValidator;
 
     public OrderResponse execute(String orderUuid) {
-        String confirmOrderUuid = freeOrderExecute(orderUuid, memberUtils.getCurrentMemberId());
+        String confirmOrderUuid = freeOrderExecute(orderUuid, userUtils.getCurrentMemberId());
         return orderMapper.toOrderResponse(confirmOrderUuid);
     }
 

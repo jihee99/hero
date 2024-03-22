@@ -1,11 +1,10 @@
 package com.ex.hero.events.repository;
 
-import java.util.List;
-
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventStatus;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 
 public interface EventRepository extends JpaRepository<Event, Long>{

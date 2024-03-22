@@ -1,6 +1,5 @@
 package com.ex.hero.common.vo;
 
-import com.ex.hero.common.annotation.DateFormat;
 import com.ex.hero.events.model.Event;
 import com.ex.hero.events.model.EventStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;

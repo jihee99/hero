@@ -2,7 +2,6 @@ package com.ex.hero.common.vo;
 
 
 import com.ex.hero.group.model.Group;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
